@@ -6,7 +6,7 @@
 /*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 15:08:48 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/05/31 17:00:07 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/06/04 17:06:29 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,19 @@
 
 # define COMMENT_CHAR_ALT       ';'
 # define OP_num_args			(3)
+# define N						0x1
+# define DUMP					0x2
+# define VISU					0x4
 
-typedef struct					s_visu
+/*typedef struct					s_visu
 {
 
-}								t_visu;
+}								t_visu;*/
 
 typedef struct					s_champ
 {
 	header_t					head;
-	uint_8						n;
+	uint_8						id;
 	uint_8						state;
 	uint_8						*exec;
 	t_champ						*next;
@@ -36,10 +39,15 @@ typedef struct					s_champ
 
 typedef struct					s_cw
 {
-	uint_32						num_champs;
+//	t_visu						visu;
 	t_champ						*champ;
-	uint_8						flags;
-	t_visu						visu;
+	uint_8						map[MEM_SIZE];
+	uint_32						num_champs;
+	uint_8						flg;
+	uint_32						cycles;
+	uint_32						cycles_to_die;
+	uint_32						cycles_check;
+	uint_32						num_check;
 }								t_cw;
 
 typedef struct					s_car
