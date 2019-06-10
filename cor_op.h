@@ -6,7 +6,7 @@
 /*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 15:08:48 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/06/06 14:14:19 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/06/10 17:18:48 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "op.h"
 
 # define OP_CODE			    (1)
+# define OP_NUM				    (16)
 # define COMMENT_CHAR_ALT       ';'
 # define OP_NUM_ARGS			(3)
 # define N						0x1
@@ -48,8 +49,9 @@ typedef struct					s_cw
 	uint_32						lives;
 	uint_32						cycles;
 	uint_32						cycles_to_die;
+	uint_32						cycles_dump;
 	uint_32						cycles_check;
-	uint_32						num_check;
+	uint_32						checks;
 }								t_cw;
 
 typedef struct					s_car
@@ -79,7 +81,7 @@ typedef struct					s_op
 
 void							op_live(t_cw *cw, t_car *car);
 
-t_op							g_op[16] = {
+t_op							g_op[OP_NUM] = {
 	{
 		.name = "live",
 		.num_args = 1,
