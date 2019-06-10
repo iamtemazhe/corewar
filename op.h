@@ -6,7 +6,7 @@
 /*   By: zaz <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/05/31 16:50:11 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/06/06 13:33:54 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,6 @@
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
-
-# define OP_NAME_LENGTH			(5)
-# define OP_DESCRIPT_LENGTH		(15)
-# define OP_ARGS_COUNT			(3)
 
 typedef char					t_arg_type;
 

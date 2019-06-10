@@ -22,10 +22,16 @@ int					main()
 	}
 }
 
-void			live(t_car *car, unsigned char **map)
+void			op_live(t_cw *cw, t_car *car)
 {
-	car->state = 1;
-	if (car->champ.id == (unsigned int)map[0][car->pos + car->label_size])
+	int32_t		id;
+
+	cw->lives++;
+	car->step = g_op[0].label_size + OP_CODE;
+	car->wait_cycles = g_op[0].cycles;
+	car->last_live = cw->cycles;
+	id = (int32_t)vm->map[car->pos + g_op[0].label_size];
+	if (-(int32_t)cw->num_champs <= id && id <= -1)
 		car->champ.state = 1;
 }
 
