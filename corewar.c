@@ -1,51 +1,111 @@
+#include "op_tab.h"
 #include "op.h"
 #include "cw.h"
 #include "libft.h"
 
 int					main()
 {
-	unsigned char	i;
-	t_car			*car;
+	uint8_t			i;
 	t_cw			cw;
 
 	cw.num_of_champs = 2;
-	if (!(car = (t_car*)malloc(sizeof(t_car) * cw.num_of_champs)))
+	cw.op_tab = g_op;
+	if (!(cw.car = (t_car*)malloc(sizeof(t_car) * cw.num_of_champs)))
 		exit (ft_printf("Error\n"));
-//	fight(&cw);
+	fight(&cw);
 	i = 0;
-	while (i < 3)
+	while (i < OP_NUM)
 		ft_printf("%s\n", g_op[i++].name);
 	return (0);
 }
 
-void			op_live(t_cw *cw, t_car *car)
+int8_t			codage_validator(t_cw *cw, uint8_t op_i, uint32_t car_i)
 {
-	uint32_t		id;
+	int8_t		i;
+	int8_t		err;
+	uint8_t		codage;
+	
+	i = -1;
+	err = 0;
+	cw->step = CODAGE_SIZE + OP_SIZE;
+	codage = cw->map[cw->car[car_i].PC + OPCI_SIZE] >> 2;
+	while (++i < OP_NUM_ARGS)
+		if ((codage >> i * 2) & IND_CODE)
+		{
+			err -= (g_op[op_i].args[i] & IND_CODE) ? 0 : 1;
+			cw->step += IND_SIZE;
+		}
+		else if ((codage >> i * 2) & REG_CODE)
+		{
+			err -= (g_op[op_i].args[i] & REG_CODE) ? 0 : 1;
+			cw->step += REG_SIZE;
+		}
+		else if ((codage >> i * 2) & DIR_CODE)
+		{
+			err -= (g_op[op_i].args[i] & DIR_CODE) ? 0 : 1;
+			cw->step += g_op[op_i].label_size;
+		}
+	cw->car[car_i].PC += (err) ? cw->step : 0;
+	return (err);
+}
+
+void			op_live(t_cw *cw, uint32_t i)
+{
+	uint32_t	id;
 
 	cw->lives++;
-	car->last_live = cw->cycles;
-	id = -(uint32_t)cw->map[car->PC + g_op[0].label_size];
-	car->PC += g_op[0].label_size + OP_CODE;
+	cw->car[i].last_live = cw->cycles;
+	id = -(uint32_t)cw->map[cw->car[i].PC + OPI_SIZE + g_op[LIVE].label_size];
+	cw->car[i].PC += g_op[LIVE].label_size + OP_SIZE;
 	if (1 <= id && id <= cw->num_of_champs)
 		cw->champ[id - 1].lives++;
 }
-/*
-void			op_ld(t_car *car, unsigned char **map)
+
+void			op_ld(t_cw *cw, uint32_t i)
 {
 	uint32_t	pos;
+	uint32_t	data;
 
-	pos = car->pos + car->codage;
-	args = (unsigned char)map[0][pos] >> 4;
-	if (!(args & T_REG))
+	if (codage_validator(cw, LD, i))
 		return ;
-	if (args & T_DIR && (pos = map[0][car->pos + car->label_size + 1]) < 17)
-		car->reg[pos] = (unsigned int)map[0][car->pos + car->label_size];
-	else if (args & T_IND)
-
-	   	&& (pos = map[0][car->pos + car->label_size + 1]) < 17)
-		car->champ.state = 1;
+	if ((cw->map[cw->car[i].PC + OPCI_SIZE] >> 6) & IND_CODE)
+	{
+		pos = (uint32_t)cw->map[cw->car[i].PC + OPCI_SIZE + IND_SIZE];
+		data = (uint32_t)cw->map[cw->car[i].PC + pos % IDX_MOD];
+		pos = cw->car[i].PC + OPCI_SIZE + IND_SIZE + REG_SIZE;
+	}
+	else
+	{
+		data = (uint32_t)cw->map[cw->car[i].PC + OPCI_SIZE + g_op[LD].label_size];
+		pos = cw->car[i].PC + OPCI_SIZE + g_op[LD].label_size + REG_SIZE;
+	}
+	(uint32_t)cw->map[pos] = data;
+	cw->car[i].carry = (data) ? 0 : 1;
+	cw->car[i].PC += cw->step;
 }
-*/
+
+void			op_st(t_cw *cw, uint32_t i)
+{
+	uint32_t	pos;
+	uint32_t	data;
+
+	if (codage_validator(cw, ST, i))
+		return ;
+	if ((cw->map[cw->car[i].PC + OPCI_SIZE] >> 4) & IND_CODE)
+	{
+		pos = (uint32_t)cw->map[cw->car[i].PC + OPCI_SIZE + REG_SIZE + IND_SIZE];
+		pos = cw->car[i].PC + pos % IDX_MOD;
+		(uint32_t)cw->map[pos] = (uint32_t)cw->map[cw->car[i].PC + OPCI_SIZE + REG_SIZE];
+	}
+	else
+	{
+		data = (uint32_t)cw->map[cw->car[i].PC + OPCI_SIZE + REG_SIZE + REG_SIZE];
+		if (1 <= data && data <= REG_NUMBER)
+			cw->car[i].reg[data - 1] = (uint32_t)cw->map[cw->car[i].PC + OPCI_SIZE + REG_SIZE];
+	}
+	cw->car[i].PC += cw->step;
+}
+
 static int8_t	dies_checker(t_cw *cw)
 {
 	cw->checks++;
@@ -78,7 +138,7 @@ static void		car_cycler(t_cw *cw)
 			if (!cw->car[i].cycle_to_wait)
 			{
 				if (1 <= cw->car[i].op_code && cw->car[i].op_code <= OP_NUM)
-					g_op[cw->car[i].op_code].f(cw, &cw->car[i]);
+					g_op[cw->car[i].op_code].f(cw, i);
 				else
 					cw->car[i].PC++;
 			}
