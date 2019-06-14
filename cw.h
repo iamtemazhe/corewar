@@ -6,16 +6,15 @@
 /*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/06/14 18:24:13 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/06/14 18:39:27 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CW_H
 # define CW_H
 
-# include <stdint.h>
-# include "libft.h"
 # include "op.h"
+# include <stdint.h>
 
 # define N						0x1
 # define DUMP					0x2
@@ -103,11 +102,8 @@ struct							s_cw
 	uint32_t					cycle_to_dump;
 	uint32_t					cycle_to_check;
 	uint32_t					step;
-	t_op						*op_tab;
+	t_op						*op;
 };
-
-int8_t							codage_validator(t_cw *cw, uint32_t car_i,
-																uint32_t op_i);
 
 void							op_live(t_cw *cw, uint32_t i);
 void							op_ld(t_cw *cw, uint32_t i);
@@ -126,5 +122,8 @@ void							op_lld(t_cw *cw, uint32_t i);
 void							op_lldi(t_cw *cw, uint32_t i);
 void							op_lfork(t_cw *cw, uint32_t i);
 void							op_aff(t_cw *cw, uint32_t i);
+
+int8_t							codage_validator(t_cw *cw, uint32_t car_i,
+																uint32_t op_i);
 
 #endif

@@ -9,13 +9,13 @@ int					main()
 	t_cw			cw;
 
 	cw.num_of_champs = 2;
-	cw.op_tab = g_op;
+	cw.op_tab = cw->op;
 	if (!(cw.car = (t_car*)malloc(sizeof(t_car) * cw.num_of_champs)))
 		exit (ft_printf("Error\n"));
 	fight(&cw);
 	i = 0;
 	while (i < OP_NUM)
-		ft_printf("%s\n", g_op[i++].name);
+		ft_printf("%s\n", cw->op[i++].name);
 	return (0);
 }
 
@@ -32,18 +32,18 @@ int8_t			codage_validator(t_cw *cw, uint8_t op_i, uint32_t car_i)
 	while (++i < OP_NUM_ARGS)
 		if ((codage >> i * 2) & IND_CODE)
 		{
-			err -= (g_op[op_i].args[i] & IND_CODE) ? 0 : 1;
+			err -= (cw->op[op_i].args[i] & IND_CODE) ? 0 : 1;
 			cw->step += IND_SIZE;
 		}
 		else if ((codage >> i * 2) & REG_CODE)
 		{
-			err -= (g_op[op_i].args[i] & REG_CODE) ? 0 : 1;
+			err -= (cw->op[op_i].args[i] & REG_CODE) ? 0 : 1;
 			cw->step += REG_SIZE;
 		}
 		else if ((codage >> i * 2) & DIR_CODE)
 		{
-			err -= (g_op[op_i].args[i] & DIR_CODE) ? 0 : 1;
-			cw->step += g_op[op_i].label_size;
+			err -= (cw->op[op_i].args[i] & DIR_CODE) ? 0 : 1;
+			cw->step += cw->op[op_i].label_size;
 		}
 	cw->car[car_i].PC += (err) ? cw->step : 0;
 	return (err);
@@ -55,8 +55,8 @@ void			op_live(t_cw *cw, uint32_t i)
 
 	cw->lives++;
 	cw->car[i].last_live = cw->cycles;
-	id = -(uint32_t)cw->map[cw->car[i].PC + OPI_SIZE + g_op[LIVE].label_size];
-	cw->car[i].PC += g_op[LIVE].label_size + OP_SIZE;
+	id = -(uint32_t)cw->map[cw->car[i].PC + OPI_SIZE + cw->op[LIVE].label_size];
+	cw->car[i].PC += cw->op[LIVE].label_size + OP_SIZE;
 	if (1 <= id && id <= cw->num_of_champs)
 		cw->champ[id - 1].lives++;
 }
@@ -76,8 +76,8 @@ void			op_ld(t_cw *cw, uint32_t i)
 	}
 	else
 	{
-		data = (uint32_t)cw->map[cw->car[i].PC + OPCI_SIZE + g_op[LD].label_size];
-		pos = cw->car[i].PC + OPCI_SIZE + g_op[LD].label_size + REG_SIZE;
+		data = (uint32_t)cw->map[cw->car[i].PC + OPCI_SIZE + cw->op[LD].label_size];
+		pos = cw->car[i].PC + OPCI_SIZE + cw->op[LD].label_size + REG_SIZE;
 	}
 	(uint32_t)cw->map[pos] = data;
 	cw->car[i].carry = (data) ? 0 : 1;
@@ -132,13 +132,13 @@ static void		car_cycler(t_cw *cw)
 			{
 				cw->car[i].op_code = cw->map[cw->car[i].PC % MEM_SIZE];
 				cw->car[i].cycle_to_wait = (1 <= cw->car[i].op_code && cw->car[i].op_code <= OP_NUM) ?
-										g_op[cw->car[i].op_code].cycles : 0;
+										cw->op[cw->car[i].op_code].cycles : 0;
 			}
 			cw->car[i].cycle_to_wait -= (cw->car[i].cycle_to_wait > 0) ? 1 : 0;
 			if (!cw->car[i].cycle_to_wait)
 			{
 				if (1 <= cw->car[i].op_code && cw->car[i].op_code <= OP_NUM)
-					g_op[cw->car[i].op_code].f(cw, i);
+					cw->op[cw->car[i].op_code].f(cw, i);
 				else
 					cw->car[i].PC++;
 			}
