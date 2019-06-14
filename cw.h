@@ -6,7 +6,7 @@
 /*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 15:08:48 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/06/10 17:18:48 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/06/13 16:46:56 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,30 @@
 # include "libft.h"
 # include "op.h"
 
-# define OP_CODE			    (1)
-# define OP_NUM				    (16)
-# define COMMENT_CHAR_ALT       ';'
-# define OP_NUM_ARGS			(3)
 # define N						0x1
 # define DUMP					0x2
 # define VISU					0x4
+
+# define OP_NUM_ARGS			(3)
+# define OP_CODE			    (1)
+# define OP_NUM				    (16)
+
+# define LIVE					(1)
+# define LD						(2)
+# define ST						(3)
+# define ADD					(4)
+# define SUB					(5)
+# define AND					(6)
+# define OR 					(7)
+# define XOR					(8)
+# define ZJMP					(9)
+# define LDI					(10)
+# define STI					(11)
+# define FORK					(12)
+# define LLD					(13)
+# define LLDI					(14)
+# define LFORK					(15)
+# define AFF					(16)
 
 /*typedef struct					s_visu
 {
@@ -33,53 +50,68 @@
 typedef struct					s_champ
 {
 	header_t					head;
-	uint_8						id;
-	uint_8						state;
-	uint_8						*exec;
-	t_champ						*next;
+	uint8_t						id;
+	uint8_t						*exec;
+	uint32_t					lives;
 }								t_champ;
+
+typedef struct					s_car
+{
+	uint8_t						id;
+	uint8_t						carry;
+	uint32_t					op_code;	
+	uint32_t					last_live;
+	uint32_t					cycle_to_wait;
+	uint32_t					PC;
+	int32_t						reg[REG_NUMBER];
+}								t_car;
 
 typedef struct					s_cw
 {
 //	t_visu						visu;
 	t_champ						*champ;
-	uint_8						map[MEM_SIZE];
-	uint_32						num_champs;
-	uint_8						flg;
-	uint_32						lives;
-	uint_32						cycles;
-	uint_32						cycles_to_die;
-	uint_32						cycles_dump;
-	uint_32						cycles_check;
-	uint_32						checks;
+	t_car						*car;
+	uint8_t						flg;
+	uint8_t						map[MEM_SIZE];
+	uint32_t					num_of_champs;
+	uint32_t					lives;
+	uint32_t					checks;
+	uint32_t					cycles;
+	uint32_t					cycle_to_die;
+	uint32_t					cycle_to_dump;
+	uint32_t					cycle_to_check;
 }								t_cw;
-
-typedef struct					s_car
-{
-	uint_8						id;
-	uint_8						carry;
-	uint_32						op_code;	
-	uint_32						last_live;
-	uint_32						wait_cycles;
-	uint_32						pos;
-	uint_32						step;
-	int_32						reg[REG_NUMBER];
-}								t_car;
 
 typedef struct					s_op
 {
 	char						*name;
-	uint_8						num_args;
-	uint_8						args[OP_NUM_ARGS];
-	uint_8						code;
-	uint_32						cycles;
+	uint8_t						num_args;
+	uint8_t						args[OP_NUM_ARGS];
+	uint8_t						code;
+	uint32_t					cycles;
 	char						*description;
-	uint_8						codage;
-	uint_8						label_size;
+	uint8_t						codage;
+	uint8_t						label_size;
 	void						(*f)(t_cw *, t_car *);
 }								t_op;
 
 void							op_live(t_cw *cw, t_car *car);
+void							op_ld(t_cw *cw, t_car *car);
+void							op_st(t_cw *cw, t_car *car);
+void							op_st(t_cw *cw, t_car *car);
+void							op_add(t_cw *cw, t_car *car);
+void							op_sub(t_cw *cw, t_car *car);
+void							op_and(t_cw *cw, t_car *car);
+void							op_or(t_cw *cw, t_car *car);
+void							op_xor(t_cw *cw, t_car *car);
+void							op_zjmp(t_cw *cw, t_car *car);
+void							op_ldi(t_cw *cw, t_car *car);
+void							op_sti(t_cw *cw, t_car *car);
+void							op_fork(t_cw *cw, t_car *car);
+void							op_lld(t_cw *cw, t_car *car);
+void							op_lldi(t_cw *cw, t_car *car);
+void							op_lfork(t_cw *cw, t_car *car);
+void							op_aff(t_cw *cw, t_car *car);
 
 t_op							g_op[OP_NUM] = {
 	{
@@ -122,7 +154,7 @@ t_op							g_op[OP_NUM] = {
 		.code = 4,
 		.cycles = 10,
 		.description = "addition",
-		.code = 1,
+		.codage = 1,
 		.label_size = 4,
 		.f = &op_add
 	},
@@ -143,7 +175,7 @@ t_op							g_op[OP_NUM] = {
 		.args = {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG},
 		.code = 6,
 		.cycles = 6,
-		"et (and  r1, r2, r3   r1&r2 -> r3",
+		.description = "et (and  r1, r2, r3   r1&r2 -> r3",
 		.codage = 1,
 		.label_size = 4,
 		.f = &op_and
@@ -233,7 +265,7 @@ t_op							g_op[OP_NUM] = {
 		.cycles = 50,
 		.description = "long load index",
 		.codage = 1,
-		.label _size = 2,
+		.label_size = 2,
 		.f = &op_lldi
 	},
 	{
