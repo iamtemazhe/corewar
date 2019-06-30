@@ -14,19 +14,19 @@
 # define CW_H
 
 # include "op.h"
+# include "libft.h"
+# include <string.h>
 # include <stdint.h>
 
 # define N						0x1
 # define DUMP					0x2
 # define VISU					0x4
 
-# define CODAGE_SIZE		    1
 # define OP_SIZE				1
+# define CODAGE_SIZE		    1
 # define OP_NUM				    16
 # define OP_NUM_ARGS			3
-# define OPC_SIZE				CODAGE_SIZE
-# define OPI_SIZE			    OP_CODE_SIZE - 1
-# define OPCI_SIZE			    OP_CODE_SIZE + OPC_SIZE - 1
+# define OPC_SIZE				OP_SIZE + CODAGE_SIZE
 
 # define LIVE					0
 # define LD						1
@@ -44,6 +44,9 @@
 # define LLDI					13
 # define LFORK					14
 # define AFF					15
+
+# define PC(x)					(((x) ? ((x) - 1) : (x)) % MEM_SIZE)
+# define IN(x)					((x) ? ((x) - 1) : (x))
 
 /*
 typedef struct					s_visu
@@ -68,7 +71,7 @@ typedef struct					s_car
 	uint32_t					last_live;
 	uint32_t					cycle_to_wait;
 	uint32_t					pc;
-	int32_t						reg[REG_NUMBER];
+	uint32_t					reg[REG_NUMBER];
 }								t_car;
 
 typedef struct s_cw				t_cw;
@@ -83,7 +86,7 @@ typedef struct					s_op
 	char						*description;
 	uint8_t						codage;
 	uint8_t						label_size;
-	void						(*f)(t_cw *, uint32_t);
+	void						(*f)(t_cw *, uint8_t);
 }								t_op;
 
 struct							s_cw
@@ -95,6 +98,7 @@ struct							s_cw
 	uint8_t						flg;
 	uint8_t						map[MEM_SIZE];
 	uint32_t					num_of_champs;
+	uint32_t					num_of_cars;
 	uint32_t					lives;
 	uint32_t					checks;
 	uint32_t					cycles;
@@ -102,28 +106,45 @@ struct							s_cw
 	uint32_t					cycle_to_dump;
 	uint32_t					cycle_to_check;
 	uint32_t					step;
+	uint32_t					pos;
+	uint32_t					arg[3];
 	t_op						*op;
+	union
+	{
+		uint8_t					age;
+		struct
+		{	
+			unsigned			v4 : 2;
+			unsigned			v3 : 2;
+			unsigned			v2 : 2;
+			unsigned			v1 : 2;
+		}						arg;
+	}							cod;
 };
 
-void							op_live(t_cw *cw, uint32_t i);
-void							op_ld(t_cw *cw, uint32_t i);
-void							op_st(t_cw *cw, uint32_t i);
-void							op_st(t_cw *cw, uint32_t i);
-void							op_add(t_cw *cw, uint32_t i);
-void							op_sub(t_cw *cw, uint32_t i);
-void							op_and(t_cw *cw, uint32_t i);
-void							op_or(t_cw *cw, uint32_t i);
-void							op_xor(t_cw *cw, uint32_t i);
-void							op_zjmp(t_cw *cw, uint32_t i);
-void							op_ldi(t_cw *cw, uint32_t i);
-void							op_sti(t_cw *cw, uint32_t i);
-void							op_fork(t_cw *cw, uint32_t i);
-void							op_lld(t_cw *cw, uint32_t i);
-void							op_lldi(t_cw *cw, uint32_t i);
-void							op_lfork(t_cw *cw, uint32_t i);
-void							op_aff(t_cw *cw, uint32_t i);
+void							op_live(t_cw *cw, uint8_t i_car);
+void							op_ld(t_cw *cw, uint8_t i_car);
+void							op_st(t_cw *cw, uint8_t i_car);
+void							op_st(t_cw *cw, uint8_t i_car);
+void							op_add(t_cw *cw, uint8_t i_car);
+void							op_sub(t_cw *cw, uint8_t i_car);
+void							op_and(t_cw *cw, uint8_t i_car);
+void							op_or(t_cw *cw, uint8_t i_car);
+void							op_xor(t_cw *cw, uint8_t i_car);
+void							op_zjmp(t_cw *cw, uint8_t i_car);
+void							op_ldi(t_cw *cw, uint8_t i_car);
+void							op_sti(t_cw *cw, uint8_t i_car);
+void							op_fork(t_cw *cw, uint8_t i_car);
+void							op_lld(t_cw *cw, uint8_t i_car);
+void							op_lldi(t_cw *cw, uint8_t i_car);
+void							op_lfork(t_cw *cw, uint8_t i_car);
+void							op_aff(t_cw *cw, uint8_t i_car);
 
-int8_t							codage_validator(t_cw *cw, uint32_t car_i,
-																uint32_t op_i);
+size_t							code_to_byte(const void *src, uint32_t pos,\
+																	size_t n);
+void							byte_to_code(void *dst, uint32_t pos,\
+													const void *src, size_t n);
+int8_t							codage_validator(t_cw *cw, uint8_t i_car,
+																uint8_t i_op);
 
 #endif

@@ -10,53 +10,51 @@
 #                                                                              #
 # **************************************************************************** #
 
-CORE = corewar
-VISU = visu_hex
-LIBN = libft.a
-MLXN = mlx.a
+CW   = corewar
+VS   = visu_hex
+LIB  = libft.a
 
-OP_D = operations
-OP_S = op_live.c op_ld.c op_st.c
-SRC  =
-SRC1 = $(SRC) $(addprefix $(OP_D)/, $(OP_C))
-SRC2 = visu.c   $(SRC) inp_keyboard.c inp_mouse.c inp_params.c img_params.c put_image.c	\
-	   draw_line.c draw_circle.c ant.c room.c
+SRC_D= src/
+CW_D = cw/
+ASM_D= asm/
+OP_D = op/
+VS_D = visu/
+LIB_D= libft/
 
-INCL = libft/includes/
-LIB  = libft/
-MLX  = minilibx_macos/
+INC_S= includes/
+INC_L= libft/includes/
+
+OP_S =	op_add.c		op_aff.c	op_and.c	op_fork.c	op_ld.c		op_ldi.c\
+		op_lfork.c		op_live.c	op_lld.c	op_lldi.c	op_or.c		op_st.c\
+		op_sti.c		op_sub.c	op_xor.c	op_zjmp.c
+
+VS_S =
+
+CW_S =	corewar.c		byte_func.c	codage_validator.c
+
+CW_C = $(addprefix $(SRC_D)/$(CW_D), $(CW_S)) $(addprefix $(SRC_D)/$(CW_D)/$(OP_D)/, $(OP_S))
+VS_C = 
 
 FLG  = -Wall -Wextra -Werror
-FRAEM= -framework OpenGL -framework AppKit
-CFLAGS=-O3 -I $(INCL) -I $(MLX) $(FLG) 
+CFLAGS=-O3 -I $(INC_L) -I $(INC_S) $(FLG) 
 
-OBJ1 = $(SRC1:.c=.o)
-OBJ2 = $(SRC2:.c=.o)
+CW_O = $(CW_C:.c=.o)
+VS_O = $(VS_C:.c=.o)
 
-all: $(LIBN) $(CORE)
+all: $(LIB) $(CW)
 
+$(LIB): $(LIB_D)*.c
+	@make -C $(LIB_D)
 
-$(LIBN): $(LIB)*.c
-	@make -C $(LIB)
-
-$(MLXN): $(MLX)*.c
-	@make -C $(MLX)
-
-$(CORE): $(LIB)*.c $(OBJ1)
-	gcc -O2 -o $(CORE) $(OBJ1) $(CFLAGS) -L $(LIB) -lft
-
-
-
-
-$(VISU): $(LIB)*.c $(MLX)*.c $(OBJ2)
-	gcc -O2 -o $(VISU) $(OBJ2) $(CFALGS) -L $(LIB) -lft -L $(MLX) -lmlx $(FRAEM)
+$(CW): $(LIB_D)*.c $(CW_O)
+	gcc -O2 -o $(CW) $(CW_O) $(CFLAGS) -L $(LIB_D) -lft
 
 clean:
 	rm -f *.o
-	make -C $(LIB) clean
+	make -C $(LIB_D) clean
 
 fclean: clean
-	rm -f $(CORE)
-	make -C $(LIB) fclean
+	rm -f $(CW)
+	make -C $(LIB_D) fclean
 
 re: fclean all
