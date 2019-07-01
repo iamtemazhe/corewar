@@ -21,12 +21,13 @@ void				add_car(t_cw *cw, uint8_t i_car)
 	ft_memcpy(cw->car[cw->num_of_cars - 1].reg, cw->car[i_car].reg, REG_NUMBER * sizeof(int32_t));
 }
 
-int					main()
+int					main(int ac, char **av)
 {
 	uint8_t			i;
 	t_cw			cw;
 
-	cw.num_of_champs = 2;
+	//cw.num_of_champs = 2;
+	fill_cw(ac, av, &cw);
 	cw.op = g_op;
 	add_car(&cw, 0);
 	fight(&cw);

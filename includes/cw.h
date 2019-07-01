@@ -6,7 +6,7 @@
 /*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/06/14 18:39:27 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/01 15:05:25 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,7 @@ void							byte_to_code(void *dst, uint32_t pos,\
 													const void *src, size_t n);
 int8_t							codage_validator(t_cw *cw, uint8_t i_car,
 																uint8_t i_op);
+void							fill_cw(int ac, char **av, t_cw *cw);
+int								ft_strrstr(const char *haystack, const char *needle);
 
 #endif
