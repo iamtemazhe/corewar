@@ -11,4 +11,5 @@ void			op_aff(t_cw *cw, uint8_t i_car)
 	}
 	cw->arg[0] = cw->car[i_car].reg[cw->map[PC(cw->pos)] - 1] % 0xFF;
 	write(1, &cw->arg[0], 1);
+	vs_log(cw, AFF);
 }

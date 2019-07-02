@@ -8,7 +8,13 @@ void		byte_to_code(void *dst, uint32_t pos, const void *src, size_t n);
 int			main()
 {
 	t_cws	cw;
-	uint8_t	b[4] = {0xAA, 0xBB, 0xCC, 0xEE};
+
+	cw.flg.b = 0xab;
+	printf("FLG = %#x\n", cw.flg.b);
+	printf("VIS = %#x, DEB = %#x, N = %#x, DUMP = %#x\n", cw.flg.f.v1, cw.flg.f.v2, cw.flg.f.v3, cw.flg.f.v4);
+
+
+	/*uint8_t	b[4] = {0xAA, 0xBB, 0xCC, 0xEE};
 
 	uint32_t i;
 	memcpy(&i, &b[0], 4);
@@ -23,7 +29,6 @@ int			main()
 
 	cw.cod.age = 0x37;
 	printf("codage = %#x, arg1 = %#x, arg2 = %#x, arg3 = %#x, arg4 = %#x\n", cw.cod.age, cw.cod.arg.v1, cw.cod.arg.v2, cw.cod.arg.v3, cw.cod.arg.v4);
-	printf("pos_45 = %d, pos_4097 = %d, pos_4100 = %d\n", PC(45), PC(4097), PC(4100));
-	//printf("codage = %#x, arg1 = %#x, arg2 = %#x, arg3 = %#x, arg4 = %#x\n", cw.cod.age, cw.cod.arg[0], cw.cod.arg[1], cw.cod.arg[2], cw.cod.arg[3]);
+	printf("pos_45 = %d, pos_4097 = %d, pos_4100 = %d\n", PC(45), PC(4097), PC(4100));*/
 	return (0);
 }

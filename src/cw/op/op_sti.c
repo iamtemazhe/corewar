@@ -13,6 +13,7 @@ void			op_sti(t_cw *cw, uint8_t i_car)
 	else
 		cw->pos += cw->car[i_car].reg[cw->arg[2]];
 	cw->pos = cw->pos % IDX_MOD + cw->car[i_car].pc;
-	byte_to_code(cw->map, cw->pos, cw->car[i_car].reg[cw->arg[0]], REG_SIZE);
+	byte_to_code(cw->map, cw->pos, &cw->car[i_car].reg[cw->arg[0]], REG_SIZE);
 	cw->car[i_car].pc += cw->step;
+	vs_log(cw, STI);
 }

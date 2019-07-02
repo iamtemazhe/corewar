@@ -1,6 +1,6 @@
 2014 Corewar Championship
 
-Logins are those of the group leaders
+vs_logins are those of the group leaders
 
 Contestants :
 bguy

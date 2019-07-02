@@ -21,22 +21,6 @@ void				add_car(t_cw *cw, uint8_t i_car)
 	ft_memcpy(cw->car[cw->num_of_cars - 1].reg, cw->car[i_car].reg, REG_NUMBER * sizeof(int32_t));
 }
 
-int					main(int ac, char **av)
-{
-	uint8_t			i;
-	t_cw			cw;
-
-	//cw.num_of_champs = 2;
-	fill_cw(ac, av, &cw);
-	cw.op = g_op;
-	add_car(&cw, 0);
-	fight(&cw);
-	i = 0;
-	while (i < OP_NUM)
-		ft_printf("%s\n", cw.op[i++].name);
-	return (0);
-}
-
 static int8_t	dies_checker(t_cw *cw)
 {
 	cw->checks++;
@@ -92,5 +76,17 @@ int8_t				fight(t_cw *cw)
 				return (1);
 		car_cycler(cw);
 		cw->cycles++;
+		// printf("%d\n", cw->cycles);
 	}
+}
+
+int					main(int ac, char **av)
+{
+	t_cw			cw;
+
+	fill_cw(ac, av, &cw);
+	cw.op = g_op;
+	add_car(&cw, 0);
+	fight(&cw);
+	return (0);
 }

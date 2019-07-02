@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 13:26:35 by jwinthei          #+#    #+#              #
-#    Updated: 2019/07/01 15:10:22 by hgysella         ###   ########.fr        #
+#    Updated: 2019/07/02 17:35:42 by jwinthei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ OP_S =	op_add.c		op_aff.c	op_and.c	op_fork.c	op_ld.c		op_ldi.c\
 
 VS_S =
 
-CW_S =	corewar.c		byte_func.c	codage_validator.c		parse_args.c		ft_strrstr.c
+CW_S =	corewar.c		byte_func.c	codage_validator.c		parse_args.c		ft_strrstr.c\
+		vs_log.c
 
 CW_C = $(addprefix $(SRC_D)/$(CW_D), $(CW_S)) $(addprefix $(SRC_D)/$(CW_D)/$(OP_D)/, $(OP_S))
 VS_C = 
@@ -51,6 +52,8 @@ $(CW): $(LIB_D)*.c $(CW_O)
 
 clean:
 	rm -f *.o
+	rm -f $(SRC_D)/$(CW_D)/*.o
+	rm -f $(SRC_D)/$(CW_D)/$(OP_D)/*.o
 	make -C $(LIB_D) clean
 
 fclean: clean

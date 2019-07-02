@@ -6,7 +6,7 @@
 /*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 18:21:42 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/06/14 18:22:27 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/02 16:28:12 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_op							g_op[OP_NUM] = {
 		.args = {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG},
 		.code = 6,
 		.cycles = 6,
-		.description = "et (and  r1, r2, r3   r1&r2 -> r3",
+		.description = "r1&r2 -> r3",
 		.codage = 1,
 		.label_size = 4,
 		.f = &op_and

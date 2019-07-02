@@ -9,4 +9,5 @@ void			op_live(t_cw *cw, uint8_t i_car)
 	cw->pos = -code_to_byte(cw->map, cw->pos, cw->op[LIVE].label_size);
 	if (1 <= cw->pos && cw->pos <= cw->num_of_champs)
 		cw->champ[IN(cw->pos)].lives++;
+	vs_log(cw, LIVE);
 }

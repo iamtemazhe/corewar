@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 15:08:48 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/06/12 19:43:45 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/02 15:39:50 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,6 @@
 // 	unsigned					arg1 : 2;
 // }								t_cod;
 
-typedef union					s_cod
-{
-	uint8_t						age;
-	struct
-	{	
-		unsigned				rg4 : 2;
-		unsigned				rg3 : 2;
-		unsigned				rg2 : 2;
-		unsigned				rg1 : 2;
-	}							a;
-}								t_cod;
-
-
 typedef struct					s_cws
 {
 	uint32_t					cycles;
@@ -46,15 +33,15 @@ typedef struct					s_cws
 	uint32_t					cycles_to_die;
 	union
 	{
-		uint8_t					age;
+		uint8_t					b;
 		struct
 		{	
-			unsigned			v4 : 2;
-			unsigned			v3 : 2;
-			unsigned			v2 : 2;
-			unsigned			v1 : 2;
-		}						arg;
-	}							cod;
+			unsigned			v1 : 1;
+			unsigned			v2 : 1;
+			unsigned			v3 : 1;
+			unsigned			v4 : 1;
+		}						f;
+	}							flg;
 }								t_cws;
 
 #endif
