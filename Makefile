@@ -6,7 +6,7 @@
 #    By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 13:26:35 by jwinthei          #+#    #+#              #
-#    Updated: 2019/07/02 17:35:42 by jwinthei         ###   ########.fr        #
+#    Updated: 2019/07/03 12:47:45 by hgysella         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OP_S =	op_add.c		op_aff.c	op_and.c	op_fork.c	op_ld.c		op_ldi.c\
 VS_S =
 
 CW_S =	corewar.c		byte_func.c	codage_validator.c		parse_args.c		ft_strrstr.c\
-		vs_log.c
+		vs_log.c		visu.c
 
 CW_C = $(addprefix $(SRC_D)/$(CW_D), $(CW_S)) $(addprefix $(SRC_D)/$(CW_D)/$(OP_D)/, $(OP_S))
 VS_C = 
@@ -48,7 +48,7 @@ $(LIB): $(LIB_D)*.c
 	@make -C $(LIB_D)
 
 $(CW): $(LIB_D)*.c $(CW_O)
-	gcc -O2 -o $(CW) $(CW_O) $(CFLAGS) -L $(LIB_D) -lft
+	gcc -O2 -o $(CW) $(CW_O) $(CFLAGS) -L $(LIB_D) -lft -lncurses
 
 clean:
 	rm -f *.o

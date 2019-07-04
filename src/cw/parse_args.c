@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/01 14:46:56 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/04 13:21:47 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void			fill_champ(char *av, int j, t_cw *cw)
 	cw->champ[j - 1].id = j;
 	if ((fd = open(av, O_RDONLY)) < 0)
 		exit(ft_printf("File read error\n"));
-	if (read(fd, head, 2192) <= 0)
+	if (read(fd, head, 2191) <= 0)
 		exit(ft_printf("File read error\n"));
 	cw->champ[j - 1].head.prog_size = read(fd, exec, CHAMP_MAX_SIZE + 1);
 	if (cw->champ[j - 1].head.prog_size <= 0)
@@ -172,7 +172,7 @@ void			fill_cw(int ac, char **av, t_cw *cw)
 	cw->flg = 0;
 	cw->cycle_to_dump = 0;
 	parse_args(ac, av, cw, 0);
-	if (!cw->num_of_champs)
+		if (!cw->num_of_champs)
 		exit(ft_printf("Where is players O_o?\n"));
 	if (cw->num_of_champs > MAX_PLAYERS)
 		exit(ft_printf("The number of players is more than MAX_PLAYERS\n"));

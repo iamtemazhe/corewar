@@ -83,10 +83,29 @@ int8_t				fight(t_cw *cw)
 int					main(int ac, char **av)
 {
 	t_cw			cw;
+	uint			j;
 
+	j = 0;
 	fill_cw(ac, av, &cw);
-	cw.op = g_op;
-	add_car(&cw, 0);
-	fight(&cw);
+	ft_printf("num_of_champs = %d\n", cw.num_of_champs);
+	ft_printf("cw->cycle_to_dump = %d\n", cw.cycle_to_dump);
+	while (j < cw.num_of_champs)
+	{
+		ft_printf("name_%d = %s\n", j, cw.champ[j].head.prog_name);
+		ft_printf("size = %ud\n", j, cw.champ[j].head.prog_size);
+		ft_printf("comment = %s\n", cw.champ[j].head.comment);
+		ft_printf("id = %d\n", cw.champ[j].id);
+		j++;
+	}
+	j = 0;
+	while (j < 4096)
+	{
+		ft_printf("%x",  cw.map[j]);
+		j++;
+	}
+	visu(&cw);
+	//cw.op = g_op;
+	//add_car(&cw, 0);
+	//fight(&cw);
 	return (0);
 }

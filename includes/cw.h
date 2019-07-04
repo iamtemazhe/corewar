@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/02 17:24:31 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/04 12:57:32 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libft.h"
 # include <string.h>
 # include <stdint.h>
+# include <ncurses.h>
 
 # define N						0x1
 # define DUMP					0x2
@@ -48,12 +49,15 @@
 # define PC(x)					(((x) ? ((x) - 1) : (x)) % MEM_SIZE)
 # define IN(x)					((x) ? ((x) - 1) : (x))
 
-/*
 typedef struct					s_visu
 {
-
+	WINDOW						*map;
+	WINDOW						*header;
+	WINDOW						*menu;
+	WINDOW						*bkg;
+	uint						row;
+	uint						col;
 }								t_visu;
-*/
 
 typedef struct					s_champ
 {
@@ -91,7 +95,7 @@ typedef struct					s_op
 
 struct							s_cw
 {
-//	t_visu						visu;
+	t_visu						visu;
 	t_champ						*champ;
 	t_car						*car;
 	int8_t						err;
@@ -150,5 +154,7 @@ void							fill_cw(int ac, char **av, t_cw *cw);
 int								ft_strrstr(const char *haystack, const char *needle);
 void							add_car(t_cw *cw, uint8_t i_car);
 void							vs_log(t_cw *cw, uint8_t i_op);
+
+void							visu(t_cw *cw);
 
 #endif
