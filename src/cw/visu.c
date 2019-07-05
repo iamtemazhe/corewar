@@ -6,12 +6,11 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/05 16:00:40 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/05 16:02:21 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw.h"
-#include "op.h"
 #include "libft.h"
 #include <ncurses.h>
 #include <panel.h>

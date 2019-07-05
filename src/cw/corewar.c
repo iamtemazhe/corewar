@@ -1,5 +1,3 @@
-#include "op_tab.h"
-#include "op.h"
 #include "cw.h"
 #include "libft.h"
 

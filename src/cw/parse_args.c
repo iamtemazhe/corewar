@@ -6,12 +6,11 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/05 16:00:35 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/05 16:02:13 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw.h"
-#include "op.h"
 #include "libft.h"
 
 void			fill_map(t_cw *cw)
