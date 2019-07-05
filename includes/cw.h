@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/04 12:57:32 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/05 15:43:39 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ struct							s_cw
 {
 	t_visu						visu;
 	t_champ						*champ;
-	t_car						*car;
+	t_car						**car;
 	int8_t						err;
 	uint8_t						flg;
 	uint8_t						map[MEM_SIZE];
@@ -111,7 +111,7 @@ struct							s_cw
 	uint32_t					cycle_to_check;
 	uint32_t					step;
 	uint32_t					pos;
-	uint32_t					arg[3];
+	uint32_t					arg[OP_NUM_ARGS];
 	t_op						*op;
 	union
 	{
@@ -152,9 +152,14 @@ int8_t							codage_validator(t_cw *cw, uint8_t i_car,
 																uint8_t i_op);
 void							fill_cw(int ac, char **av, t_cw *cw);
 int								ft_strrstr(const char *haystack, const char *needle);
-void							add_car(t_cw *cw, uint8_t i_car);
 void							vs_log(t_cw *cw, uint8_t i_op);
 
+void							init_cw(t_cw *cw);
+void							add_car(t_cw *cw, uint8_t i_car);
+void							del_car(t_cw *cw, uint8_t i_car);
+void							del_all_cars(t_cw *cw);
+
 void							visu(t_cw *cw);
+void							init_visu(t_cw *cw);
 
 #endif

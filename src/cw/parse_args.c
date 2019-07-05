@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/04 13:21:47 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/05 16:00:35 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void			fill_champ(char *av, int j, t_cw *cw)
 	cw->champ[j - 1].id = j;
 	if ((fd = open(av, O_RDONLY)) < 0)
 		exit(ft_printf("File read error\n"));
-	if (read(fd, head, 2191) <= 0)
+	if (read(fd, head, 2192) <= 0)
 		exit(ft_printf("File read error\n"));
 	cw->champ[j - 1].head.prog_size = read(fd, exec, CHAMP_MAX_SIZE + 1);
 	if (cw->champ[j - 1].head.prog_size <= 0)

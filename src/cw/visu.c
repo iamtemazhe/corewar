@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   visu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/05 13:38:57 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/05 16:00:40 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void			print_header(t_cw *cw)
 
 void			visu(t_cw *cw)
 {
-	init_visu(cw);
+	// init_visu(cw);
 	print_map(cw);
 	wrefresh(cw->visu.map);
 	print_header(cw);
 	wrefresh(cw->visu.header);
-	sleep(100);
+	sleep(1);
 	endwin();
 }
