@@ -41,7 +41,7 @@ void				add_car(t_cw *cw, uint8_t i_car)
 
 void				del_all_cars(t_cw *cw)
 {
-	while (--cw->num_of_cars >= 0)
+	while (cw->num_of_cars-- > 0)
 		free(cw->car[cw->num_of_cars]);
 	free(cw->car);
 }
