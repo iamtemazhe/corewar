@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/04 16:40:16 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/05 13:38:57 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void			init_visu(t_cw *cw)
 	wrefresh(cw->visu.bkg);
 	wattron(cw->visu.header, COLOR_PAIR(6) | A_BOLD);
 	mvwprintw(cw->visu.menu, 1, 1, "%s", "hello world!");
+	mvwprintw(cw->visu.menu, 2, 1, "%d",  cw->num_of_champs);
 	wrefresh(cw->visu.menu);
 }
 
@@ -96,7 +97,6 @@ void			print_header(t_cw *cw)
 
 void			visu(t_cw *cw)
 {
-
 	init_visu(cw);
 	print_map(cw);
 	wrefresh(cw->visu.map);
