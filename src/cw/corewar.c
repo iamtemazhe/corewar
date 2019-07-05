@@ -90,9 +90,10 @@ int					main(int ac, char **av)
 		ft_printf("%x",  cw.map[j]);
 		j++;
 	}
-	// init_visu(&cw);
-	// visu(&cw);
-	add_car(&cw, 0);
-	fight(&cw);
+	init_visu(&cw);
+	visu(&cw);
+	//add_car(&cw, 0);
+	//fight(&cw);
+	endwin();
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/05 16:02:21 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/05 16:07:42 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void			print_map(t_cw *cw)
 			wattron(cw->visu.map, COLOR_PAIR(3));
 			if (j < cw->champ[i].head.prog_size + (MEM_SIZE / cw->num_of_champs) * i)
 				wattron(cw->visu.map, COLOR_PAIR(i + 1));
-			mvwprintw(cw->visu.map, k, m++, "%x",cw->map[j++]);
+			mvwprintw(cw->visu.map, k, m++, "%02x",cw->map[j++]);
+			m += 2;
 			if (m >= cw->visu.col / 4 * 3 - 2 && k++)
 				m = 1;
 		}

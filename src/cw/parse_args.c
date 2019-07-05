@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/05 16:02:13 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/05 16:29:12 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,17 @@ void			fill_map(t_cw *cw)
 	uint		k;
 
 	i = 0;
-	ft_bzero(cw->map, MEM_SIZE);
 	while (i < cw->num_of_champs)
 	{
 		j = 0;
 		k = (MEM_SIZE / cw->num_of_champs) * i;
 		while (j < cw->champ[i].head.prog_size)
-		{
-			cw->map[k++] = cw->champ[i].exec[j];
-			j++;
-		}
+			cw->map[k++] = cw->champ[i].exec[j++];
 		i++;
 	}
 }
 
-uint8_t			*write_exec(char *buf, int size)
+uint8_t			*write_exec(unsigned char *buf, int size)
 {
 	uint8_t		*exec;
 	int			i;
@@ -47,7 +43,7 @@ uint8_t			*write_exec(char *buf, int size)
 	return (exec);
 }
 
-void			fill_head(char *head, char *exec, int id, t_cw *cw)
+void			fill_head(unsigned char *head, unsigned char *exec, int id, t_cw *cw)
 {
 	int			j;
 	int			k;
@@ -70,9 +66,9 @@ void			fill_head(char *head, char *exec, int id, t_cw *cw)
 
 void			fill_champ(char *av, int j, t_cw *cw)
 {
-	int			fd;
-	char		head[2193];
-	char		exec[CHAMP_MAX_SIZE + 1];
+	int				fd;
+	unsigned char	head[2193];
+	unsigned char	exec[CHAMP_MAX_SIZE + 1];
 
 	if (j > (int)cw->num_of_champs || cw->champ[j - 1].id)
 		exit(ft_printf("Invalid player number\n"));
@@ -85,7 +81,7 @@ void			fill_champ(char *av, int j, t_cw *cw)
 	if (cw->champ[j - 1].head.prog_size <= 0)
 		exit(ft_printf("File read error\n"));
 	if (cw->champ[j - 1].head.prog_size > CHAMP_MAX_SIZE)
-		exit(ft_printf("File %s has too large executable code\n", av));
+		exit(ft_printf("File %s has too large executable code, %d > %d\n", av, cw->champ[j - 1].head.prog_size, CHAMP_MAX_SIZE));
 	fill_head(head, exec, j - 1, cw);
 	close(fd);
 }
@@ -167,9 +163,6 @@ void			fill_cw(int ac, char **av, t_cw *cw)
 	i = 1;
 	if (ac == 1)
 		exit(ft_printf("Usage: ./corewar <champion1.cor> <...>\n"));
-	cw->num_of_champs = 0;
-	cw->flg = 0;
-	cw->cycle_to_dump = 0;
 	parse_args(ac, av, cw, 0);
 		if (!cw->num_of_champs)
 		exit(ft_printf("Where is players O_o?\n"));
