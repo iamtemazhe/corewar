@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/05 15:43:39 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/05 16:18:58 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # define LFORK					14
 # define AFF					15
 
+# define PC_INC(x, y)			(((x) + (y)) % MEM_SIZE)
 # define PC(x)					(((x) ? ((x) - 1) : (x)) % MEM_SIZE)
 # define IN(x)					((x) ? ((x) - 1) : (x))
 
