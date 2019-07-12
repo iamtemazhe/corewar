@@ -34,7 +34,7 @@ static void		car_cycler(t_cw *cw)
 			{
 				if (1 <= cw->car[i_car]->op_code && cw->car[i_car]->op_code <= OP_NUM)
 				{
-					ft_printf("op_code = %ud\n", cw->car[i_car]->op_code);
+					// ft_printf("op_code = %ud\n", cw->car[i_car]->op_code);
 					cw->op[cw->car[i_car]->op_code].f(cw, i_car);
 				}
 				else
@@ -49,20 +49,17 @@ void				fight(t_cw *cw)
 {
 	while (1)
 	{
-		ft_printf("%d\n", cw->cycles);
-		ft_printf("num_of_champs = %d\n", cw->num_of_champs);
-		ft_printf("cw->cycle_to_die = %d\n", cw->cycle_to_die);
+		// ft_printf("%d\n", cw->cycles);
+		// ft_printf("num_of_champs = %d\n", cw->num_of_champs);
+		// ft_printf("cw->cycle_to_die = %d\n", cw->cycle_to_die);
 		if (cw->flg & DUMP && cw->cycles == cw->cycle_to_dump)
 			exit (ft_printf("kek eto dump\n"));
-		ft_printf("cw->cycle_to_die = %d\n", cw->cycle_to_die);
 		if (cw->cycle_to_die <= 0 || (cw->cycles && !(cw->cycles % cw->cycle_to_die)))
 			if (dies_checker(cw))
 				return ;
-		ft_printf("cw->cycle_to_die = %d\n", cw->cycle_to_die);
 		car_cycler(cw);
 		cw->cycles++;
-		ft_printf("cw->cycle_to_die = %d\n", cw->cycle_to_die);
-		// visu(cw);
+		visu(cw);
 	}
 }
 
@@ -92,8 +89,8 @@ int					main(int ac, char **av)
 	}
 	init_visu(&cw);
 	visu(&cw);
-	//add_car(&cw, 0);
-	//fight(&cw);
+	add_car(&cw, 0);
+	fight(&cw);
 	endwin();
 	ft_printf("col = %d\n", cw.visu.col);
 	ft_printf("row = %d\n", cw.visu.row);
