@@ -49,8 +49,7 @@ void				del_all_cars(t_cw *cw)
 void				del_car(t_cw *cw, uint8_t i_car)
 {
 	free(cw->car[i_car]);
-	while (i_car++ < cw->num_of_cars)
-		if (i_car < cw->num_of_cars)
+	while (++i_car < cw->num_of_cars)
 			cw->car[IN(i_car)] = cw->car[i_car];
 	cw->num_of_cars--;
 }

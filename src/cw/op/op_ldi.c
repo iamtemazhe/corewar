@@ -5,11 +5,12 @@ void			op_ldi(t_cw *cw, uint8_t i_car)
 	if (codage_validator(cw, i_car, LDI))
 		return ;
 	if (cw->cod.arg.v1 & IND_CODE || cw->cod.arg.v1 & DIR_CODE)
-		cw->pos = code_to_byte(cw->map, cw->arg[0], REG_SIZE);
+		cw->pos = code_to_byte(cw->map, cw->arg[0],\
+			(cw->cod.arg.v1 & IND_CODE) ? IND_SIZE : cw->op[LDI].label_size);
 	else
 		cw->pos = cw->car[i_car]->reg[cw->arg[1]];
-	if (cw->cod.arg.v1 & DIR_CODE)
-		cw->pos += code_to_byte(cw->map, cw->arg[1], REG_SIZE);
+	if (cw->cod.arg.v2 & DIR_CODE)
+		cw->pos += code_to_byte(cw->map, cw->arg[1], cw->op[LDI].label_size);
 	else
 		cw->pos += cw->car[i_car]->reg[cw->arg[1]];
 	cw->pos = cw->pos % IDX_MOD + cw->car[i_car]->pc;

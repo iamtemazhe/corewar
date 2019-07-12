@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/05 16:18:58 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/12 18:58:46 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 # define OP_SIZE				1
 # define CODAGE_SIZE		    1
+# define REGN_SIZE		  		1
 # define OP_NUM				    16
 # define OP_NUM_ARGS			3
 # define OPC_SIZE				OP_SIZE + CODAGE_SIZE
@@ -145,9 +146,9 @@ void							op_lldi(t_cw *cw, uint8_t i_car);
 void							op_lfork(t_cw *cw, uint8_t i_car);
 void							op_aff(t_cw *cw, uint8_t i_car);
 
-size_t							code_to_byte(const void *src, uint32_t pos,\
+size_t							code_to_byte(const void *src, size_t pos,\
 																	size_t n);
-void							byte_to_code(void *dst, uint32_t pos,\
+void							byte_to_code(void *dst, size_t pos,\
 													const void *src, size_t n);
 int8_t							codage_validator(t_cw *cw, uint8_t i_car,
 																uint8_t i_op);

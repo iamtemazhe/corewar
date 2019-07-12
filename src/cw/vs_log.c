@@ -14,5 +14,5 @@
 
 inline void		vs_log(t_cw *cw, uint8_t i_op)
 {
-	printf("%s\n", cw->op[i_op].name);
+	ft_printf("%s, ", cw->op[i_op].name);
 }

@@ -3,6 +3,15 @@
 
 static int8_t	dies_checker(t_cw *cw)
 {
+	uint8_t		i_car;
+
+	i_car = 0;
+	while (i_car < cw->num_of_cars)
+	{
+		if (cw->car[i_car]->last_live >= cw->cycle_to_die)
+			del_car(cw, i_car);
+		i_car++;
+	}
 	cw->checks++;
 	if (cw->lives >= NBR_LIVE || (cw->checks == MAX_CHECKS && cw->cycle_to_check == cw->cycle_to_die))
 	{
@@ -11,6 +20,8 @@ static int8_t	dies_checker(t_cw *cw)
 	}
 	cw->cycle_to_check = cw->cycle_to_die;
 	cw->lives = 0;
+	if (cw->num_of_cars <= 0)
+		return (-1);
 	return (0);
 }
 
@@ -21,25 +32,19 @@ static void		car_cycler(t_cw *cw)
 	i_car = 0;
 	while (i_car < cw->num_of_cars)
 	{
-		if (cw->car[i_car]->last_live < cw->cycle_to_die)
+		if (!cw->car[i_car]->cycle_to_wait)
 		{
-			if (!cw->car[i_car]->cycle_to_wait)
-			{
-				cw->car[i_car]->op_code = cw->map[cw->car[i_car]->pc % MEM_SIZE];
-				cw->car[i_car]->cycle_to_wait =\
-					(1 <= cw->car[i_car]->op_code && cw->car[i_car]->op_code <= OP_NUM) ?\
-												cw->op[cw->car[i_car]->op_code].cycles : 0;
-			}
-			if (!(cw->car[i_car]->cycle_to_wait = IN(cw->car[i_car]->cycle_to_wait)))
-			{
-				if (1 <= cw->car[i_car]->op_code && cw->car[i_car]->op_code <= OP_NUM)
-				{
-					ft_printf("op_code = %ud\n", IN(cw->car[i_car]->op_code));
-					cw->op[IN(cw->car[i_car]->op_code)].f(cw, i_car);
-				}
-				else
-					cw->car[i_car]->pc = (cw->car[i_car]->pc + 1) % MEM_SIZE;
-			}
+			cw->car[i_car]->op_code = cw->map[cw->car[i_car]->pc % MEM_SIZE];
+			cw->car[i_car]->cycle_to_wait =\
+				(1 <= cw->car[i_car]->op_code && cw->car[i_car]->op_code <= OP_NUM) ?\
+											cw->op[cw->car[i_car]->op_code].cycles : 0;
+		}
+		if (!(cw->car[i_car]->cycle_to_wait = IN(cw->car[i_car]->cycle_to_wait)))
+		{
+			if (1 <= cw->car[i_car]->op_code && cw->car[i_car]->op_code <= OP_NUM)
+				cw->op[IN(cw->car[i_car]->op_code)].f(cw, i_car);
+			else
+				cw->car[i_car]->pc = (cw->car[i_car]->pc + 1) % MEM_SIZE;
 		}
 		i_car++;
 	}
@@ -59,7 +64,8 @@ void				fight(t_cw *cw)
 				return ;
 		car_cycler(cw);
 		cw->cycles++;
-		visu(cw);
+		// ft_printf("%u ", cw->cycles);
+		// visu(cw);
 	}
 }
 
@@ -71,14 +77,14 @@ int					main(int ac, char **av)
 	init_cw(&cw);
 	j = 0;
 	fill_cw(ac, av, &cw);
-	ft_printf("num_of_champs = %d\n", cw.num_of_champs);
-	ft_printf("cw->cycle_to_dump = %d\n", cw.cycle_to_dump);
+	ft_printf("num_of_champs = %d\n\r", cw.num_of_champs);
+	ft_printf("cw->cycle_to_dump = %d\n\r", cw.cycle_to_dump);
 	while (j < cw.num_of_champs)
 	{
-		ft_printf("name_%d = %s\n", j, cw.champ[j].head.prog_name);
-		ft_printf("size = %ud\n", j, cw.champ[j].head.prog_size);
-		ft_printf("comment = %s\n", cw.champ[j].head.comment);
-		ft_printf("id = %d\n", cw.champ[j].id);
+		ft_printf("name_%d = %s\n\r", j, cw.champ[j].head.prog_name);
+		ft_printf("size = %ud\n\r", j, cw.champ[j].head.prog_size);
+		ft_printf("comment = %s\n\r", cw.champ[j].head.comment);
+		ft_printf("id = %d\n\r", cw.champ[j].id);
 		j++;
 	}
 	j = 0;
@@ -87,12 +93,18 @@ int					main(int ac, char **av)
 		ft_printf("%x",  cw.map[j]);
 		j++;
 	}
-	init_visu(&cw);
-	visu(&cw);
+	ft_printf("\n\r");
+	// init_visu(&cw);
+	// visu(&cw);
 	add_car(&cw, 0);
 	fight(&cw);
-	endwin();
-	ft_printf("col = %d\n", cw.visu.col);
-	ft_printf("row = %d\n", cw.visu.row);
+	ft_printf("END\n\r");
+	j = 0;
+	while (j < 4096)
+	{
+		ft_printf("%x",  cw.map[j]);
+		j++;
+	}
+	// endwin();
 	return (0);
 }

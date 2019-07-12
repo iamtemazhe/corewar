@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_tab.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 18:21:42 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/02 16:28:12 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/12 19:39:13 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_op							g_op[OP_NUM] = {
 	{
 		.name = "st",
 		.num_args = 2,
-		.args = {T_REG, T_IND | T_REG},
+		.args = {T_REG, T_IND | T_REG, 0},
 		.code = 3,
 		.cycles = 5,
 		.description = "store",
@@ -107,7 +107,7 @@ t_op							g_op[OP_NUM] = {
 	{
 		.name = "zjmp",
 		.num_args = 1,
-		.args = {T_DIR},
+		.args = {T_DIR, 0, 0},
 		.code = 9,
 		.cycles = 20,
 		.description = "jump if zero",
@@ -140,7 +140,7 @@ t_op							g_op[OP_NUM] = {
 	{
 		.name = "fork",
 		.num_args = 1,
-		.args = {T_DIR},
+		.args = {T_DIR, 0, 0},
 		.code = 12,
 		.cycles = 800,
 		.description = "fork",
@@ -151,7 +151,7 @@ t_op							g_op[OP_NUM] = {
 	{
 		.name = "lld",
 		.num_args = 2,
-		.args = {T_DIR | T_IND, T_REG},
+		.args = {T_DIR | T_IND, T_REG, 0},
 		.code = 13,
 		.cycles = 10,
 		.description = "long load",
@@ -173,7 +173,7 @@ t_op							g_op[OP_NUM] = {
 	{
 		.name = "lfork",
 		.num_args = 1,
-		.args = {T_DIR},
+		.args = {T_DIR, 0, 0},
 		.code = 15,
 		.cycles = 1000,
 		.description = "long fork",
@@ -184,7 +184,7 @@ t_op							g_op[OP_NUM] = {
 	{
 		.name = "aff",
 		.num_args = 1,
-		.args = {T_REG},
+		.args = {T_REG, 0, 0},
 		.code = 16,
 		.cycles = 2,
 		.description = "aff",
