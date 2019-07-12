@@ -95,5 +95,7 @@ int					main(int ac, char **av)
 	//add_car(&cw, 0);
 	//fight(&cw);
 	endwin();
+	ft_printf("col = %d\n", cw.visu.col);
+	ft_printf("row = %d\n", cw.visu.row);
 	return (0);
 }

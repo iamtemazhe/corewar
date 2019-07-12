@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/05 16:07:42 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/12 15:32:55 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void			init_visu(t_cw *cw)
 	mvwprintw(cw->visu.menu, 1, 1, "%s", "hello world!");
 	mvwprintw(cw->visu.menu, 2, 1, "%d",  cw->num_of_champs);
 	wrefresh(cw->visu.menu);
+	keypad(cw->visu.menu, TRUE);
 }
 
 void			print_map(t_cw *cw)
@@ -57,7 +58,7 @@ void			print_map(t_cw *cw)
 	{
 		while (j < (MEM_SIZE / cw->num_of_champs) * (i + 1) && j < MEM_SIZE)
 		{
-			wattron(cw->visu.map, COLOR_PAIR(3));
+			wattron(cw->visu.map, COLOR_PAIR(3) | A_BOLD);
 			if (j < cw->champ[i].head.prog_size + (MEM_SIZE / cw->num_of_champs) * i)
 				wattron(cw->visu.map, COLOR_PAIR(i + 1));
 			mvwprintw(cw->visu.map, k, m++, "%02x",cw->map[j++]);
@@ -90,6 +91,7 @@ void			print_header(t_cw *cw)
 			if (m >= cw->visu.col / 4 - 2 && k++)
 				m = 1;
 		}
+		//mvwprintw(cw->visu.header, k++, 0, "%d", l);
 		k++;
 		i++;
 	}
@@ -97,11 +99,21 @@ void			print_header(t_cw *cw)
 
 void			visu(t_cw *cw)
 {
-	// init_visu(cw);
+	//int			key;
+	//int			i = 0;
+
 	print_map(cw);
 	wrefresh(cw->visu.map);
 	print_header(cw);
 	wrefresh(cw->visu.header);
+	//i++;
 	sleep(1);
-	endwin();
+	//key = wgetch(cw->visu.menu);
+	/*if ()
+		if (key == 27)
+			endwin();*/
+	//}
+	//mvwprintw(cw->visu.menu, 3, 1, "%d",  key);
+	wrefresh(cw->visu.menu);
+	wgetch(cw->visu.menu);
 }
