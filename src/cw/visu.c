@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/12 15:32:55 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/12 15:47:05 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,6 @@ void			visu(t_cw *cw)
 			endwin();*/
 	//}
 	//mvwprintw(cw->visu.menu, 3, 1, "%d",  key);
-	wrefresh(cw->visu.menu);
-	wgetch(cw->visu.menu);
+	// wrefresh(cw->visu.menu);
+	// wgetch(cw->visu.menu);
 }

@@ -34,11 +34,11 @@ static void		car_cycler(t_cw *cw)
 			{
 				if (1 <= cw->car[i_car]->op_code && cw->car[i_car]->op_code <= OP_NUM)
 				{
-					// ft_printf("op_code = %ud\n", cw->car[i_car]->op_code);
-					cw->op[cw->car[i_car]->op_code].f(cw, i_car);
+					ft_printf("op_code = %ud\n", IN(cw->car[i_car]->op_code));
+					cw->op[IN(cw->car[i_car]->op_code)].f(cw, i_car);
 				}
 				else
-					cw->car[i_car]->pc = ++cw->car[i_car]->pc % MEM_SIZE;
+					cw->car[i_car]->pc = (cw->car[i_car]->pc + 1) % MEM_SIZE;
 			}
 		}
 		i_car++;
