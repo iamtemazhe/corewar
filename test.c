@@ -10,16 +10,17 @@ int			main()
 	t_cws	cw;
 
 	cw.flg.b = 0xab;
-	printf("FLG = %#x\n", cw.flg.b);
-	printf("VIS = %#x, DEB = %#x, N = %#x, DUMP = %#x\n", cw.flg.f.v1, cw.flg.f.v2, cw.flg.f.v3, cw.flg.f.v4);
+	// printf("FLG = %#x\n", cw.flg.b);
+	// printf("VIS = %#x, DEB = %#x, N = %#x, DUMP = %#x\n", cw.flg.f.v1, cw.flg.f.v2, cw.flg.f.v3, cw.flg.f.v4);
 
 
-	/*uint8_t	b[4] = {0xAA, 0xBB, 0xCC, 0xEE};
-
-	uint32_t i;
-	memcpy(&i, &b[0], 4);
-	printf("b = %#x\n", i);
-	unsigned char	a[4] = {0xFF, 0xAA, 0xDD, 0xCC};
+	uint8_t	b[4] = {0, 0, 0, 0};
+	uint32_t i = 0xabcdef11;
+	//memcpy(b, &i, 4);
+	byte_to_code(b, 1, &i, 1);
+	for (int j = 0; j < 4; j++)
+		printf("%#x ", b[j]);
+/*	unsigned char	a[4] = {0xFF, 0xAA, 0xDD, 0xCC};
 	uint32_t		j;
 	j = (uint32_t)code_to_byte(a, 0, 4);
 	printf("a = %#x\n", j);

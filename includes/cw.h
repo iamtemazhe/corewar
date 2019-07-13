@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/12 18:58:46 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/13 19:42:19 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@
 # define LFORK					14
 # define AFF					15
 
-# define PC_INC(x, y)			(((x) + (y)) % MEM_SIZE)
-# define PC(x)					(((x) ? ((x) - 1) : (x)) % MEM_SIZE)
+
+
 # define IN(x)					((x) ? ((x) - 1) : (x))
+# define PCV(x)					((x) % MEM_SIZE)
+# define PC(x)					(PCV(IN(x)))
 
 typedef struct					s_visu
 {
@@ -154,10 +156,10 @@ int8_t							codage_validator(t_cw *cw, uint8_t i_car,
 																uint8_t i_op);
 void							fill_cw(int ac, char **av, t_cw *cw);
 int								ft_strrstr(const char *haystack, const char *needle);
-void							vs_log(t_cw *cw, uint8_t i_op);
+void							vs_log(t_cw *cw, uint8_t i_op, uint8_t i_car);
 
 void							init_cw(t_cw *cw);
-void							add_car(t_cw *cw, uint8_t i_car);
+uint8_t							add_car(t_cw *cw, uint8_t i_car);
 void							del_car(t_cw *cw, uint8_t i_car);
 void							del_all_cars(t_cw *cw);
 
