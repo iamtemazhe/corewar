@@ -106,6 +106,9 @@ int					main(int ac, char **av)
 		j++;
 	}
 	ft_printf("\n\rcycles = %u\n", cw.cycles);
-	// endwin();
+	j = 0;
+	while (++j < 100)
+		select_key(&cw)
+	endwin();
 	return (0);
 }
