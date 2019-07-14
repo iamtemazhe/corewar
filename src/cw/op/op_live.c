@@ -8,7 +8,7 @@ void			op_live(t_cw *cw, uint8_t i_car)
 	cw->car[i_car]->last_live = cw->cycles;
 
 	if (cw->flg & DEBUG)
-		debug_log(cw, i_car);
+		dbg_log(cw, i_car);
 	// ft_printf("\n\r cw->pc = %u, ", cw->car[i_car]->pc);
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + OP_SIZE + cw->op[LIVE].label_size);
 	cw->pos = cw->car[i_car]->pc;

@@ -60,7 +60,7 @@ int8_t			codage_validator(t_cw *cw, uint8_t i_car, uint8_t i_op)
 		else
 			cw->err = -1;
 	if (cw->flg & DEBUG)
-		debug_log(cw, i_car);
+		dbg_log(cw, i_car);
 	if (!cw->err)
 		return (0);
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);

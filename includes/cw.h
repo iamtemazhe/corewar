@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/14 16:00:27 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/14 16:08:20 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,9 +158,9 @@ int8_t							codage_validator(t_cw *cw, uint8_t i_car,
 void							fill_cw(int ac, char **av, t_cw *cw);
 int								ft_strrstr(const char *haystack, const char *needle);
 void							vs_log(t_cw *cw, uint8_t i_car);
-inline void						debug_log(t_cw *cw, uint8_t i_car);
-inline void						debug_log_top();
-inline void						debug_log_bot();
+void							dbg_log(t_cw *cw, uint8_t i_car);
+void							dbg_log_top();
+void							dbg_log_bot();
 
 void							init_cw(t_cw *cw);
 uint8_t							add_car(t_cw *cw, uint8_t i_car);

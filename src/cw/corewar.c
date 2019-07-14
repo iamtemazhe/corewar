@@ -99,10 +99,10 @@ int					main(int ac, char **av)
 	// visu(&cw);
 	add_car(&cw, 0);
 	if (cw.flg & DEBUG)
-		debug_log_top();
+		dbg_log_top();
 	fight(&cw);
 	if (cw.flg & DEBUG)
-		debug_log_bot();
+		dbg_log_bot();
 	j = 0;
 	while (j < 4096)
 	{

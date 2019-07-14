@@ -12,10 +12,12 @@
 
 #include "cw.h"
 
-inline void		vs_log(t_cw *cw, uint8_t i_op, uint8_t i_car)
+void			vs_log(t_cw *cw, uint8_t i_car)
 {
 	uint8_t		col;
+	uint8_t		i_op;
 
+	i_op = IN(cw->car[i_car]->op_code);
 	if (i_op)
 		col = 0;
 	col = (uint8_t)cw->car[i_car]->reg[0];
