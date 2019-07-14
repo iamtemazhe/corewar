@@ -2,8 +2,8 @@
 
 void			op_zjmp(t_cw *cw, uint8_t i_car)
 {
-	if (cw->flg & DEBUG)
-		dbg_log(cw, i_car);
+	// if (cw->flg & DEBUG)
+		// dbg_log(cw, i_car);
 	if (!cw->car[i_car]->carry)
 		return ;
 	// ft_printf("\n\rpc[%u] = %u, op_code = %#x, ", i_car, cw->car[i_car]->pc, cw->car[i_car]->op_code);
