@@ -24,7 +24,7 @@ inline void		dbg_log_cod(t_cw *cw, uint8_t i_car)
 
 inline void		dbg_log(t_cw *cw, uint8_t i_car)
 {
-	ft_printf("\033[3%1um|%3d|%4u|%6s | %02x |%12|%8x|%9|%9|%6|%5d|%6|%6|\n\r",
+	ft_printf("\033[3%1um|%3d|%4u|%6s | %02x |%12|%8x|%9|%9|%5s|%5d|%6|%6|\n\r",
 				i_car % 6 + 1, i_car, cw->car[i_car]->pc, cw->op[IN(cw->car[i_car]->op_code)].name,
-				cw->car[i_car]->op_code, cw->arg[0], (int16_t)cw->arg[0]);
+				cw->car[i_car]->op_code, cw->arg[0], (cw->err) ? "\033[47mcarry\033[40m" : "", (int16_t)cw->arg[0]);
 }

@@ -34,7 +34,8 @@ uint8_t				add_car(t_cw *cw, uint8_t i_car)
 		}
 		return (IN(cw->num_of_cars));
 	}
-	if (!(cw->car = (t_car **)realloc(cw->car, sizeof(t_car *) * ++cw->num_of_cars)))
+	cw->num_of_cars++;
+	if (!(cw->car = (t_car **)realloc(cw->car, sizeof(t_car *) * cw->num_of_cars)))
 		exit (ft_puterr(-1, "Error"));
 	if (!(cw->car[IN(cw->num_of_cars)] = new_car(0)))
 		exit (ft_puterr(-1, "Error"));
@@ -59,7 +60,7 @@ void				del_car(t_cw *cw, uint8_t i_car)
 		cw->car[i_car] = NULL;
 	}
 	cw->num_of_cars--;
-	
+	ft_printf("\033[5m!!!!!!!!!!!!!!!!!!CARRY DEAD!!!!!!!!!!!!!!!!!\033[5m\n\n");
 }
 
 void				del_all_cars(t_cw *cw)
