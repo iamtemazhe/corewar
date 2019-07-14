@@ -77,6 +77,7 @@ int					main(int ac, char **av)
 	init_cw(&cw);
 	j = 0;
 	fill_cw(ac, av, &cw);
+	cw.flg |= DEBUG;
 	ft_printf("num_of_champs = %d\n\r", cw.num_of_champs);
 	ft_printf("cw->cycle_to_dump = %d\n\r", cw.cycle_to_dump);
 	while (j < cw.num_of_champs)
@@ -106,9 +107,9 @@ int					main(int ac, char **av)
 		j++;
 	}
 	ft_printf("\n\rcycles = %u\n", cw.cycles);
-	j = 0;
-	while (++j < 100)
-		select_key(&cw)
-	endwin();
+	// j = 0;
+	// while (++j < 100)
+		// select_key(&cw);
+	// endwin();
 	return (0);
 }

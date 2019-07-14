@@ -12,7 +12,7 @@ void			op_live(t_cw *cw, uint8_t i_car)
 	cw->pos = cw->car[i_car]->pc;
 	// ft_printf("cw->pc + step = %u, ", cw->car[i_car]->pc);
 	id_champ = code_to_byte(cw->map, cw->pos, cw->op[LIVE].label_size);
-	ft_printf(" | pc[%u] = %u, op_code = %#x, id = %x", i_car, cw->car[i_car]->pc, cw->car[i_car]->op_code, id_champ);
+	// ft_printf(" | pc[%u] = %u, op_code = %#x, id = %x", i_car, cw->car[i_car]->pc, cw->car[i_car]->op_code, id_champ);
 	// ft_printf("id_champ = %#x\n\r", id_champ);
 	if (1 <= id_champ && id_champ <= cw->num_of_champs)
 		cw->champ[IN(id_champ)].lives++;

@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/13 19:46:59 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/14 14:58:29 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define N						0x1
 # define DUMP					0x2
 # define VISU					0x4
+# define DEBUG					0x8
 
 # define OP_SIZE				1
 # define CODAGE_SIZE		    1
