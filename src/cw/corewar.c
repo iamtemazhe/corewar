@@ -109,9 +109,8 @@ int					main(int ac, char **av)
 		j++;
 	}
 	ft_printf("\n\rcycles = %u\n", cw.cycles);
-	// j = 0;
-	// while (++j < 100)
-		// select_key(&cw);
+	// while (wgetch(cw.visu.menu) != 'q')
+	// 	sleep(1);
 	// endwin();
 	return (0);
 }

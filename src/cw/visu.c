@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/13 19:26:17 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/14 20:37:57 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void			init_visu(t_cw *cw)
 	initscr();
 	curs_set(0);
 	start_color();
-	init_pair(2, COLOR_BLUE, COLOR_BLACK);
-	init_pair(5, COLOR_BLACK, COLOR_BLUE);
 	init_pair(1, COLOR_GREEN, COLOR_BLACK);
-	init_pair(4, COLOR_BLACK, COLOR_GREEN);
+	init_pair(2, COLOR_BLUE, COLOR_BLACK);
 	init_pair(3, COLOR_GRAY, COLOR_BLACK);
+	init_pair(5, COLOR_BLACK, COLOR_BLUE);
+	init_pair(4, COLOR_BLACK, COLOR_GREEN);
 	init_pair(6, COLOR_WHITE, COLOR_BLACK);
 	init_pair(7, COLOR_BLACK, COLOR_GRAY);
 	init_pair(8, COLOR_BLACK, COLOR_RED);
@@ -126,7 +126,10 @@ void			print_menu(t_cw *cw)
 {
 	wattron(cw->visu.menu, COLOR_PAIR(6) | A_BOLD);
 	mvwprintw(cw->visu.menu, 1, cw->visu.col / 2 - 2, "%-20s",  "MENU");
-	mvwprintw(cw->visu.menu, 2, 1, "%-20s",  "Esc for exit");
+	mvwprintw(cw->visu.menu, 2, 1, "%s",  "Q for exit");
+	mvwprintw(cw->visu.menu, 2, 30, "%s",  "S for step by step");
+	mvwprintw(cw->visu.menu, 2, 60, "%s",  "Spase for continuous performance");
+	mvwprintw(cw->visu.menu, 2, 100, "%s",  "P for a pause");
 	wrefresh(cw->visu.menu);
 	keypad(cw->visu.menu, TRUE);
 }
@@ -141,37 +144,59 @@ void			visu_exit(t_cw *cw)
 	exit(0);
 }
 
-void			select_key(t_cw *cw)
+void			select_key(t_cw *cw, int key)
 {
-	noecho();
-	halfdelay(5);
-	if (wgetch(cw->visu.menu) == ERR)
-		sleep(1);
-	else if (wgetch(cw->visu.menu) == 27)
+	int			second;
+
+	second = 5;
+	if (key == 'q')
 		visu_exit(cw);
+	else if (key == 'p')
+	{
+		while (wgetch(cw->visu.menu) != 'p')
+			if (wgetch(cw->visu.menu) == 'q')
+				visu_exit(cw);
+	}
+	else if (key == 'w')
+	{
+		second--;
+		mvwprintw(cw->visu.menu, 4, 35, "%d limit", second);
+		wrefresh(cw->visu.menu);
+	}
+	// sleep(second);
 }
 
 void			visu(t_cw *cw)
 {
 	int			i = 0;
+	int			k;
 
-	scrollok(cw->visu.map, true);
+	print_map(cw);
 	wrefresh(cw->visu.map);
-	while (i < 3)
-	{	
-		print_map(cw);
-		wrefresh(cw->visu.map);
-		print_header(cw);
-		wrefresh(cw->visu.header);
+	print_header(cw);
+	wrefresh(cw->visu.header);
+	print_menu(cw);
+	wrefresh(cw->visu.menu);
+	noecho();
+	while ((k = wgetch(cw->visu.menu)) != 'q' && i < 30)	
+	{
+		if (k == 32)
+			halfdelay(2);
+		else
+			select_key(cw, k);
 		mvwprintw(cw->visu.menu, 3, 1, "%d", i);
-		print_menu(cw);
-		select_key(cw);
 		if (i == 2)
 		{
-			wattron(cw->visu.map, COLOR_PAIR(1) | A_BOLD);			
-			mvwprintw(cw->visu.map, 1, 1, "%.2x", 0);
-			mvwprintw(cw->visu.map, 8, 1, "%.2x",cw->map[364]);
-			wrefresh(cw->visu.map);
+			int	x;
+			int y;
+			wattron(cw->visu.map, COLOR_PAIR(2) | A_BOLD);			
+			//mvwprintw(cw->visu.map, 1, 1, "%.2x", 0);
+			getmaxyx(cw->visu.map,y,x);
+			mvwprintw(cw->visu.menu, 4, 1, "%d col %d row", 327 / (x / 3) + 1, 327 % (x / 3));
+			mvwprintw(cw->visu.menu, 4, 15, "%d", cw->champ[0].head.prog_size);
+			mvwprintw(cw->visu.menu, 4, 25, "%d okno", x);
+			mvwprintw(cw->visu.map, 71 * 3 / x + 1, 71 * 3 % x + 1, "%.2x", cw->map[71]);
+			// wrefresh(cw->visu.map);
 		}
 		i++;
 	}
