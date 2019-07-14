@@ -49,7 +49,6 @@ int8_t			codage_validator(t_cw *cw, uint8_t i_car, uint8_t i_op)
 	cw->step = OPC_SIZE;
 	cw->cod.age = cw->map[PC(cw->car[i_car]->pc + cw->step)];
 	cw->err = (cw->cod.arg.v4) ? -1 : 0;
-	// ft_printf("\n\rpc[%u] = %u, op_code = %#x codage = %#x, op = %s, ", i_car, cw->car[i_car]->pc, cw->car[i_car]->op_code, cw->cod.age, cw->op[i_op].name);
 	i_arg = -1;
 	while (++i_arg < cw->op[i_op].num_args)
 		if ((code = (cw->cod.age >> (6 - i_arg * 2)) & 0x3) && code == IND_CODE)
@@ -60,7 +59,8 @@ int8_t			codage_validator(t_cw *cw, uint8_t i_car, uint8_t i_op)
 			dir(cw, i_arg, i_car, i_op);
 		else
 			cw->err = -1;
-	// ft_printf(" err = %d ", cw->err);
+	if (cw->flg & DEBUG)
+		debug_log(cw, i_car);
 	if (!cw->err)
 		return (0);
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);

@@ -7,6 +7,8 @@ void			op_live(t_cw *cw, uint8_t i_car)
 	cw->lives++;
 	cw->car[i_car]->last_live = cw->cycles;
 
+	if (cw->flg & DEBUG)
+		debug_log(cw, i_car);
 	// ft_printf("\n\r cw->pc = %u, ", cw->car[i_car]->pc);
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + OP_SIZE + cw->op[LIVE].label_size);
 	cw->pos = cw->car[i_car]->pc;
@@ -16,5 +18,6 @@ void			op_live(t_cw *cw, uint8_t i_car)
 	// ft_printf("id_champ = %#x\n\r", id_champ);
 	if (1 <= id_champ && id_champ <= cw->num_of_champs)
 		cw->champ[IN(id_champ)].lives++;
-	vs_log(cw, LIVE, i_car);
+	if (cw->flg & VISU)
+		vs_log(cw, i_car);
 }

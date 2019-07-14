@@ -18,5 +18,6 @@ void			op_sti(t_cw *cw, uint8_t i_car)
 	// ft_printf("\n\r pos_posle = %u, reg = %d\n\r", cw->pos, cw->car[i_car]->reg[cw->arg[0]]);
 	byte_to_code(cw->map, cw->pos, &cw->car[i_car]->reg[cw->arg[0]], REG_SIZE);
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);
-	vs_log(cw, STI, i_car);
+	if (cw->flg & VISU)
+		vs_log(cw, i_car);
 }

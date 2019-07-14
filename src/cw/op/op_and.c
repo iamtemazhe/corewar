@@ -16,5 +16,6 @@ void			op_and(t_cw *cw, uint8_t i_car)
 		cw->car[i_car]->reg[cw->arg[2]] &= cw->car[i_car]->reg[cw->arg[1]];
 	cw->car[i_car]->carry = (cw->car[i_car]->reg[cw->arg[2]]) ? 0 : 1;
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);
-	vs_log(cw, AND, i_car);
+	if (cw->flg & VISU)
+		vs_log(cw, i_car);
 }
