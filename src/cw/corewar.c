@@ -35,13 +35,12 @@ static void		car_cycler(t_cw *cw)
 		if (!cw->car[i_car]->cycle_to_wait)
 		{
 			cw->car[i_car]->op_code = cw->map[cw->car[i_car]->pc];
-			if (!(1 <= cw->car[i_car]->op_code && cw->car[i_car]->op_code <= OP_NUM))
+			if (cw->car[i_car]->op_code < 1 || OP_NUM < cw->car[i_car]->op_code)
 			{
 				cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + 1);
 				i_car++;
 				continue ;
 			}
-			// ft_printf(" op_code[%u] = %u ", i_car, cw->car[i_car]->op_code);
 			cw->car[i_car]->cycle_to_wait = cw->op[IN(cw->car[i_car]->op_code)].cycles;
 		}
 		if (!(cw->car[i_car]->cycle_to_wait = IN(cw->car[i_car]->cycle_to_wait)))

@@ -12,6 +12,12 @@ size_t		code_to_byte(const void *src, size_t pos, size_t n)
 
 void		byte_to_code(void *dst, size_t pos, const void *src, size_t n)
 {
+	size_t	i;
+
+	i = 0;
 	while (n-- > 0)
-		((uint8_t *)dst)[PC(pos - n)] = ((uint8_t *)src)[n];
+	{
+		((uint8_t *)dst)[PCV(pos + i)] = ((uint8_t *)src)[n];
+		i++;
+	}
 }
