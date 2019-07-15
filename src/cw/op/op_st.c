@@ -9,6 +9,7 @@ void			op_st(t_cw *cw, uint8_t i_car)
 	else
 		cw->car[i_car]->reg[IN(cw->arg[1])] = cw->car[i_car]->reg[IN(cw->arg[0])];
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);
+	cw->pos = cw->arg[1];
 	if (cw->flg & VISU)
-		vs_log(cw, i_car);
+		vs_log(cw, i_car, (cw->cod.arg.v2 == IND_CODE) ? ST : 0);
 }

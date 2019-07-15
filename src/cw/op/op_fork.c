@@ -12,5 +12,5 @@ void			op_fork(t_cw *cw, uint8_t i_car)
 	cw->car[id_car]->pc = PCV(cw->car[i_car]->pc + (int16_t)cw->arg[0] % IDX_MOD);
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);
 	if (cw->flg & VISU)
-		vs_log(cw, i_car);
+		vs_log(cw, i_car, 0);
 }

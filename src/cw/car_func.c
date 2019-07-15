@@ -60,7 +60,7 @@ void				del_car(t_cw *cw, uint8_t i_car)
 		cw->car[i_car] = NULL;
 	}
 	cw->num_of_cars--;
-	ft_printf("\033[5m!!!!!!!!!!!!!!!!!!CARRY DEAD!!!!!!!!!!!!!!!!!\033[5m\n\n");
+	ft_printf("\033[3%1um!!!!!!!!!!!!!!!!!!CARRY DEAD!!!!!!!!!!!!!!!!!\n\n", i_car % 6 + 1);
 }
 
 void				del_all_cars(t_cw *cw)

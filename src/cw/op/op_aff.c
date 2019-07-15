@@ -14,5 +14,5 @@ void			op_aff(t_cw *cw, uint8_t i_car)
 	letter = cw->car[i_car]->reg[IN(cw->arg[0])] % 0xFF;
 	write(1, &letter, 1);
 	if (cw->flg & VISU)
-		vs_log(cw, i_car);
+		vs_log(cw, i_car, 0);
 }
