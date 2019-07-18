@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/15 14:30:29 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/18 15:17:13 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 
 # include "op.h"
 # include "libft.h"
-# include <string.h>
-# include <stdint.h>
+# include "stack.h"
 # include <ncurses.h>
 
 # define N						0x1
 # define DUMP					0x2
 # define VISU					0x4
 # define DEBUG					0x8
+
+# define CYCLE_TO_SHOW			50
 
 # define OP_SIZE				1
 # define CODAGE_SIZE		    1
@@ -48,8 +49,6 @@
 # define LFORK					14
 # define AFF					15
 
-
-
 # define IN(x)					((x) ? ((x) - 1) : (x))
 # define PCV(x)					((x) % MEM_SIZE)
 # define PC(x)					(PCV(IN(x)))
@@ -62,6 +61,8 @@ typedef struct					s_visu
 	WINDOW						*bkg;
 	uint						row;
 	uint						col;
+	t_stack						st_st;
+	t_stack						st_live;
 }								t_visu;
 
 typedef struct					s_champ

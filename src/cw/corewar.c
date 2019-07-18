@@ -5,24 +5,21 @@ static int8_t	dies_checker(t_cw *cw)
 {
 	uint8_t		i_car;
 
+
 	i_car = 0;
 	while (i_car < cw->num_of_cars)
 	{
-		if (cw->car[i_car]->last_live >= cw->cycle_to_die)
+		if (cw->cycles - cw->car[i_car]->last_live >= cw->cycle_to_die)
 			del_car(cw, i_car);
 		i_car++;
 	}
-	cw->checks++;
-	if (cw->lives >= NBR_LIVE || (cw->checks == MAX_CHECKS && cw->cycle_to_check == cw->cycle_to_die))
+	if (++cw->checks == MAX_CHECKS || cw->lives >= NBR_LIVE)
 	{
 		cw->cycle_to_die -= CYCLE_DELTA;
 		cw->checks = 0;
 	}
-	cw->cycle_to_check = cw->cycle_to_die;
 	cw->lives = 0;
-	if (cw->num_of_cars <= 0)
-		return (-1);
-	return (0);
+	return ((cw->num_of_cars) ? 0 : -1);
 }
 
 static void		car_cycler(t_cw *cw)
@@ -53,9 +50,6 @@ void				fight(t_cw *cw)
 {
 	while (1)
 	{
-		// ft_printf("%d\n", cw->cycles);
-		// ft_printf("num_of_champs = %d\n", cw->num_of_champs);
-		// ft_printf("cw->cycle_to_die = %d\n", cw->cycle_to_die);
 		if (cw->flg & DUMP && cw->cycles == cw->cycle_to_dump)
 			exit (ft_printf("kek eto dump\n"));
 		if (cw->cycle_to_die <= 0 || (cw->cycles && !(cw->cycles % cw->cycle_to_die)))
@@ -76,7 +70,7 @@ int					main(int ac, char **av)
 	init_cw(&cw);
 	j = 0;
 	fill_cw(ac, av, &cw);
-	cw.flg |= DEBUG;
+	// cw.flg |= DEBUG;
 	ft_printf("num_of_champs = %d\n\r", cw.num_of_champs);
 	ft_printf("cw->cycle_to_dump = %d\n\r", cw.cycle_to_dump);
 	while (j < cw.num_of_champs)
