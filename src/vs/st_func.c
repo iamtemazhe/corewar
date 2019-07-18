@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   st_func.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 16:15:45 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/18 18:38:11 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/18 20:36:39 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ t_stack			*st_new(t_cw *cw, size_t i_car, size_t n)
 	st_elem->next = st_elem;
 	st_elem->n = n;
 	st_elem->pc = cw->pos;
-	st_elem->id = cw->car[i_car]->reg[0];
+	st_elem->id = -cw->car[i_car]->reg[0];
 	st_elem->cycle_to_show = cw->cycles;
-	st_elem->op_code = IN(cw->car[i_car]->op_code);
+	st_elem->size = (IN(cw->car[i_car]->op_code) == LIVE) ? OP_SIZE : REG_SIZE;
 	st_elem->prev = st_elem;
 	return (st_elem);
 }

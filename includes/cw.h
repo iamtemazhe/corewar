@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/18 18:47:01 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/18 20:35:52 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct					s_champ
 	uint8_t						id;
 	uint8_t						*exec;
 	uint32_t					lives;
+	size_t						last_live;
 }								t_champ;
 
 typedef struct					s_car
@@ -178,6 +179,8 @@ t_stack							*st_add(t_cw *cw, size_t i_car, t_stack *st_dst);
 
 void							visu(t_cw *cw);
 void							init_visu(t_cw *cw);
+void							vs_backlight_car(t_cw *cw, size_t i_car, uint8_t mod);
+void							vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod);
 void							select_key(t_cw *cw, int key, int *delay);
 
 #endif

@@ -8,6 +8,7 @@ void				init_cw(t_cw *cw)
 	cw->car = NULL;
 	cw->err = 0;
 	cw->flg = 0;
+	cw->visu.st_op = NULL;
 	ft_bzero(cw->map, sizeof(*cw->map) * MEM_SIZE);
 	ft_bzero(cw->arg, sizeof(*cw->arg) * OP_NUM_ARGS);
 	ft_bzero(cw->arg_code, sizeof(*cw->arg_code) * OP_NUM_ARGS);

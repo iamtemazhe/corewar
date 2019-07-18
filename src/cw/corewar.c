@@ -34,14 +34,19 @@ static void		car_cycler(t_cw *cw)
 			cw->car[i_car]->op_code = cw->map[cw->car[i_car]->pc];
 			if (cw->car[i_car]->op_code < 1 || OP_NUM < cw->car[i_car]->op_code)
 			{
+				vs_backlight_car(cw, i_car, 0);
 				cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + 1);
-				i_car++;
+				vs_backlight_car(cw, i_car++, 1);
 				continue ;
 			}
 			cw->car[i_car]->cycle_to_wait = cw->op[IN(cw->car[i_car]->op_code)].cycles;
 		}
 		if (!(cw->car[i_car]->cycle_to_wait = IN(cw->car[i_car]->cycle_to_wait)))
+		{
+			vs_backlight_car(cw, i_car, 0);
 			cw->op[IN(cw->car[i_car]->op_code)].f(cw, i_car);
+			vs_backlight_car(cw, i_car, 1);
+		}
 		i_car++;
 	}
 }
@@ -57,7 +62,7 @@ void				fight(t_cw *cw)
 				return ;
 		car_cycler(cw);
 		cw->cycles++;
-		// visu(cw);
+		visu(cw);
 	}
 }
 
@@ -69,6 +74,7 @@ int					main(int ac, char **av)
 	init_cw(&cw);
 	fill_cw(ac, av, &cw);
 	// cw.flg |= DEBUG;
+	cw.flg |= VISU;
 	ft_printf("num_of_champs = %d\n\r", cw.num_of_champs);
 	ft_printf("cw->cycle_to_dump = %d\n\r", cw.cycle_to_dump);
 	j = 0;
