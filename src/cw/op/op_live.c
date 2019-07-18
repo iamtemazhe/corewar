@@ -11,6 +11,6 @@ void			op_live(t_cw *cw, uint8_t i_car)
 	if (1 <= cw->arg[0] && cw->arg[0] <= cw->num_of_champs)
 		cw->champ[IN(cw->arg[0])].lives++;
 	if (cw->flg & VISU)
-		vs_log(cw, i_car, LIVE);
+		vs_log(cw, i_car, LIVE + 1);
 	cw->car[i_car]->pc = cw->pos;
 }

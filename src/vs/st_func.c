@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 16:15:45 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/18 15:16:49 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/18 15:37:57 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int8_t			st_err(int8_t retv, t_stack **st_p)
 	return (retv);
 }
 
-t_stack			*st_new(size_t arg, size_t n)
+t_stack			*st_new(size_t pc, size_t cycle, size_t size, size_t n)
 {
 	t_stack		*st_elem;
 
@@ -56,19 +56,20 @@ t_stack			*st_new(size_t arg, size_t n)
 		return (NULL);
 	st_elem->next = st_elem;
 	st_elem->n = n;
-	st_elem->pc = arg;
-	st_elem->cycle_to_show = CYCLE_TO_SHOW;
+	st_elem->pc = pc;
+	st_elem->cycle_to_show = cycle;
+	st_elem->size = size;
 	st_elem->prev = st_elem;
 	return (st_elem);
 }
 
-t_stack			*st_add(size_t arg, t_stack *st_dst)
+t_stack			*st_add(size_t pc, size_t cycle, size_t size, t_stack *st_dst)
 {
 	t_stack		*st_elem;
 
 	if (!st_dst)
-		return (st_dst = st_new(arg, 1));
-	if (!(st_elem = st_new(arg, st_dst->n + 1)))
+		return (st_dst = st_new(pc, cycle, size, 1));
+	if (!(st_elem = st_new(pc, cycle, size, st_dst->n + 1)))
 		return (NULL);
 	if (st_dst->n == 1)
 	{

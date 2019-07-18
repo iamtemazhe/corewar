@@ -11,5 +11,5 @@ void			op_st(t_cw *cw, uint8_t i_car)
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);
 	cw->pos = cw->arg[1];
 	if (cw->flg & VISU)
-		vs_log(cw, i_car, (cw->cod.arg.v2 == IND_CODE) ? ST : 0);
+		vs_log(cw, i_car, (cw->cod.arg.v2 == IND_CODE) ? ST + 1 : 0);
 }

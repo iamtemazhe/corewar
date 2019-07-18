@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/18 15:17:13 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/18 15:38:48 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ typedef struct					s_visu
 	WINDOW						*bkg;
 	uint						row;
 	uint						col;
-	t_stack						st_st;
-	t_stack						st_live;
+	t_stack						*st_op;
 }								t_visu;
 
 typedef struct					s_champ
