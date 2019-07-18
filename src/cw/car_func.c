@@ -19,7 +19,7 @@ static t_car		*new_car(uint32_t id_champ)
 	return (new_car);
 }
 
-uint8_t				add_car(t_cw *cw, uint8_t i_car)
+uint8_t				add_car(t_cw *cw, size_t i_car)
 {
 	if (!cw->car)
 	{
@@ -44,16 +44,16 @@ uint8_t				add_car(t_cw *cw, uint8_t i_car)
 	return (IN(cw->num_of_cars));
 }
 
-static void			del_one_car(t_cw *cw, uint8_t i_car)
+static void			del_one_car(t_cw *cw, size_t i_car)
 {
 	free(cw->car[i_car]);
 	cw->car[i_car] = NULL;
 }
 
-void				del_car(t_cw *cw, uint8_t i_car)
+void				del_car(t_cw *cw, size_t i_car)
 {
-	if (cw->flg & DEBUG)
-		ft_printf("\033[3%1um!!!!!CARRY DEAD!!!!\n\n", cw->car[i_car]->id % 6 + 1);
+	// if (cw->flg & DEBUG)
+		// ft_printf("\033[3%1um!!!!!CARRY DEAD!!!!\n\n", cw->car[i_car]->id % 6 + 1);
 	del_one_car(cw, i_car);
 	while (++i_car < cw->num_of_cars)
 	{

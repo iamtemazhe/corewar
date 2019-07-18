@@ -1,6 +1,6 @@
 #include "cw.h"
 
-void			op_live(t_cw *cw, uint8_t i_car)
+void			op_live(t_cw *cw, size_t i_car)
 {
 	cw->lives++;
 	cw->car[i_car]->last_live = cw->cycles;

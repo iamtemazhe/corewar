@@ -1,6 +1,6 @@
 #include "cw.h"
 
-void			op_lld(t_cw *cw, uint8_t i_car)
+void			op_lld(t_cw *cw, size_t i_car)
 {
 	if (codage_validator(cw, i_car, LLD))
 		return ;

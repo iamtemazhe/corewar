@@ -1,6 +1,6 @@
 #include "cw.h"
 
-void			op_aff(t_cw *cw, uint8_t i_car)
+void			op_aff(t_cw *cw, size_t i_car)
 {
 	uint8_t		letter;
 

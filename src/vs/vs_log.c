@@ -12,11 +12,11 @@
 
 #include "cw.h"
 
-static void				vs_log_op(t_cw *cw, uint8_t i_car, uint8_t i_op)
+static void				vs_log_op(t_cw *cw, size_t i_car, uint8_t i_op)
 {
 	if (1 <= i_op && i_op <= OP_NUM)
-		cw->visu.st_op = st_add(cw->car[i_car]->pc, cw->cycles,
-								(IN(i_op) == LIVE) ? OP_SIZE : REG_SIZE, cw->visu.st_op);
+		cw->visu.st_op = st_add(cw, i_car, cw->visu.st_op);
+		
 	while ((cw->visu.st_op = cw->visu.st_op->prev))
 		if (cw->cycles - cw->visu.st_op->cycle_to_show >= CYCLE_TO_SHOW)
 			st_del(&cw->visu.st_op);
@@ -24,7 +24,7 @@ static void				vs_log_op(t_cw *cw, uint8_t i_car, uint8_t i_op)
 			break ;
 }
 
-void			vs_log(t_cw *cw, uint8_t i_car, uint8_t i_op)
+void			vs_log(t_cw *cw, size_t i_car, uint8_t i_op)
 {
 	uint8_t		col;
 	int			x;

@@ -3,13 +3,13 @@
 
 static int8_t	dies_checker(t_cw *cw)
 {
-	uint8_t		i_car;
-
+	size_t		i_car;
 
 	i_car = 0;
+	// vs_checker(cw);
 	while (i_car < cw->num_of_cars)
 	{
-		if (cw->cycles - cw->car[i_car]->last_live >= cw->cycle_to_die)
+		if ((int32_t)(cw->cycles - cw->car[i_car]->last_live) >= cw->cycle_to_die)
 			del_car(cw, i_car);
 		i_car++;
 	}
@@ -24,7 +24,7 @@ static int8_t	dies_checker(t_cw *cw)
 
 static void		car_cycler(t_cw *cw)
 {
-	uint8_t		i_car;
+	size_t		i_car;
 
 	i_car = 0;
 	while (i_car < cw->num_of_cars)
@@ -50,14 +50,13 @@ void				fight(t_cw *cw)
 {
 	while (1)
 	{
-		if (cw->flg & DUMP && cw->cycles == cw->cycle_to_dump)
+		if ((cw->flg & DUMP32 || cw->flg & DUMP64) && cw->cycles == cw->cycle_to_dump)
 			exit (ft_printf("kek eto dump\n"));
 		if (cw->cycle_to_die <= 0 || (cw->cycles && !(cw->cycles % cw->cycle_to_die)))
 			if (dies_checker(cw))
 				return ;
 		car_cycler(cw);
 		cw->cycles++;
-		// ft_printf("%u ", cw->cycles);
 		// visu(cw);
 	}
 }
@@ -68,11 +67,11 @@ int					main(int ac, char **av)
 	uint			j;
 
 	init_cw(&cw);
-	j = 0;
 	fill_cw(ac, av, &cw);
 	// cw.flg |= DEBUG;
 	ft_printf("num_of_champs = %d\n\r", cw.num_of_champs);
 	ft_printf("cw->cycle_to_dump = %d\n\r", cw.cycle_to_dump);
+	j = 0;
 	while (j < cw.num_of_champs)
 	{
 		ft_printf("name_%d = %s\n\r", j, cw.champ[j].head.prog_name);
@@ -88,24 +87,23 @@ int					main(int ac, char **av)
 		j++;
 	}
 	ft_printf("\n\r");
-	init_visu(&cw);
-	
 	add_car(&cw, 0);
+	init_visu(&cw);
 	visu(&cw);
-	// if (cw.flg & DEBUG)
-	// 	dbg_log_top();
-	// fight(&cw);
-	// if (cw.flg & DEBUG)
-	// 	dbg_log_bot();
-	// j = 0;
-	// while (j < 4096)
-	// {
-	// 	ft_printf("%x",  cw.map[j]);
-	// 	j++;
-	// }
-	// ft_printf("\n\rcycles = %u\n", cw.cycles);
-	while (wgetch(cw.visu.menu) != 'q')
-		sleep(1);
-	endwin();
+	if (cw.flg & DEBUG)
+		dbg_log_top();
+	fight(&cw);
+	if (cw.flg & DEBUG)
+		dbg_log_bot();
+	j = 0;
+	while (j < 4096)
+	{
+		ft_printf("%x",  cw.map[j]);
+		j++;
+	}
+	ft_printf("\n\rcycles = %u\n", cw.cycles);
+	// while (wgetch(cw.visu.menu) != 'q')
+	// 	sleep(1);
+	// endwin();
 	return (0);
 }

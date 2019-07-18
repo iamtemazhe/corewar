@@ -1,6 +1,6 @@
 #include "cw.h"
 
-static void			reg(t_cw *cw, uint8_t i_arg, uint8_t i_car, uint8_t i_op)
+static void			reg(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 {
 	cw->step += REGN_SIZE;
 	if (!(cw->op[i_op].args[i_arg] & T_REG))
@@ -15,7 +15,7 @@ static void			reg(t_cw *cw, uint8_t i_arg, uint8_t i_car, uint8_t i_op)
 		cw->err = -1;
 }
 
-static void			ind(t_cw *cw, uint8_t i_arg, uint8_t i_car, uint8_t i_op)
+static void			ind(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 {
 	cw->step += IND_SIZE;
 	if (!(cw->op[i_op].args[i_arg] & T_IND))
@@ -27,7 +27,7 @@ static void			ind(t_cw *cw, uint8_t i_arg, uint8_t i_car, uint8_t i_op)
 	cw->arg[i_arg] = (int16_t)cw->arg_code[i_arg] % IDX_MOD + cw->car[i_car]->pc;
 }
 
-static void		dir(t_cw *cw, uint8_t i_arg, uint8_t i_car, uint8_t i_op)
+static void		dir(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 {
 	cw->step += cw->op[i_op].label_size;
 	if (!(cw->op[i_op].args[i_arg] & T_DIR))
@@ -39,7 +39,7 @@ static void		dir(t_cw *cw, uint8_t i_arg, uint8_t i_car, uint8_t i_op)
 	cw->arg[i_arg] = cw->pos;
 }
 
-int8_t			codage_validator(t_cw *cw, uint8_t i_car, uint8_t i_op)
+int8_t			codage_validator(t_cw *cw, size_t i_car, uint8_t i_op)
 {
 	int8_t		i_arg;
 	uint8_t		code;

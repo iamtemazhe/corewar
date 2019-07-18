@@ -17,7 +17,6 @@ void				init_cw(t_cw *cw)
 	cw->cycles = 0;
 	cw->cycle_to_die = CYCLE_TO_DIE;
 	cw->cycle_to_dump = 0;
-	cw->cycle_to_check = 0;
 	cw->step = 0;
 	cw->pos = 0;
 	cw->op = g_op;
