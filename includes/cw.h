@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/18 15:38:48 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/18 17:16:13 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,6 @@ void							del_all_cars(t_cw *cw);
 
 void							visu(t_cw *cw);
 void							init_visu(t_cw *cw);
-void							select_key(t_cw *cw, int key);
+void							select_key(t_cw *cw, int key, int *delay);
 
 #endif

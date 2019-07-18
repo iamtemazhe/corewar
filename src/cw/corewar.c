@@ -88,23 +88,24 @@ int					main(int ac, char **av)
 		j++;
 	}
 	ft_printf("\n\r");
-	// init_visu(&cw);
-	// visu(&cw);
+	init_visu(&cw);
+	
 	add_car(&cw, 0);
-	if (cw.flg & DEBUG)
-		dbg_log_top();
-	fight(&cw);
-	if (cw.flg & DEBUG)
-		dbg_log_bot();
-	j = 0;
-	while (j < 4096)
-	{
-		ft_printf("%x",  cw.map[j]);
-		j++;
-	}
-	ft_printf("\n\rcycles = %u\n", cw.cycles);
-	// while (wgetch(cw.visu.menu) != 'q')
-	// 	sleep(1);
-	// endwin();
+	visu(&cw);
+	// if (cw.flg & DEBUG)
+	// 	dbg_log_top();
+	// fight(&cw);
+	// if (cw.flg & DEBUG)
+	// 	dbg_log_bot();
+	// j = 0;
+	// while (j < 4096)
+	// {
+	// 	ft_printf("%x",  cw.map[j]);
+	// 	j++;
+	// }
+	// ft_printf("\n\rcycles = %u\n", cw.cycles);
+	while (wgetch(cw.visu.menu) != 'q')
+		sleep(1);
+	endwin();
 	return (0);
 }
