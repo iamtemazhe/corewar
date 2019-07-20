@@ -12,12 +12,12 @@
 
 #include "cw.h"
 
-void				vs_log(t_cw *cw, size_t i_car, uint8_t i_op)
+void				vs_log(t_cw *cw, size_t i_car, uint32_t pc)
 {
-	if (!i_op)
-		return ;
-	cw->visu.st_op = st_add(cw, i_car, cw->visu.st_op);
-	vs_backlight_map(cw, cw->visu.st_op, 1);
+	cw->visu.st_op = st_add(cw, i_car, pc, cw->visu.st_op);
+	mvwprintw(cw->visu.menu, 6, 10, "stack huek");
+	wnoutrefresh(cw->visu.menu);
+	vs_backlight_map(cw, cw->visu.st_op);
 }
 
 void				print_live_breakdown(t_cw *cw, int mod)
@@ -48,5 +48,3 @@ void				print_live_breakdown(t_cw *cw, int mod)
 	mvwprintw(cw->visu.header, k, i, "]");
 	wrefresh(cw->visu.header);
 }
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   st_func.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 16:15:45 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/20 13:41:22 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/20 21:11:16 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int8_t			st_err(int8_t retv, t_stack **st_p)
 	return (retv);
 }
 
-t_stack			*st_new(t_cw *cw, size_t i_car, size_t n)
+t_stack			*st_new(t_cw *cw, size_t i_car, size_t pc, size_t n)
 {
 	t_stack		*st_elem;
 
@@ -56,7 +56,7 @@ t_stack			*st_new(t_cw *cw, size_t i_car, size_t n)
 		return (NULL);
 	st_elem->next = st_elem;
 	st_elem->n = n;
-	st_elem->pc = cw->pos;
+	st_elem->pc = pc;
 	st_elem->id = -cw->car[i_car]->reg[0];
 	st_elem->cycle_to_show = cw->cycles;
 	st_elem->size = (IN(cw->car[i_car]->op_code) == LIVE) ? OP_SIZE : REG_SIZE;
@@ -64,13 +64,13 @@ t_stack			*st_new(t_cw *cw, size_t i_car, size_t n)
 	return (st_elem);
 }
 
-t_stack			*st_add(t_cw *cw, size_t i_car, t_stack *st_dst)
+t_stack			*st_add(t_cw *cw, size_t i_car, size_t pc, t_stack *st_dst)
 {
 	t_stack		*st_elem;
 
 	if (!st_dst)
-		return (st_dst = st_new(cw, i_car, 1));
-	if (!(st_elem = st_new(cw, i_car, st_dst->n + 1)))
+		return (st_dst = st_new(cw, i_car, pc, 1));
+	if (!(st_elem = st_new(cw, i_car, pc, st_dst->n + 1)))
 		return (NULL);
 	if (st_dst->n == 1)
 	{

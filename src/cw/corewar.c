@@ -24,10 +24,10 @@ static int8_t	dies_checker(t_cw *cw)
 
 static void		car_cycler(t_cw *cw)
 {
-	size_t		i_car;
+	size_t	i_car;
 
-	i_car = 0;
-	while (i_car < cw->num_of_cars)
+	i_car = cw->num_of_cars;
+	while (i_car-- > 0)
 	{
 		if (!cw->car[i_car]->cycle_to_wait)
 		{
@@ -35,6 +35,8 @@ static void		car_cycler(t_cw *cw)
 			if (cw->car[i_car]->op_code < 1 || OP_NUM < cw->car[i_car]->op_code)
 			{
 				cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + 1);
+				// if (cw->f.lg.vs)
+					// vs_backlight_car(cw, i_car, 1);
 				i_car++;
 				continue ;
 			}
@@ -42,7 +44,6 @@ static void		car_cycler(t_cw *cw)
 		}
 		if (!(cw->car[i_car]->cycle_to_wait = IN(cw->car[i_car]->cycle_to_wait)))
 			cw->op[IN(cw->car[i_car]->op_code)].f(cw, i_car);
-		i_car++;
 	}
 }
 
@@ -59,7 +60,9 @@ void				fight(t_cw *cw)
 				return ;
 		car_cycler(cw);
 		cw->cycles++;
-		// visu(cw);
+		if (cw->f.lg.vs)
+			visu(cw);
+		write(0, 0, 0);
 	}
 }
 
@@ -87,23 +90,26 @@ int					main(int ac, char **av)
 	// 	j++;
 	// }
 	// ft_printf("\n\r");
-	add_car(&cw, 0);
-	// init_visu(&cw);
-	// visu(&cw);
+	if (cw.f.lg.vs)
+		init_visu(&cw);
 	if (cw.f.lg.dbg)
 		dbg_log_top();
+	add_car(&cw, 0);
 	fight(&cw);
 	if (cw.f.lg.dbg)
 		dbg_log_bot();
-	int j = 0;
-	while (j < 4096)
-	{
-		ft_printf("%x",  cw.map[j]);
-		j++;
-	}
+	// int j = 0;
+	// while (j < 4096)
+	// {
+	// 	ft_printf("%x",  cw.map[j]);
+	// 	j++;
+	// }
 	ft_printf("\n\rcycles = %u\n", cw.cycles);
-	// while (wgetch(cw.visu.menu) != 'q')
-	// 	sleep(1);
-	// endwin();
+	if (cw.f.lg.vs)
+	{
+		while (wgetch(cw.visu.menu) != 'q')
+			sleep(1);
+		endwin();
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/20 17:00:06 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/20 20:15:26 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ static void		sort_champs(t_cw *cw)
 	{
 		tmp = cw->champ[i];
 		j = i;
-		while (--j >= 0 && cw->champ[j]->id < tmp->id)
+		while (--j >= 0 && cw->champ[j]->id > tmp->id)
 			cw->champ[j + 1] = cw->champ[j];
 		cw->champ[j + 1] = tmp;
 	}

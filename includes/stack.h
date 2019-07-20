@@ -7,9 +7,9 @@
 
 typedef struct					s_stack
 {
-	uint8_t						n;
 	uint8_t						id;
 	uint8_t						size;
+	uint16_t					n;
 	uint32_t					pc;
 	size_t						cycle_to_show;
 	struct s_stack				*prev;

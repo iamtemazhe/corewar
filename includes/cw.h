@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/20 17:14:34 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/20 21:30:24 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@
 
 # define ABS(x)					(((int8_t)(x)) < 0 ? (-x) : (x))
 # define IN(x)					((x) ? ((x) - 1) : (x))
-# define PCV(x)					((x) % MEM_SIZE)
+# define PCV(x)					(((int32_t)(x) < 0) ? (MEM_SIZE - (int32_t)(x)) : (x) % MEM_SIZE)
 # define PC(x)					(PCV(IN(x)))
 
 typedef struct					s_visu
@@ -184,13 +184,12 @@ int8_t							codage_validator(t_cw *cw, size_t i_car,
 																uint8_t i_op);
 void							fill_cw(int ac, char **av, t_cw *cw);
 int								ft_strrstr(const char *haystack, const char *needle);
-void							vs_log(t_cw *cw, size_t i_car, uint8_t i_op);
+
 void							dbg_log(t_cw *cw, size_t i_car);
 void							dbg_log_cod(t_cw *cw, size_t i_car);
 void							dbg_log_top();
 void							dbg_log_bot();
 void							usage(int prnt, char *prog_name);
-
 void							init_cw(t_cw *cw);
 void							dump(t_cw *cw);
 
@@ -202,12 +201,15 @@ int8_t							add_champ(t_cw *cw, uint8_t id_champ);
 
 void							st_del(t_stack **st_p);
 int8_t							st_err(int8_t retv, t_stack **st_p);
-t_stack							*st_new(t_cw *cw, size_t i_car, size_t n);
-t_stack							*st_add(t_cw *cw, size_t i_car, t_stack *st_dst);
+t_stack							*st_new(t_cw *cw, size_t i_car, size_t pc, size_t n);
+t_stack							*st_add(t_cw *cw, size_t i_car, size_t pc, t_stack *st_dst);
 
 void							visu(t_cw *cw);
 void							init_visu(t_cw *cw);
 void							select_key(t_cw *cw, int key, int *delay);
-void							vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod);
+void							vs_log(t_cw *cw, size_t i_car, uint32_t pc);
+void							vs_backlight_map(t_cw *cw, t_stack *st_op);
+void							vs_backlight_car(t_cw *cw, size_t i_car, uint32_t step);
+void							vs_backlight_new_car(t_cw *cw, uint8_t col, uint32_t pc);
 
 #endif

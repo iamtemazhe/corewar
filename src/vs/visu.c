@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/20 17:12:38 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/20 22:12:18 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void			select_key(t_cw *cw, int key, int *w)
 		nodelay(cw->visu.menu, true);
 		cbreak();
 		noecho();
-		//timeout(*w);
+		wtimeout(cw->visu.menu, *w);
 		mvwprintw(cw->visu.header, 1, 1, "%s", "** PAUSED **");
 		wnoutrefresh(cw->visu.header);
 		doupdate();
@@ -149,32 +149,49 @@ void			select_key(t_cw *cw, int key, int *w)
 	wnoutrefresh(cw->visu.header);
 }
 
-void			vs_backlight_car(t_cw *cw, size_t i_car, uint8_t mod)
-{
-	uint8_t		col;
-		
-	col = -cw->car[i_car]->reg[0];
-	wattron(cw->visu.map, (mod) ? COLOR_PAIR(col * 2) : COLOR_PAIR(col * 2 - 1));
-	mvwprintw(cw->visu.map, cw->car[i_car]->pc * 3 / (MAP_X - 2) + 1, cw->car[i_car]->pc * 3 % (MAP_X - 2) + 1, "%.2x", cw->map[cw->car[i_car]->pc]);
-	wnoutrefresh(cw->visu.map);
-	//wrefresh(cw->visu.map);
-}
-
-void			vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod)
+void			vs_backlight_map(t_cw *cw, t_stack *st_op)
 {
 	int			j;
 
+	wattron(cw->visu.map, COLOR_PAIR(st_op->id * 2 - 1) | A_BOLD);
 	j = 0;
-	wattron(cw->visu.map, COLOR_PAIR(st_op->id * 2 + 1) | (mod) ? A_BOLD : 0);
 	while (++j <= st_op->size)
 	{
-		mvwprintw(cw->visu.map, st_op->pc * 3 / (MAP_X - 2) + 1, st_op->pc * 3 % (MAP_X - 2) + 1, "%.2x", cw->map[st_op->pc]);
-		st_op->pc = PCV(++st_op->pc);
+		mvwprintw(cw->visu.map, st_op->pc * 3 / (MAP_X - 2) + 1, st_op->pc * 3 % (MAP_X - 2) + 1, "%.2x", cw->map[PCV(st_op->pc)]);
+		st_op->pc++;
 	}
-	//wrefresh(cw->visu.map);
-	wattroff(cw->visu.map, COLOR_PAIR(st_op->id * 2 + 1) | A_BOLD);	
+	wattroff(cw->visu.map, A_BOLD);
 	wnoutrefresh(cw->visu.map);
 }
+
+
+void			vs_backlight_car(t_cw *cw, size_t i_car, uint32_t step)
+{
+	uint8_t		col;
+	uint32_t	pc_prev;
+	uint32_t	pc;
+
+	pc_prev = cw->car[i_car]->pc;
+	pc = PCV(pc_prev + step);
+	col = -cw->car[i_car]->reg[0];
+	wattron(cw->visu.map, COLOR_PAIR(col * 2 - 1));
+	mvwprintw(cw->visu.map, pc_prev * 3 / (MAP_X - 2) + 1, pc_prev * 3 % (MAP_X - 2) + 1, "%.2x", cw->map[pc_prev]);
+	wattron(cw->visu.map, COLOR_PAIR(col * 2));
+	mvwprintw(cw->visu.map, pc * 3 / (MAP_X - 2) + 1, pc * 3 % (MAP_X - 2) + 1, "%.2x", cw->map[pc]);
+	mvwprintw(cw->visu.menu, 4, 10, "y = %3u x = %3u map = %02x pos = %4u, id_car = %u", pc_prev * 3 / (MAP_X - 2) + 1, pc_prev * 3 % (MAP_X - 2) + 1, cw->map[pc_prev], pc_prev, i_car + 1);
+	mvwprintw(cw->visu.menu, 5, 10, "y = %3u x = %3u map = %02x pos = %4u", pc * 3 / (MAP_X - 2) + 1, pc * 3 % (MAP_X - 2) + 1, cw->map[pc], pc);
+	wnoutrefresh(cw->visu.menu);
+	wnoutrefresh(cw->visu.map);
+	//wrefresh(cw->visu.map);
+}
+
+void			vs_backlight_new_car(t_cw *cw, uint8_t col, uint32_t pc)
+{
+	wattron(cw->visu.map, COLOR_PAIR(col * 2));
+	mvwprintw(cw->visu.map, pc * 3 / (MAP_X - 2) + 1, pc * 3 % (MAP_X - 2) + 1, "%.2x", cw->map[pc]);
+	wnoutrefresh(cw->visu.map);
+}
+
 
 void				print_cycle_to_die(t_cw *cw)
 {
@@ -212,14 +229,12 @@ void			visu(t_cw *cw)
 	// 	}
 	// 	else
 	// 		break ;
-	// }
-	
+	// }	
 }
 
 void			print_windows(t_cw *cw)
 {
-	wbkgd(cw->visu.bkg, COLOR_PAIR(11));
-	wrefresh(cw->visu.bkg);
+	wbkgd(cw->visu.bkg, COLOR_PAIR(11));	wrefresh(cw->visu.bkg);
 	print_map(cw);
 	//wrefresh(cw->visu.map);
 	print_header(cw);

@@ -1,7 +1,7 @@
 #include "cw.h"
 #include "libft.h"
 
-static t_car		*new_car(uint32_t id_champ)
+static t_car		*new_car(t_cw *cw, uint8_t id_champ, uint32_t pc)
 {
 	t_car			*new_car;
 	static uint8_t	id_car = 0;
@@ -13,9 +13,11 @@ static t_car		*new_car(uint32_t id_champ)
 	new_car->op_code = 0;
 	new_car->last_live = 0;
 	new_car->cycle_to_wait = 0;
-	new_car->pc = 0;
+	new_car->pc = pc;
 	ft_bzero(new_car->reg, REG_NUMBER * sizeof(uint32_t));
 	new_car->reg[0] = -id_champ;
+	if (cw->f.lg.vs)
+		vs_backlight_new_car(cw, id_champ, pc);
 	return (new_car);
 }
 
@@ -28,7 +30,8 @@ uint8_t				add_car(t_cw *cw, size_t i_car)
 			exit (ft_puterr(-1, "Error"));
 		while (i_car < cw->num_of_cars)
 		{
-			if (!(cw->car[i_car] = new_car(i_car + 1)))
+			if (!(cw->car[i_car] = new_car(cw, cw->champ[i_car]->id,\
+										(MEM_SIZE / cw->num_of_cars) * i_car)))
 				exit (ft_puterr(-1, "Error"));
 			i_car++;
 		}
@@ -36,7 +39,8 @@ uint8_t				add_car(t_cw *cw, size_t i_car)
 	}
 	if (!(cw->car = (t_car **)realloc(cw->car, sizeof(t_car *) * ++cw->num_of_cars)))
 		exit (ft_puterr(-1, "Error"));
-	if (!(cw->car[IN(cw->num_of_cars)] = new_car(0)))
+	if (!(cw->car[IN(cw->num_of_cars)] = new_car(cw, -cw->car[i_car]->reg[0],\
+												PCV(cw->car[i_car]->pc + cw->pos))))
 		exit (ft_puterr(-1, "Error"));
 	cw->car[IN(cw->num_of_cars)]->carry = cw->car[i_car]->carry;
 	cw->car[IN(cw->num_of_cars)]->last_live = cw->car[i_car]->last_live;
