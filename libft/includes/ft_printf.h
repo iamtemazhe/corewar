@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 16:14:40 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/02/07 18:31:38 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/19 19:08:27 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,25 @@
 # include "libft.h"
 # include <stdarg.h>
 
-# define MNUL 0x2000
-# define FLGM 0x1000
-# define FLGP 0x0800
-# define FLGE 0x0400
-# define FLGS 0x0200
-# define FLG0 0x0100
-# define MACC 0x0080
-# define MOD2 0x0040
-# define MODH 0x0020
-# define MODL 0x0010
-# define MODUL 0x0008
-# define MODJ 0x0004
-# define MODZ 0x0002
-# define TYPUP 0x0001
+# define MALL		0x4000
+# define MNUL		0x2000
+# define FLGM		0x1000
+# define FLGP		0x0800
+# define FLGE		0x0400
+# define FLGS		0x0200
+# define FLG0		0x0100
+# define MACC		0x0080
+# define MOD2		0x0040
+# define MODH		0x0020
+# define MODL		0x0010
+# define MODUL		0x0008
+# define MODJ		0x0004
+# define MODZ		0x0002
+# define TYPUP		0x0001
+
+# define STDIN		0
+# define STDOUT		1
+# define STDERR		2
 
 typedef struct		s_pf
 {
@@ -36,6 +41,7 @@ typedef struct		s_pf
 	int				wid;
 	int				acc;
 	int				count;
+	int				fildes;
 	char			tpc;
 	char			*str;
 }					t_pf;

@@ -32,7 +32,7 @@ void				print_live_breakdown(t_cw *cw, int mod)
 	i = 0;
 	total = 0;
 	while (i < cw->num_of_champs)
-		total = total + cw->champ[i++].lives;
+		total = total + cw->champ[i++]->lives;
 	i = 1;
 	j = 0;
 	total = (!total) ? cw->num_of_champs : total;
@@ -40,7 +40,7 @@ void				print_live_breakdown(t_cw *cw, int mod)
 	while (++i < 50)
 	{
 		
-		if (i < 48 / total * (3 + cw->champ[j].lives))
+		if (i < 48 / total * (3 + cw->champ[j]->lives))
 			wattron(cw->visu.header, COLOR_PAIR(j++ * 2 + 1) | A_BOLD);	
 		mvwprintw(cw->visu.header, k, i, "-");
 	}

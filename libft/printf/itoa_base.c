@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
+/*   itoa_base.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 17:37:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/02/07 18:12:24 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/19 18:48:26 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char
 	w = pf->wid - i;
 	i = ((pf->flg & FLGM) && w > 0) ? ft_pr_right(pf, w, i, ' ') : i;
 	pf->str[i] = '\0';
-	pf->count += write(1, pf->str, i);
+	pf->count += write(pf->fildes, pf->str, i);
 	return (pf->str);
 }
 
@@ -122,6 +122,6 @@ char
 	nbr_round_ld(base[0][nb], *base, pf, i - 1);
 	i = ((pf->flg & FLGM) && pf->wid - i > 0) ?\
 		ft_pr_right(pf, pf->wid - i, i, ' ') : i;
-	pf->count += write(1, pf->str, i);
+	pf->count += write(pf->fildes, pf->str, i);
 	return (pf->str);
 }

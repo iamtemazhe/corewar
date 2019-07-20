@@ -16,6 +16,6 @@ void			op_or(t_cw *cw, size_t i_car)
 		cw->car[i_car]->reg[IN(cw->arg[2])] |= cw->car[i_car]->reg[IN(cw->arg[1])];
 	cw->car[i_car]->carry = (cw->car[i_car]->reg[IN(cw->arg[2])]) ? 0 : 1;
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);
-	if (cw->flg & VISU)
+	if (cw->f.lg.vs & VISU)
 		vs_log(cw, i_car, 0);
 }

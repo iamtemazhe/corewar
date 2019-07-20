@@ -52,8 +52,8 @@ static void			del_one_car(t_cw *cw, size_t i_car)
 
 void				del_car(t_cw *cw, size_t i_car)
 {
-	// if (cw->flg & DEBUG)
-		// ft_printf("\033[3%1um!!!!!CARRY DEAD!!!!\n\n", cw->car[i_car]->id % 6 + 1);
+	if (cw->f.lg.dbg_r)
+		ft_printf("%38\033[3%1um|%9s Carry# %7u DEAD! %2|\n\r", cw->car[i_car]->id % 6 + 1, "", cw->car[i_car]->id);
 	del_one_car(cw, i_car);
 	while (++i_car < cw->num_of_cars)
 	{

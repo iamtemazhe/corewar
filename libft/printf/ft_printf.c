@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 16:40:21 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/04/17 14:43:34 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/19 19:08:42 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static const char		*form_analis(const char *fmt, va_list *ap,\
 	pf->flg -= (pf->flg & MACC && pf->flg & FLG0 && (pf->tpc == 'd' ||\
 				pf->tpc == 'i' || pf->tpc == 'x' || pf->tpc == 'o')) ? FLG0 : 0;
 	type_analis(ap, pf);
-	return ((pf->str || pf->tpc == 'n') ? fmt : --fmt);
+	return ((pf->str || pf->tpc == 'n' || pf->tpc == 'w') ? fmt : --fmt);
 }
 
 static void				print_str(const char *format, va_list *ap, t_pf *pf)
@@ -96,7 +96,7 @@ static void				print_str(const char *format, va_list *ap, t_pf *pf)
 	{
 		if (*format == '%')
 		{
-			pf->count += write(1, format - i, i);
+			pf->count += write(pf->fildes, format - i, i);
 			format = form_analis(++format, ap, pf);
 			ft_strdel(&pf->str);
 			i = 0;
@@ -105,7 +105,7 @@ static void				print_str(const char *format, va_list *ap, t_pf *pf)
 			i++;
 		else
 		{
-			pf->count += write(1, format - i, i);
+			pf->count += write(pf->fildes, format - i, i);
 			break ;
 		}
 		format += (*format) ? 1 : 0;
@@ -122,6 +122,7 @@ int						ft_printf(const char *restrict format, ...)
 		exit(-1);
 	pf->str = NULL;
 	pf->count = 0;
+	pf->fildes = STDOUT;
 	va_start(ap, format);
 	print_str(format, &ap, pf);
 	va_end(ap);

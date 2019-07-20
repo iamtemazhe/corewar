@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/18 20:35:52 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/20 17:14:34 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,22 @@
 # include "stack.h"
 # include <ncurses.h>
 
-# define N						0x01
-# define DUMP32					0x02
-# define DUMP64					0x04
-# define VISU					0x08
-# define DEBUG					0x10
+# define AF						0x01
+# define DUMP					0x02
+# define VISU					0x04
+# define DEBUG					0x08
+# define DUMP64					0x20 | DUMP
+# define DEBUG_C				0x40 | DEBUG
+# define DEBUG_R				0x80 | DEBUG
+# define DEBUG_F				DEBUG | DEBUG_C | DEBUG_R
 
 # define CYCLE_TO_SHOW			50
+
+# define MAGIC_HEADER_SIZE		4
+# define DELIMETR_SIZE			4
+# define CHAMP_EXEC_SIZE		4
+# define HEADER_SIZE			PROG_NAME_LENGTH + COMMENT_LENGTH + MAGIC_HEADER_SIZE +\
+								(2 * DELIMETR_SIZE) + CHAMP_EXEC_SIZE
 
 # define OP_SIZE				1
 # define CODAGE_SIZE		    1
@@ -50,6 +59,7 @@
 # define LFORK					14
 # define AFF					15
 
+# define ABS(x)					(((int8_t)(x)) < 0 ? (-x) : (x))
 # define IN(x)					((x) ? ((x) - 1) : (x))
 # define PCV(x)					((x) % MEM_SIZE)
 # define PC(x)					(PCV(IN(x)))
@@ -102,15 +112,15 @@ typedef struct					s_op
 struct							s_cw
 {
 	t_visu						visu;
-	t_champ						*champ;
 	t_op						*op;
 	t_car						**car;
+	t_champ						**champ;
 	int8_t						err;
 	uint8_t						flg;
 	uint8_t						checks;
+	uint8_t						num_of_champs;
 	uint8_t						map[MEM_SIZE];
 	int32_t						cycle_to_die;
-	uint32_t					num_of_champs;
 	uint32_t					num_of_cars;
 	uint32_t					lives;
 	uint32_t					step;
@@ -120,15 +130,30 @@ struct							s_cw
 	uint32_t					arg_code[OP_NUM_ARGS];
 	size_t						last_live;
 	size_t						cycles;
+		union
+	{
+		uint8_t					lag;
+		struct
+		{	
+			uint8_t				af		: 1;
+			uint8_t				dump	: 1;
+			uint8_t				vs		: 1;
+			uint8_t				dbg		: 1;
+			uint8_t				reserv	: 1;
+			uint8_t				dump64	: 1;
+			uint8_t				dbg_c	: 1;
+			uint8_t				dbg_r	: 1;
+		}						lg;
+	}							f;
 	union
 	{
 		uint8_t					age;
 		struct
 		{	
-			unsigned			v4 : 2;
-			unsigned			v3 : 2;
-			unsigned			v2 : 2;
-			unsigned			v1 : 2;
+			uint8_t				v4 : 2;
+			uint8_t				v3 : 2;
+			uint8_t				v2 : 2;
+			uint8_t				v1 : 2;
 		}						arg;
 	}							cod;
 };
@@ -164,13 +189,16 @@ void							dbg_log(t_cw *cw, size_t i_car);
 void							dbg_log_cod(t_cw *cw, size_t i_car);
 void							dbg_log_top();
 void							dbg_log_bot();
-void							usage(uint8_t err_n, const char *str, size_t size);
+void							usage(int prnt, char *prog_name);
 
 void							init_cw(t_cw *cw);
+void							dump(t_cw *cw);
 
 uint8_t							add_car(t_cw *cw, size_t i_car);
 void							del_car(t_cw *cw, size_t i_car);
 void							del_all_cars(t_cw *cw);
+
+int8_t							add_champ(t_cw *cw, uint8_t id_champ);
 
 void							st_del(t_stack **st_p);
 int8_t							st_err(int8_t retv, t_stack **st_p);
@@ -179,8 +207,7 @@ t_stack							*st_add(t_cw *cw, size_t i_car, t_stack *st_dst);
 
 void							visu(t_cw *cw);
 void							init_visu(t_cw *cw);
-void							vs_backlight_car(t_cw *cw, size_t i_car, uint8_t mod);
-void							vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod);
 void							select_key(t_cw *cw, int key, int *delay);
+void							vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod);
 
 #endif

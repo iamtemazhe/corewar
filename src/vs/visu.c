@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/20 17:08:25 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/20 17:12:38 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void			print_map(t_cw *cw)
 		while (j < (MEM_SIZE / cw->num_of_champs) * (i + 1) && j < MEM_SIZE)
 		{
 			wattron(cw->visu.map, COLOR_PAIR(9));
-			if (j < cw->champ[i].head.prog_size + (MEM_SIZE / cw->num_of_champs) * i)
+			if (j < cw->champ[i]->head.prog_size + (MEM_SIZE / cw->num_of_champs) * i)
 				wattron(cw->visu.map, COLOR_PAIR(i * 2 + 1));
 			mvwprintw(cw->visu.map, k, m++, "%.2x", cw->map[j++]);
 			m += 2;
@@ -80,10 +80,10 @@ void			print_header(t_cw *cw)
 	{	
 		mvwprintw(cw->visu.header, ++k, 1, "%s%d : ",  "Player -", i + 1);
 		wattron(cw->visu.header, COLOR_PAIR(i * 2 + 1) | A_BOLD);
-		mvwprintw(cw->visu.header, k++, 13, "%.52s", cw->champ[i].head.prog_name);	
+		mvwprintw(cw->visu.header, k++, 13, "%.52s", cw->champ[i]->head.prog_name);	
 		wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
-		mvwprintw(cw->visu.header, k++, 5,"%-25s %d", "Last live :", cw->champ[i].last_live);
-		mvwprintw(cw->visu.header, k++, 5,"%-25s %d", "Lives in current period :", cw->champ[i++].lives);
+		mvwprintw(cw->visu.header, k++, 5,"%-25s %d", "Last live :", cw->champ[i]->last_live);
+		mvwprintw(cw->visu.header, k++, 5,"%-25s %d", "Lives in current period :", cw->champ[i++]->lives);
 	}
 	print_header_1(cw);
 	wnoutrefresh(cw->visu.header);

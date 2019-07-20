@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types_analis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/06 13:11:15 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/02/07 17:55:38 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/19 18:57:38 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void							type_analis(va_list *ap, t_pf *pf)
 		ft_itoa_base_ld(types_aefg(ap, pf->flg), &base, pf);
 	else if (pf->tpc == 'n' && (n = va_arg(*ap, void*)))
 		*n = pf->count;
+	else if (pf->tpc == 'w')
+		pf->fildes = va_arg(*ap, int);
 	else
 		(str = types_cs(ap, pf)) ? ft_printstr(&str, pf) : exit(-2);
 	ft_strdel(&base);

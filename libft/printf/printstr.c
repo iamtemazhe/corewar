@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printstr.c                                      :+:      :+:    :+:   */
+/*   printstr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:16:35 by hgysella          #+#    #+#             */
-/*   Updated: 2019/02/07 17:56:42 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/19 18:44:03 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ int		ft_printstr(char **str, t_pf *pf)
 	while (pf->acc-- > 0 && len-- > 0)
 		pf->str[i++] = str[0][j++];
 	i = (pf->flg & FLGM) ? ft_pr_right(pf, pf->wid, i, ' ') : i;
-	pf->count += i;
-	write(1, pf->str, i);
+	pf->count += write(pf->fildes, pf->str, i);
 	return (ft_strerr(0, str));
 }
 
