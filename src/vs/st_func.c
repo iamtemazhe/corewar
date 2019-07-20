@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 16:15:45 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/18 20:36:39 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/20 13:41:22 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void			st_del(t_stack **st_p)
 	st_st = *st_p;
 	st_st->prev->next = st_st->next;
 	st_st->next->prev = st_st->prev;
-	*st_p = (st_st->n > 1) ? st_st->next : NULL;
-	free(st_st);
+	//*st_p = (st_st->n > 1) ? st_st->next : NULL;
+	//free(st_st);
 	st_st = NULL;
 }
 

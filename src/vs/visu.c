@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/19 20:04:34 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/20 17:08:25 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void			print_map(t_cw *cw)
 		}
 		i++;
 	}
+	wnoutrefresh(cw->visu.map);
 }
 
 void			print_header_1(t_cw *cw)
@@ -60,6 +61,7 @@ void			print_header_1(t_cw *cw)
 	mvwprintw(cw->visu.header, k += 2, 1,"%s : %d", "CYCLE_DELTA", CYCLE_DELTA);
 	mvwprintw(cw->visu.header, k += 2, 1,"%s : %d", "NBR_LIVE", NBR_LIVE);
 	mvwprintw(cw->visu.header, k += 2, 1,"%s : %d", "MAX_CHECKS", MAX_CHECKS);
+	//wnoutrefresh(cw->visu.header);
 }
 
 void			print_header(t_cw *cw)
@@ -71,7 +73,7 @@ void			print_header(t_cw *cw)
 	k = 9;
 	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
 	mvwprintw(cw->visu.header, 1, 1,"%s", "** PAUSED **");
-	mvwprintw(cw->visu.header, 3, 1,"%s %d", "Cycles/second limit :", 5);
+	mvwprintw(cw->visu.header, 3, 1,"%s %5d", "Cycles/second limit :", 0);
 	mvwprintw(cw->visu.header, 6, 1,"%s %-6d", "Cycle :", cw->cycles);
 	mvwprintw(cw->visu.header, 8, 1,"%s %d", "Processes :", cw->num_of_cars);
 	while (i < cw->num_of_champs)
@@ -84,6 +86,7 @@ void			print_header(t_cw *cw)
 		mvwprintw(cw->visu.header, k++, 5,"%-25s %d", "Lives in current period :", cw->champ[i++].lives);
 	}
 	print_header_1(cw);
+	wnoutrefresh(cw->visu.header);
 }
 
 void			print_menu(t_cw *cw)
@@ -95,7 +98,12 @@ void			print_menu(t_cw *cw)
 	mvwprintw(cw->visu.menu, 2, 50, "%s",  "Speed w / s");
 	keypad(cw->visu.menu, TRUE);
 	noecho();
-	wrefresh(cw->visu.menu);
+	timeout(1);
+	//nonl();
+	cbreak();
+	
+	wnoutrefresh(cw->visu.menu);
+	//wrefresh(cw->visu.menu);
 }
 
 void			visu_exit(t_cw *cw)
@@ -114,37 +122,42 @@ void			select_key(t_cw *cw, int key, int *w)
 		visu_exit(cw);
 	else if (key == 32)
 	{
+		nodelay(cw->visu.menu, true);
+		cbreak();
+		noecho();
+		//timeout(*w);
 		mvwprintw(cw->visu.header, 1, 1, "%s", "** PAUSED **");
-		wrefresh(cw->visu.header);
-		while ((key = wgetch(cw->visu.menu)) != 32)
+		wnoutrefresh(cw->visu.header);
+		doupdate();
+		while ((key = wgetch(cw->visu.menu)) != 32)		
 			if (key == 'q')
 				visu_exit(cw);
-		halfdelay(*w);	
 		mvwprintw(cw->visu.header, 1, 1, "%s", "** RUNNIG **");
-		wrefresh(cw->visu.header);	
+		mvwprintw(cw->visu.header, 3, 1, "%s %5d", "Cycles/second limit :", *w);
 	}
 	else if (key == 'w')
 	{
-		halfdelay(++*w);
+		timeout(++*w);
 		mvwprintw(cw->visu.header, 3, 1, "%s %5d", "Cycles/second limit :", *w);
-		wrefresh(cw->visu.header);
 	}
 	else if (key == 's')
 	{
-		halfdelay(--*w);	
+		timeout(--*w);	
 		mvwprintw(cw->visu.header, 3, 1, "%s %5d", "Cycles/second limit :", *w);
-		wrefresh(cw->visu.header);	
-	}	
+	}
+	wrefresh(cw->visu.header);
+	wnoutrefresh(cw->visu.header);
 }
 
 void			vs_backlight_car(t_cw *cw, size_t i_car, uint8_t mod)
 {
 	uint8_t		col;
-
+		
 	col = -cw->car[i_car]->reg[0];
 	wattron(cw->visu.map, (mod) ? COLOR_PAIR(col * 2) : COLOR_PAIR(col * 2 - 1));
 	mvwprintw(cw->visu.map, cw->car[i_car]->pc * 3 / (MAP_X - 2) + 1, cw->car[i_car]->pc * 3 % (MAP_X - 2) + 1, "%.2x", cw->map[cw->car[i_car]->pc]);
-	wrefresh(cw->visu.map);
+	wnoutrefresh(cw->visu.map);
+	//wrefresh(cw->visu.map);
 }
 
 void			vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod)
@@ -158,14 +171,16 @@ void			vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod)
 		mvwprintw(cw->visu.map, st_op->pc * 3 / (MAP_X - 2) + 1, st_op->pc * 3 % (MAP_X - 2) + 1, "%.2x", cw->map[st_op->pc]);
 		st_op->pc = PCV(++st_op->pc);
 	}
-	wrefresh(cw->visu.map);
+	//wrefresh(cw->visu.map);
 	wattroff(cw->visu.map, COLOR_PAIR(st_op->id * 2 + 1) | A_BOLD);	
+	wnoutrefresh(cw->visu.map);
 }
 
 void				print_cycle_to_die(t_cw *cw)
 {
 	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
 	mvwprintw(cw->visu.header, 16 + 4 * cw->num_of_champs, 16, "%-10d", cw->cycle_to_die);
+	wnoutrefresh(cw->visu.header);	
 }
 
 void				print_cycles(t_cw *cw)
@@ -173,28 +188,31 @@ void				print_cycles(t_cw *cw)
 	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
 	mvwprintw(cw->visu.header, 6, 9, "%-6d", cw->cycles);
 	mvwprintw(cw->visu.header, 8, 13,"%-6d", cw->num_of_cars);
+	wnoutrefresh(cw->visu.header);
 }
 
 void			visu(t_cw *cw)
 {
 	int			delay;
 
-	delay = 1;
+	delay = 5;
+	timeout (delay);
 	select_key(cw, wgetch(cw->visu.menu), &delay);
+	//sleep(1);
 	print_cycles(cw);
-	wrefresh(cw->visu.header);
+	doupdate();
 	if (!cw->visu.st_op)
 		return ;
-	while ((cw->visu.st_op = cw->visu.st_op->prev))
-	{
-		if (cw->cycles - cw->visu.st_op->cycle_to_show >= CYCLE_TO_SHOW)
-		{
-			vs_backlight_map(cw, cw->visu.st_op, 0);
-			st_del(&cw->visu.st_op);
-		}
-		else
-			break ;
-	}
+	// while ((cw->visu.st_op = cw->visu.st_op->prev))
+	// {
+	// 	if (cw->cycles - cw->visu.st_op->cycle_to_show >= CYCLE_TO_SHOW)
+	// 	{
+	// 		vs_backlight_map(cw, cw->visu.st_op, 0);
+	// 		st_del(&cw->visu.st_op);
+	// 	}
+	// 	else
+	// 		break ;
+	// }
 	
 }
 
@@ -203,11 +221,12 @@ void			print_windows(t_cw *cw)
 	wbkgd(cw->visu.bkg, COLOR_PAIR(11));
 	wrefresh(cw->visu.bkg);
 	print_map(cw);
-	wrefresh(cw->visu.map);
+	//wrefresh(cw->visu.map);
 	print_header(cw);
-	wrefresh(cw->visu.header);
+	//wrefresh(cw->visu.header);
 	print_menu(cw);
-	wrefresh(cw->visu.menu);	
+	//wrefresh(cw->visu.menu);
+	doupdate();
 }
 
 void			init_visu(t_cw *cw)
@@ -231,5 +250,5 @@ void			init_visu(t_cw *cw)
 	cw->visu.map = newwin(67, 194, 1, 1);
 	cw->visu.header = newwin(67, 67, 1, 196);
 	cw->visu.menu = newwin(10, 262, 69, 1);
-	print_windows(cw);	
+	print_windows(cw);
 }
