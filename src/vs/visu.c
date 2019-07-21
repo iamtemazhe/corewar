@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/21 17:26:10 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/21 17:28:07 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,8 @@ void			vs_backlight_new_car(t_cw *cw, uint8_t col, int32_t pc)
 
 void			visu(t_cw *cw)
 {
-	//int			delay;
 	t_stack		*tmp;
 
-	//delay = 5;
 	select_key(cw, wgetch(cw->visu.menu));
 	wtimeout(cw->visu.menu, cw->visu.delay);
 	print_cycles(cw);
