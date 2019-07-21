@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/20 20:15:26 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/21 15:15:12 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void				fill_head(t_cw *cw, uint8_t *head, uint8_t *exec, uint8_t i_champ)
 	if (cw->champ[i_champ]->head.magic != COREWAR_EXEC_MAGIC)
 		exit(ft_printf("%w\033[1;31mInvali_champ file type\033[0m\n", STDERR));
 	k = -1;
-	j = MAGIC_HEADER_SIZE;
+	j = MAGIC_HEADER_SIZE - 1;
 	while (++j < MAGIC_HEADER_SIZE + PROG_NAME_LENGTH)
 		cw->champ[i_champ]->head.prog_name[++k] = head[j];
 	k = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/21 11:57:54 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/21 17:26:12 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@
 # define PCV(x)					((((x) < 0) ? (MEM_SIZE -(x)) : (x)) % MEM_SIZE)
 # define PC(x)					(PCV(IN(x)))
 
+# define COLOR_GRAY				8
+# define MAP_X					192
+# define VPCY(x)				((x) * 3 / MAP_X + 1)
+# define VPCX(x)				((x) * 3 % MAP_X + 1)
+
 typedef struct					s_visu
 {
 	WINDOW						*map;
@@ -71,8 +76,7 @@ typedef struct					s_visu
 	WINDOW						*menu;
 	WINDOW						*bkg;
 	t_stack						*st_op;
-	uint						row;
-	uint						col;
+	uint						delay;
 }								t_visu;
 
 typedef struct					s_champ
@@ -204,10 +208,12 @@ t_stack							*st_add(t_cw *cw, size_t i_car, int32_t pc, t_stack *st_dst);
 
 void							visu(t_cw *cw);
 void							init_visu(t_cw *cw);
-void							select_key(t_cw *cw, int key, int *delay);
+void							visu_exit(t_cw *cw);
+void							select_key(t_cw *cw, int key);
 void							vs_log(t_cw *cw, size_t i_car, int32_t pc);
 void							vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod);
 void							vs_backlight_car(t_cw *cw, size_t i_car, int32_t step);
 void							vs_backlight_new_car(t_cw *cw, uint8_t col, int32_t pc);
+void							print_cycles(t_cw *cw);
 
 #endif

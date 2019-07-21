@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/20 16:40:21 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/19 19:08:42 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/21 15:00:15 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static const char		*form_analis(const char *fmt, va_list *ap,\
 				pf->tpc == 'G' || pf->tpc == 'E') ? 32 : 0;
 	pf->flg -= (pf->flg & MACC && pf->flg & FLG0 && (pf->tpc == 'd' ||\
 				pf->tpc == 'i' || pf->tpc == 'x' || pf->tpc == 'o')) ? FLG0 : 0;
-	type_analis(ap, pf);
+	//type_analis(ap, pf);
 	return ((pf->str || pf->tpc == 'n' || pf->tpc == 'w') ? fmt : --fmt);
 }
 
