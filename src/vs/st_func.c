@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 16:15:45 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/20 21:11:16 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/21 11:53:02 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void			st_del(t_stack **st_p)
 	st_st = *st_p;
 	st_st->prev->next = st_st->next;
 	st_st->next->prev = st_st->prev;
-	//*st_p = (st_st->n > 1) ? st_st->next : NULL;
-	//free(st_st);
+	*st_p = (st_st->n > 1) ? st_st->next : NULL;
+	free(st_st);
 	st_st = NULL;
 }
 
@@ -48,7 +48,7 @@ int8_t			st_err(int8_t retv, t_stack **st_p)
 	return (retv);
 }
 
-t_stack			*st_new(t_cw *cw, size_t i_car, size_t pc, size_t n)
+t_stack			*st_new(t_cw *cw, size_t i_car, int32_t pc, size_t n)
 {
 	t_stack		*st_elem;
 
@@ -64,7 +64,7 @@ t_stack			*st_new(t_cw *cw, size_t i_car, size_t pc, size_t n)
 	return (st_elem);
 }
 
-t_stack			*st_add(t_cw *cw, size_t i_car, size_t pc, t_stack *st_dst)
+t_stack			*st_add(t_cw *cw, size_t i_car, int32_t pc, t_stack *st_dst)
 {
 	t_stack		*st_elem;
 

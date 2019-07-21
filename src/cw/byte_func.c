@@ -1,6 +1,6 @@
 #include "cw.h"
 
-size_t		code_to_byte(const void *src, size_t pos, size_t n)
+size_t		code_to_byte(const void *src, int32_t pos, size_t n)
 {
 	size_t	dst;
 
@@ -10,7 +10,7 @@ size_t		code_to_byte(const void *src, size_t pos, size_t n)
 	return (dst);
 }
 
-void		byte_to_code(void *dst, size_t pos, const void *src, size_t n)
+void		byte_to_code(void *dst, int32_t pos, const void *src, size_t n)
 {
 	size_t	i;
 

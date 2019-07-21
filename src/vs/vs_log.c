@@ -12,12 +12,12 @@
 
 #include "cw.h"
 
-void				vs_log(t_cw *cw, size_t i_car, uint32_t pc)
+void				vs_log(t_cw *cw, size_t i_car, int32_t pc)
 {
 	cw->visu.st_op = st_add(cw, i_car, pc, cw->visu.st_op);
 	mvwprintw(cw->visu.menu, 6, 10, "stack huek");
 	wnoutrefresh(cw->visu.menu);
-	vs_backlight_map(cw, cw->visu.st_op);
+	vs_backlight_map(cw, cw->visu.st_op, 1);
 }
 
 void				print_live_breakdown(t_cw *cw, int mod)

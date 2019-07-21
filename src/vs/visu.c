@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/20 22:12:18 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/21 12:04:43 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,23 +149,28 @@ void			select_key(t_cw *cw, int key, int *w)
 	wnoutrefresh(cw->visu.header);
 }
 
-void			vs_backlight_map(t_cw *cw, t_stack *st_op)
+void			vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod)
 {
-	int			j;
+	uint8_t		i;
+	int32_t		pc;
 
+	i = 0;
+	pc = st_op->pc;
 	wattron(cw->visu.map, COLOR_PAIR(st_op->id * 2 - 1) | A_BOLD);
-	j = 0;
-	while (++j <= st_op->size)
+	if (!mod)
+		wattroff(cw->visu.map, A_BOLD);
+	while (++i <= st_op->size)
 	{
-		mvwprintw(cw->visu.map, st_op->pc * 3 / (MAP_X - 2) + 1, st_op->pc * 3 % (MAP_X - 2) + 1, "%.2x", cw->map[PCV(st_op->pc)]);
-		st_op->pc++;
+		mvwprintw(cw->visu.map, pc * 3 / (MAP_X - 2) + 1, pc * 3 % (MAP_X - 2) + 1, "%.2x", cw->map[PCV(pc)]);
+		pc++;
 	}
-	wattroff(cw->visu.map, A_BOLD);
+	if (mod)
+		wattroff(cw->visu.map, A_BOLD);
 	wnoutrefresh(cw->visu.map);
 }
 
 
-void			vs_backlight_car(t_cw *cw, size_t i_car, uint32_t step)
+void			vs_backlight_car(t_cw *cw, size_t i_car, int32_t step)
 {
 	uint8_t		col;
 	uint32_t	pc_prev;
@@ -185,7 +190,7 @@ void			vs_backlight_car(t_cw *cw, size_t i_car, uint32_t step)
 	//wrefresh(cw->visu.map);
 }
 
-void			vs_backlight_new_car(t_cw *cw, uint8_t col, uint32_t pc)
+void			vs_backlight_new_car(t_cw *cw, uint8_t col, int32_t pc)
 {
 	wattron(cw->visu.map, COLOR_PAIR(col * 2));
 	mvwprintw(cw->visu.map, pc * 3 / (MAP_X - 2) + 1, pc * 3 % (MAP_X - 2) + 1, "%.2x", cw->map[pc]);
@@ -211,6 +216,7 @@ void				print_cycles(t_cw *cw)
 void			visu(t_cw *cw)
 {
 	int			delay;
+	t_stack		*tmp;
 
 	delay = 5;
 	timeout (delay);
@@ -218,18 +224,23 @@ void			visu(t_cw *cw)
 	//sleep(1);
 	print_cycles(cw);
 	doupdate();
-	if (!cw->visu.st_op)
-		return ;
-	// while ((cw->visu.st_op = cw->visu.st_op->prev))
-	// {
-	// 	if (cw->cycles - cw->visu.st_op->cycle_to_show >= CYCLE_TO_SHOW)
-	// 	{
-	// 		vs_backlight_map(cw, cw->visu.st_op, 0);
-	// 		st_del(&cw->visu.st_op);
-	// 	}
-	// 	else
-	// 		break ;
-	// }	
+	if (cw->visu.st_op)
+	{
+		tmp = cw->visu.st_op;
+		while (tmp)
+		{
+			tmp = tmp->prev;
+			if (tmp->n == cw->visu.st_op->n)
+				break;
+			if (cw->cycles - tmp->cycle_to_show >= CYCLE_TO_SHOW)
+			{
+				vs_backlight_map(cw, tmp, 0);
+				st_del(&tmp);
+			}
+			else
+				break ;
+		}
+	}	
 }
 
 void			print_windows(t_cw *cw)

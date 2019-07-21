@@ -104,6 +104,12 @@ int					main(int ac, char **av)
 	// 	ft_printf("%x",  cw.map[j]);
 	// 	j++;
 	// }
+	// int32_t	i = -5000;
+	// while (i < 5000)
+	// {
+	// 	ft_printf("%u ", PCV(i));
+	// 	i++;
+	// }
 	ft_printf("\n\rcycles = %u\n", cw.cycles);
 	if (cw.f.lg.vs)
 	{
