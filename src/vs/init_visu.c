@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:31:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/22 14:32:49 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/22 20:29:00 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			print_header(t_cw *cw)
 	k = 9;
 	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
 	mvwprintw(cw->visu.header, 1, 1, "%s", "** PAUSED **");
-    mvwprintw(cw->visu.header, 3, 1, "%s %5d", "Cycles/second limit :", cw->visu.delay);
+    mvwprintw(cw->visu.header, 3, 1, "%s %5d", "Cycles/second limit :", 1000 - (cw->visu.delay * 10));
 	mvwprintw(cw->visu.header, 6, 1, "%s %-6d", "Cycle :", cw->cycles);
 	mvwprintw(cw->visu.header, 8, 1, "%s %d", "Processes :", cw->num_of_cars);
 	while (i < cw->num_of_champs)
@@ -101,11 +101,8 @@ void			print_menu(t_cw *cw)
 
 void            print_maps(t_cw *cw)
 {
-    int         key;
-
     wbkgd(cw->visu.bkg, COLOR_PAIR(11));
     wrefresh(cw->visu.bkg);
-	cw->visu.delay = 5;
     print_map(cw);
     wrefresh(cw->visu.map);
 	print_header(cw);
@@ -116,10 +113,6 @@ void            print_maps(t_cw *cw)
 	noecho();
 	wtimeout(cw->visu.menu, cw->visu.delay);
 	doupdate();
-	while ((key = wgetch(cw->visu.menu)) != 32)
-        if (key == 'q')
-		    visu_exit(cw);
-	mvwprintw(cw->visu.header, 1, 1, "%s", "** RUNNIG **");
 }
 
 void			init_visu(t_cw *cw)
@@ -143,6 +136,7 @@ void			init_visu(t_cw *cw)
 	cw->visu.map = newwin(67, 194, 1, 1);
 	cw->visu.header = newwin(67, 67, 1, 196);
 	cw->visu.menu = newwin(10, 262, 69, 1);
+	cw->f.lg.pause = 1;
+	cw->visu.delay = 95;
     print_maps(cw);
-	//cw->visu.runing = 1;
 }

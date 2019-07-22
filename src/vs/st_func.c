@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 16:15:45 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/21 11:53:02 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/22 17:17:05 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void			st_del(t_stack **st_p)
 	st_st->next->prev = st_st->prev;
 	*st_p = (st_st->n > 1) ? st_st->next : NULL;
 	free(st_st);
-	st_st = NULL;
 }
 
 int8_t			st_err(int8_t retv, t_stack **st_p)

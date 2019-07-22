@@ -15,8 +15,8 @@
 void				vs_log(t_cw *cw, size_t i_car, int32_t pc)
 {
 	cw->visu.st_op = st_add(cw, i_car, pc, cw->visu.st_op);
-	mvwprintw(cw->visu.menu, 6, 10, "stack huek");
-	wnoutrefresh(cw->visu.menu);
+	if (cw->car[i_car]->op_code == cw->op[LIVE].code)
+		print_lives(cw, 0);
 	vs_backlight_map(cw, cw->visu.st_op, 1);
 }
 

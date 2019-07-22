@@ -24,7 +24,7 @@ static void			ind(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 		return ;
 	cw->pos = cw->car[i_car]->pc + cw->step;
 	cw->arg_code[i_arg] = code_to_byte(cw->map, cw->pos, IND_SIZE);
-	cw->arg[i_arg] = (int16_t)cw->arg_code[i_arg] % IDX_MOD + cw->car[i_car]->pc;
+	cw->arg[i_arg] = PCV(((int16_t)cw->arg_code[i_arg]) % IDX_MOD + cw->car[i_car]->pc);
 }
 
 static void		dir(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)

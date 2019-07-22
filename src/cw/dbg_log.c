@@ -21,7 +21,7 @@ inline void		dbg_log_cod(t_cw *cw, size_t i_car)
 				cw->op[IN(cw->car[i_car]->op_code)].name, cw->car[i_car]->op_code,
 				cw->cod.arg.v1, cw->cod.arg.v2, cw->cod.arg.v3, cw->cod.arg.v4,
 				cw->arg_code[0], cw->arg_code[1], cw->arg_code[2], (cw->err) ? "\033[1merror\033[22m" : "",
-				(int16_t)cw->arg[0], (int16_t)cw->arg[1], (int16_t)cw->arg[2]);
+				cw->arg[0], cw->arg[1], cw->arg[2]);
 }
 
 inline void		dbg_log(t_cw *cw, size_t i_car)
