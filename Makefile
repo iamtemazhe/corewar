@@ -6,7 +6,7 @@
 #    By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 13:26:35 by jwinthei          #+#    #+#              #
-#    Updated: 2019/07/21 15:47:55 by hgysella         ###   ########.fr        #
+#    Updated: 2019/07/22 14:27:13 by hgysella         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ OP_S =	op_add.c		op_aff.c	op_and.c	op_fork.c	op_ld.c		op_ldi.c\
 		op_lfork.c		op_live.c	op_lld.c	op_lldi.c	op_or.c		op_st.c\
 		op_sti.c		op_sub.c	op_xor.c	op_zjmp.c
 
-VS_S =	visu.c			st_func.c	vs_log.c	init_func.c	visu_func.c
+VS_S =	visu.c			st_func.c	vs_log.c	init_visu.c	visu_func.c
 
 CW_S =	corewar.c		byte_func.c	codage_validator.c		parse_args.c		ft_strrstr.c\
 		dbg_log.c		car_func.c	champ_func.c 			init_func.c			usage.c

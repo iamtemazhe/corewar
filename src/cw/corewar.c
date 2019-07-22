@@ -68,7 +68,7 @@ void				fight(t_cw *cw)
 			// while ((k = wgetch(cw->visu.menu)) != 'r' && !cw->visu.runing)
 			// {
 			// 	select_key(cw, k);
-			// 	//cw->visu.runing = 0;	
+			// 	cw->visu.runing = 0;	
 			// }
 				
 		}
