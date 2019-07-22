@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/21 17:28:07 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/22 14:22:13 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void			vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod)
 		wattroff(cw->visu.map, A_BOLD);
 	while (++i <= st_op->size)
 	{
-		mvwprintw(cw->visu.map, pc * 3 / MAP_X + 1, pc * 3 % MAP_X + 1, "%.2x", cw->map[PCV(pc)]);
+		mvwprintw(cw->visu.map, VPCY(pc), VPCX(pc), "%.2x", cw->map[PCV(pc)]);
 		pc++;
 	}
 	if (mod)
@@ -44,9 +44,9 @@ void			vs_backlight_car(t_cw *cw, size_t i_car, int32_t step)
 	pc = PCV(pc_prev + step);
 	col = -cw->car[i_car]->reg[0];
 	wattron(cw->visu.map, COLOR_PAIR(col * 2 - 1));
-	mvwprintw(cw->visu.map, pc_prev * 3 / MAP_X + 1, pc_prev * 3 % MAP_X + 1, "%.2x", cw->map[pc_prev]);
+	mvwprintw(cw->visu.map, VPCY(pc_prev), VPCX(pc_prev), "%.2x", cw->map[pc_prev]);
 	wattron(cw->visu.map, COLOR_PAIR(col * 2));
-	mvwprintw(cw->visu.map, pc * 3 / MAP_X + 1, pc * 3 % MAP_X + 1, "%.2x", cw->map[pc]);
+	mvwprintw(cw->visu.map, VPCY(pc), VPCX(pc), "%.2x", cw->map[pc]);
 	mvwprintw(cw->visu.menu, 4, 10, "y = %3u x = %3u map = %02x pos = %4u, id_car = %u", pc_prev * 3 / MAP_X + 1, pc_prev * 3 % MAP_X + 1, cw->map[pc_prev], pc_prev, i_car + 1);
 	mvwprintw(cw->visu.menu, 5, 10, "y = %3u x = %3u map = %02x pos = %4u", pc * 3 / MAP_X + 1, pc * 3 % MAP_X + 1, cw->map[pc], pc);
 	wnoutrefresh(cw->visu.menu);
@@ -56,7 +56,7 @@ void			vs_backlight_car(t_cw *cw, size_t i_car, int32_t step)
 void			vs_backlight_new_car(t_cw *cw, uint8_t col, int32_t pc)
 {
 	wattron(cw->visu.map, COLOR_PAIR(col * 2));
-	mvwprintw(cw->visu.map, pc * 3 / MAP_X + 1, pc * 3 % MAP_X + 1, "%.2x", cw->map[pc]);
+	mvwprintw(cw->visu.map, VPCY(pc), VPCX(pc), "%.2x", cw->map[pc]);
 	wnoutrefresh(cw->visu.map);
 }
 

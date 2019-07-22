@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:31:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/21 17:18:29 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/22 14:09:16 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,4 +144,5 @@ void			init_visu(t_cw *cw)
 	cw->visu.header = newwin(67, 67, 1, 196);
 	cw->visu.menu = newwin(10, 262, 69, 1);
     print_maps(cw);
+	cw->visu.runing = 1;
 }

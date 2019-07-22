@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/21 17:14:47 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/22 14:08:39 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ void			select_key(t_cw *cw, int key)
 		visu_exit(cw);
 	else if (key == 32)
 	{
+		cw->visu.runing = 0;
 		mvwprintw(cw->visu.header, 1, 1, "%s", "** PAUSED **");
 		wnoutrefresh(cw->visu.header);
 		doupdate();
 		while ((key = wgetch(cw->visu.menu)) != 32)		
 			if (key == 'q')
 				visu_exit(cw);
+		cw->visu.runing = 1;
 		mvwprintw(cw->visu.header, 1, 1, "%s", "** RUNNIG **");
 	}
 	else if (key == 'w' || key == 'e')

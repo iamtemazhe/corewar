@@ -49,6 +49,8 @@ static void		car_cycler(t_cw *cw)
 
 void				fight(t_cw *cw)
 {
+	//int				k;
+
 	while (1)
 	{
 		if (cw->f.lg.dbg_c)
@@ -61,8 +63,17 @@ void				fight(t_cw *cw)
 		car_cycler(cw);
 		cw->cycles++;
 		if (cw->f.lg.vs)
+		{
 			visu(cw);
-		write(0, 0, 0);
+			// while ((k = wgetch(cw->visu.menu)) != 'r' && !cw->visu.runing)
+			// {
+			// 	select_key(cw, k);
+			// 	//cw->visu.runing = 0;	
+			// }
+				
+		}
+			
+		//write(0, 0, 0);
 	}
 }
 
