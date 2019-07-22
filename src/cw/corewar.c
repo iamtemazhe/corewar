@@ -31,7 +31,7 @@ static void		car_cycler(t_cw *cw)
 	{
 		if (!cw->car[i_car]->cycle_to_wait)
 		{
-			cw->car[i_car]->op_code = cw->map[cw->car[i_car]->pc];
+			cw->car[i_car]->op_code = cw->map[cw->car[i_car]->pc].v.code;
 			if (cw->car[i_car]->op_code < 1 || OP_NUM < cw->car[i_car]->op_code)
 			{
 				cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + 1);
@@ -49,7 +49,7 @@ static void		car_cycler(t_cw *cw)
 
 void				fight(t_cw *cw)
 {
-	//int				k;
+	// int				k;
 
 	while (1)
 	{
@@ -70,7 +70,8 @@ void				fight(t_cw *cw)
 			// 	select_key(cw, k);
 			// 	cw->visu.runing = 0;	
 			// }
-				
+			// while ((k = getch()) != 'r')
+				// select_key(cw, k);				
 		}
 			
 		//write(0, 0, 0);
@@ -97,7 +98,7 @@ int					main(int ac, char **av)
 	// j = 0;
 	// while (j < 4096)
 	// {
-	// 	ft_printf("%x",  cw.map[j]);
+	// 	ft_printf("%x",  cw.map[j].v.code);
 	// 	j++;
 	// }
 	// ft_printf("\n\r");
@@ -112,7 +113,7 @@ int					main(int ac, char **av)
 	// int j = 0;
 	// while (j < 4096)
 	// {
-	// 	ft_printf("%x",  cw.map[j]);
+	// 	ft_printf("%x",  cw.map[j].v.code);
 	// 	j++;
 	// }
 	// int32_t	i = -5000;

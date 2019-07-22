@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/22 14:25:45 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/22 15:16:42 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,18 @@ void			select_key(t_cw *cw, int key)
 		visu_exit(cw);
 	else if (key == 32)
 	{
-		//cw->visu.runing = 0;
+		cw->f.lg.pause = 0;
 		mvwprintw(cw->visu.header, 1, 1, "%s", "** PAUSED **");
 		wnoutrefresh(cw->visu.header);
 		doupdate();
 		while ((key = wgetch(cw->visu.menu)) != 32)		
 			if (key == 'q')
 				visu_exit(cw);
-		//cw->visu.runing = 1;
+			else if (key == 'r')
+			{
+				cw->f.lg.pause = 1;
+				break ;
+			}
 		mvwprintw(cw->visu.header, 1, 1, "%s", "** RUNNIG **");
 	}
 	else if (key == 'w' || key == 'e')
@@ -76,6 +80,5 @@ void			select_key(t_cw *cw, int key)
 		wtimeout(cw->visu.menu, cw->visu.delay -= (key == 'd') ? 10 : 1);
 		mvwprintw(cw->visu.header, 3, 1, "%s %5d", "Cycles/second limit :", cw->visu.delay);
 	}
-	wrefresh(cw->visu.header);
 	wnoutrefresh(cw->visu.header);
 }

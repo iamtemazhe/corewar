@@ -31,7 +31,7 @@ void			dump(t_cw *cw)
 	{
 		if (!(i % num_of_oct))
 			ft_printf("0x%04zx : ", i);
-		ft_printf("%02x%c", cw->map[i], ((i % num_of_oct) == num_of_oct - 1) ? '\n' : ' ');
+		ft_printf("%02x%c", cw->map[i].v.code, ((i % num_of_oct) == num_of_oct - 1) ? '\n' : ' ');
 		i++;
 	}
 	exit (0);

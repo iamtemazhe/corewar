@@ -8,7 +8,7 @@ static void			reg(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 	if (cw->err)
 		return ;
 	cw->pos = cw->car[i_car]->pc + cw->step;
-	cw->arg_code[i_arg] = cw->map[PC(cw->pos)];
+	cw->arg_code[i_arg] = cw->map[PC(cw->pos)].v.code;
 	if (1 <= cw->arg_code[i_arg] && cw->arg_code[i_arg] <= REG_NUMBER)
 		cw->arg[i_arg] = cw->arg_code[i_arg];
 	else
@@ -47,7 +47,7 @@ int8_t			codage_validator(t_cw *cw, size_t i_car, uint8_t i_op)
 	cw->step = OPC_SIZE;
 	ft_bzero(cw->arg, sizeof(*cw->arg) * OP_NUM_ARGS);
 	ft_bzero(cw->arg_code, sizeof(*cw->arg_code) * OP_NUM_ARGS);
-	cw->cod.age = cw->map[PC(cw->car[i_car]->pc + cw->step)];
+	cw->cod.age = cw->map[PC(cw->car[i_car]->pc + cw->step)].v.code;
 	cw->err = (cw->cod.arg.v4) ? -1 : 0;
 	i_arg = -1;
 	while (++i_arg < cw->op[i_op].num_args)

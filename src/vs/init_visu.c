@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_func.c                                        :+:      :+:    :+:   */
+/*   init_visu.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:31:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/22 14:25:23 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/22 14:32:49 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void			print_map(t_cw *cw)
 			wattron(cw->visu.map, COLOR_PAIR(9));
 			if (j < cw->champ[i]->head.prog_size + (MEM_SIZE / cw->num_of_champs) * i)
 				wattron(cw->visu.map, COLOR_PAIR(i * 2 + 1));
-			mvwprintw(cw->visu.map, k, m++, "%.2x", cw->map[j++]);
+			mvwprintw(cw->visu.map, k, m++, "%.2x", cw->map[j++].v.code);
 			m += 2;
             if (m > MAP_X && k++)
                 m = 1;

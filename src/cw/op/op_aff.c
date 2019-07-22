@@ -6,7 +6,7 @@ void			op_aff(t_cw *cw, size_t i_car)
 
 	cw->step = OP_SIZE + REGN_SIZE;
 	cw->pos = PCV(cw->car[i_car]->pc + cw->step);
-	cw->arg[0] = cw->map[IN(cw->pos)];
+	cw->arg[0] = cw->map[IN(cw->pos)].v.code;
 	if (cw->f.lg.dbg || cw->f.lg.vs)
 		(cw->f.lg.dbg) ? dbg_log_cod(cw, i_car) : vs_backlight_car(cw, i_car, cw->step);
 	cw->car[i_car]->pc = cw->pos;

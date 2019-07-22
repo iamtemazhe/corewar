@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/22 14:20:02 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/22 14:57:17 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define DUMP					0x02
 # define VISU					0x04
 # define DEBUG					0x08
+# define PAUSE					0x10 | VISU
 # define DUMP64					0x20 | DUMP
 # define DEBUG_C				0x40 | DEBUG
 # define DEBUG_R				0x80 | DEBUG
@@ -123,7 +124,6 @@ struct							s_cw
 	uint8_t						flg;
 	uint8_t						checks;
 	uint8_t						num_of_champs;
-	uint8_t						map[MEM_SIZE];
 	int32_t						pos;
 	int32_t						step;
 	int32_t						cycle_to_die;
@@ -143,7 +143,7 @@ struct							s_cw
 			uint8_t				dump	: 1;
 			uint8_t				vs		: 1;
 			uint8_t				dbg		: 1;
-			uint8_t				reserv	: 1;
+			uint8_t				pause	: 1;
 			uint8_t				dump64	: 1;
 			uint8_t				dbg_c	: 1;
 			uint8_t				dbg_r	: 1;
@@ -160,6 +160,18 @@ struct							s_cw
 			uint8_t				v1 : 2;
 		}						arg;
 	}							cod;
+	union						u_map
+	{
+	    uint32_t				val;
+	    struct
+	    {
+	        uint8_t				code	: 8;
+	        uint8_t				c_co	: 4;
+	        uint8_t				b_col	: 4;
+	        uint8_t				mc_col	: 8;
+	        uint8_t				mb_col	: 8;
+	    }						v;
+	}							map[MEM_SIZE];
 };
 
 void							op_live(t_cw *cw, size_t i_car);
@@ -180,8 +192,8 @@ void							op_lldi(t_cw *cw, size_t i_car);
 void							op_lfork(t_cw *cw, size_t i_car);
 void							op_aff(t_cw *cw, size_t i_car);
 
-size_t							code_to_byte(const void *src, int32_t pos, size_t n);
-void							byte_to_code(void *dst, int32_t pos, const void *src, size_t n);
+size_t							code_to_byte(const union u_map *src, int32_t pos, size_t n);
+void							byte_to_code(union u_map *dst, int32_t pos, const void *src, size_t n);
 
 int8_t							codage_validator(t_cw *cw, size_t i_car, uint8_t i_op);
 void							fill_cw(int ac, char **av, t_cw *cw);
