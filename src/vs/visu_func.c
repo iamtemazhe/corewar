@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/23 14:15:25 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/23 15:36:36 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void			print_lives(t_cw *cw, uint8_t mod)
 
 	i = 0;
 	colum = 1;
-	raw += (mod) ? 14 + cw->num_of_champs * 4 : 11 + cw->num_of_champs * 4;
+	raw = (mod) ? 14 + cw->num_of_champs * 4 : 11 + cw->num_of_champs * 4;
 	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
 	if (!cw->lives)
 	{
@@ -118,15 +118,15 @@ void			wait_key(t_cw *cw)
 														1 : 0;
 		else if (key == 'q' || key == 'w' || key == 'e' || key == 'r')
 			select_key(cw, key);
-		else if (cw->f.lg.pause)
-		{
-			mvwprintw(cw->visu.header, 1, 1, "%s", "** RUNNIG **");
-			wrefresh(cw->visu.header);
-		}
 		else if (!cw->f.lg.pause || key == 's')
 		{
 			mvwprintw(cw->visu.header, 1, 1, "%s", "** RUNNIG **");
 			wnoutrefresh(cw->visu.header);
 			break ;
+		}
+		else if (cw->f.lg.pause)
+		{
+			mvwprintw(cw->visu.header, 1, 1, "%s", "** PAUSED **");
+			wrefresh(cw->visu.header);
 		}
 }
