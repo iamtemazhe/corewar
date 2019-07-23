@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_log.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 17:10:38 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/23 13:57:22 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/23 18:53:13 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void				print_live_breakdown(t_cw *cw, int mod)
 	uint			total;
 
 	k = (mod < 0) ? 11 + 4 * cw->num_of_champs : 13 + 4 * cw->num_of_champs;
-	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
+	wattron(cw->visu.header, COLOR_PAIR(15) | A_BOLD);
 	i = 0;
 	total = 0;
 	while (i < cw->num_of_champs)
@@ -43,7 +43,7 @@ void				print_live_breakdown(t_cw *cw, int mod)
 			wattron(cw->visu.header, COLOR_PAIR(j++ * 2 + 1) | A_BOLD);
 		mvwprintw(cw->visu.header, k, i, "-");
 	}
-	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
+	wattron(cw->visu.header, COLOR_PAIR(15) | A_BOLD);
 	mvwprintw(cw->visu.header, k, i, "]");
 	wrefresh(cw->visu.header);
 }

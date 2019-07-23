@@ -17,7 +17,11 @@ static t_car		*new_car(t_cw *cw, uint8_t id_champ, int32_t pc)
 	ft_bzero(new_car->reg, REG_NUMBER * sizeof(uint32_t));
 	new_car->reg[0] = -id_champ;
 	if (cw->f.lg.vs)
+	{
+		cw->map->v.b_col = cw->map->v.b_col == 15 ? id_champ * 2 : cw->map->v.b_col;
 		vs_backlight_new_car(cw, id_champ, pc);
+	}
+		
 	return (new_car);
 }
 

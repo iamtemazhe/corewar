@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/23 15:36:36 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/23 19:34:44 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void			print_lives(t_cw *cw, uint8_t mod)
 	i = 0;
 	colum = 1;
 	raw = (mod) ? 14 + cw->num_of_champs * 4 : 11 + cw->num_of_champs * 4;
-	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
+	wattron(cw->visu.header, COLOR_PAIR(15) | A_BOLD);
 	if (!cw->lives)
 	{
 		mvwprintw(cw->visu.header, raw, 1, "%s",\
@@ -45,7 +45,7 @@ void			print_lives(t_cw *cw, uint8_t mod)
 	mvwaddch(cw->visu.header, raw, 50, ']');
 	while (i < cw->num_of_champs)
 	{
-		wattron(cw->visu.header, COLOR_PAIR((i + 1) * 2 - 1));
+		wattron(cw->visu.header, COLOR_PAIR(cw->champ[i]->id * 2 - 1));
 		lives = (cw->champ[i++]->lives / cw->lives) * LIVES_TO_SHOW;
 		while (lives-- > 0 && ++colum < 50)
 			mvwaddch(cw->visu.header, raw, colum, '-');
@@ -58,7 +58,7 @@ void			vs_checker(t_cw *cw, uint8_t mod)
 	uint8_t		i;
 	uint8_t		raw;
 
-	wattron(cw->visu.header, COLOR_PAIR(10));
+	wattron(cw->visu.header, COLOR_PAIR(15));
 	if (mod)
 	{
 		raw = cw->num_of_champs * 4 + 16;
@@ -66,9 +66,12 @@ void			vs_checker(t_cw *cw, uint8_t mod)
 		return ;
 	}
 	i = 0;
-	raw = 6;
+	raw = 12;
 	while (i < cw->num_of_champs)
-		mvwprintw(cw->visu.header, raw += 6, 31, "%5d", cw->champ[i++]->lives);
+	{
+		mvwprintw(cw->visu.header, raw , 31, "%5d", cw->champ[i++]->lives);
+		raw += 4;	
+	}
 	wrefresh(cw->visu.header);
 }
 
@@ -78,7 +81,7 @@ void			print_cycles(t_cw *cw)
 	int			k;
 
 	i = 0;
-	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
+	wattron(cw->visu.header, COLOR_PAIR(15) | A_BOLD);
 	mvwprintw(cw->visu.header, 6, 9, "%-6d", cw->cycles);
 	mvwprintw(cw->visu.header, 8, 13, "%-6d", cw->num_of_cars);
 	k = 11;
