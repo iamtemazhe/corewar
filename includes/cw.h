@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/23 19:49:37 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/23 22:29:05 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define DEBUG_C				0x40 | DEBUG
 # define DEBUG_R				0x80 | DEBUG
 # define DEBUG_F				DEBUG | DEBUG_C | DEBUG_R
+# define VS_LIVE				0x100
 
 # define CYCLE_TO_SHOW			50
 # define LIVES_TO_SHOW			50
@@ -138,7 +139,7 @@ struct							s_cw
 	size_t						max_num_of_cars;
 		union
 	{
-		uint8_t					lag;
+		uint16_t				lag;
 		struct
 		{	
 			uint8_t				af		: 1;
@@ -149,6 +150,7 @@ struct							s_cw
 			uint8_t				dump64	: 1;
 			uint8_t				dbg_c	: 1;
 			uint8_t				dbg_r	: 1;
+			uint8_t				vs_live	: 1;
 		}						lg;
 	}							f;
 	union
@@ -168,10 +170,10 @@ struct							s_cw
 	    struct
 	    {
 	        uint8_t				code	: 8;
-	        uint8_t				c_co	: 4;
-	        uint8_t				b_col	: 4;
-	        uint8_t				mc_col	: 8;
-	        uint8_t				mb_col	: 8;
+	        uint8_t				col		: 3;
+	        uint8_t				live	: 1;
+	        uint8_t				bold	: 6;
+	        uint16_t			car		: 14;
 	    }						v;
 	}							map[MEM_SIZE];
 };
@@ -229,6 +231,7 @@ void							vs_log(t_cw *cw, size_t i_car, int32_t pc);
 void							vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod);
 void							vs_backlight_car(t_cw *cw, size_t i_car, int32_t step);
 void							vs_backlight_new_car(t_cw *cw, uint8_t col, int32_t pc);
+void							vs_backlight_del_car(t_cw *cw, int32_t pc);
 void							vs_checker(t_cw *cw, uint8_t mod);
 void							print_lives(t_cw *cw, uint8_t mod);
 

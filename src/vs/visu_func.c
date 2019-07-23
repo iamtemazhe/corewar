@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/23 19:34:44 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/23 22:20:16 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,12 @@ void			print_lives(t_cw *cw, uint8_t mod)
 	i = 0;
 	colum = 1;
 	raw = (mod) ? 14 + cw->num_of_champs * 4 : 11 + cw->num_of_champs * 4;
-	wattron(cw->visu.header, COLOR_PAIR(15) | A_BOLD);
 	if (!cw->lives)
 	{
 		mvwprintw(cw->visu.header, raw, 1, "%s",\
 				"[------------------------------------------------]");
 		return ;
 	}
-	mvwprintw(cw->visu.header, raw, 1, "%s", "[");
-	mvwaddch(cw->visu.header, raw, 50, ']');
 	while (i < cw->num_of_champs)
 	{
 		wattron(cw->visu.header, COLOR_PAIR(cw->champ[i]->id * 2 - 1));
@@ -50,7 +47,7 @@ void			print_lives(t_cw *cw, uint8_t mod)
 		while (lives-- > 0 && ++colum < 50)
 			mvwaddch(cw->visu.header, raw, colum, '-');
 	}
-	wnoutrefresh(cw->visu.header);
+	// wnoutrefresh(cw->visu.header);
 }
 
 void			vs_checker(t_cw *cw, uint8_t mod)
@@ -72,7 +69,7 @@ void			vs_checker(t_cw *cw, uint8_t mod)
 		mvwprintw(cw->visu.header, raw , 31, "%5d", cw->champ[i++]->lives);
 		raw += 4;	
 	}
-	wrefresh(cw->visu.header);
+	// wnoutrefresh(cw->visu.header);
 }
 
 void			print_cycles(t_cw *cw)
@@ -91,7 +88,7 @@ void			print_cycles(t_cw *cw)
 		mvwprintw(cw->visu.header, ++k, 31, "%5d", cw->champ[i++]->lives);
 		k += 3;
 	}
-	wnoutrefresh(cw->visu.header);
+	// wnoutrefresh(cw->visu.header);
 }
 
 void			select_key(t_cw *cw, int key)
@@ -124,7 +121,6 @@ void			wait_key(t_cw *cw)
 		else if (!cw->f.lg.pause || key == 's')
 		{
 			mvwprintw(cw->visu.header, 1, 1, "%s", "** RUNNIG **");
-			wnoutrefresh(cw->visu.header);
 			break ;
 		}
 		else if (cw->f.lg.pause)

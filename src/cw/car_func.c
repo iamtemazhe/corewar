@@ -18,10 +18,9 @@ static t_car		*new_car(t_cw *cw, uint8_t id_champ, int32_t pc)
 	new_car->reg[0] = -id_champ;
 	if (cw->f.lg.vs)
 	{
-		cw->map->v.b_col = cw->map->v.b_col == 15 ? id_champ * 2 : cw->map->v.b_col;
+		cw->map->v.col = cw->map->v.col == 15 ? id_champ * 2 : cw->map->v.col;
 		vs_backlight_new_car(cw, id_champ, pc);
-	}
-		
+	}	
 	return (new_car);
 }
 
@@ -40,6 +39,8 @@ uint8_t				add_car(t_cw *cw, size_t i_car, int32_t pc)
 				exit (ft_puterr(-1, "Error"));
 			i_car++;
 		}
+		if (cw->f.lg.vs)
+			doupdate();
 		return (IN(cw->num_of_cars));
 	}
 	if (++cw->num_of_cars > cw->max_num_of_cars)
@@ -58,14 +59,16 @@ uint8_t				add_car(t_cw *cw, size_t i_car, int32_t pc)
 
 static void			del_one_car(t_cw *cw, size_t i_car)
 {
+	if (cw->f.lg.dbg_r)
+		ft_printf("%38\033[3%1um|%9s Carry# %7u DEAD! %2|\n\r", cw->car[i_car]->id % 6 + 1, "", cw->car[i_car]->id);
+	if (cw->f.lg.vs)
+		vs_backlight_del_car(cw, cw->car[i_car]->pc);
 	free(cw->car[i_car]);
 	cw->car[i_car] = NULL;
 }
 
 void				del_car(t_cw *cw, size_t i_car)
 {
-	if (cw->f.lg.dbg_r)
-		ft_printf("%38\033[3%1um|%9s Carry# %7u DEAD! %2|\n\r", cw->car[i_car]->id % 6 + 1, "", cw->car[i_car]->id);
 	del_one_car(cw, i_car);
 	while (++i_car < cw->num_of_cars)
 	{

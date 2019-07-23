@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_visu.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:31:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/23 18:32:51 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/23 22:33:56 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void			print_map(t_cw *cw)
 	m = 1;
 	while (j < MEM_SIZE)
 	{	
-		wattron(cw->visu.map, COLOR_PAIR(cw->map[j].v.c_co));	
+		wattron(cw->visu.map, COLOR_PAIR((cw->map[j].v.col) ? cw->map[j].v.col : 14));	
 		mvwprintw(cw->visu.map, k, m++, "%.2x", cw->map[j++].v.code);
 		m += 2;
 		if (m > MAP_X && k++)

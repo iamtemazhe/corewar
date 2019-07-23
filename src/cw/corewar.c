@@ -33,6 +33,7 @@ static void		car_cycler(t_cw *cw)
 	int8_t		show;
 
 	show = 1;
+	cw->f.lg.vs_live = 0;
 	i_car = cw->num_of_cars;
 	while (i_car-- > 0)
 	{
@@ -41,6 +42,8 @@ static void		car_cycler(t_cw *cw)
 			cw->car[i_car]->op_code = cw->map[cw->car[i_car]->pc].v.code;
 			if (cw->car[i_car]->op_code < 1 || OP_NUM < cw->car[i_car]->op_code)
 			{
+				if (cw->f.lg.vs)
+					vs_backlight_car(cw, i_car, 1);
 				cw->car[i_car]->pc = (cw->car[i_car]->pc + 1) % MEM_SIZE;
 				i_car++;
 				continue ;

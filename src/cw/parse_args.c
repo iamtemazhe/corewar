@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/23 18:32:27 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/23 22:27:28 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,15 @@ void			fill_map(t_cw *cw)
 		while (j < cw->champ[i]->head.prog_size)
 		{
 			cw->map[k].v.code = cw->champ[i]->exec[j++];
-			cw->map[k].v.c_co = cw->champ[i]->id * 2 - 1;
-			cw->map[k++].v.b_col = cw->champ[i]->id * 2;
-			// ft_printf("%d", cw->map[k - 1].v.c_co);
-			// ft_printf("%d", cw->map[k - 1].v.b_col);	
+			cw->map[k++].v.col = cw->champ[i]->id * 2 - 1;
+			// ft_printf("%d", cw->map[k - 1].v.col);
+			// ft_printf("%d", cw->map[k - 1].v.col);	
 		}
 		while (i + 1 <= cw->num_of_champs && k < MEM_SIZE / cw->num_of_champs * (i + 1))
 		{
-			cw->map[k].v.c_co = 14;
-			cw->map[k++].v.b_col = 14;
-			// ft_printf("%d", cw->map[k - 1].v.c_co);
-			// ft_printf("%d", cw->map[k - 1].v.b_col);
+			cw->map[k++].v.col = 0;
+			// ft_printf("%d", cw->map[k - 1].v.col);
+			// ft_printf("%d", cw->map[k - 1].v.col);
 		}
 		i++;
 	}
