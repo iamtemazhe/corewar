@@ -1,6 +1,6 @@
 #include "cw.h"
 
-inline void		dbg_log_top()
+inline void		dbg_log_top(void)
 {
 	ft_printf("\033[0m\033[2J");
 	ft_printf(",---------------------------------------------------------------------------------------,\n\r");
@@ -8,7 +8,7 @@ inline void		dbg_log_top()
 	ft_printf("|------|----|-------|----|-----------|--------|--------|--------|-----|-----|-----|-----|\n\r");
 }
 
-inline void		dbg_log_bot()
+inline void		dbg_log_bot(void)
 {
 	ft_printf("\033[0m");
 	ft_printf("'---------------------------------------------------------------------------------------'\n\r");

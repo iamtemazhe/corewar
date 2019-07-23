@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:31:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/22 20:29:00 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/23 14:06:42 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ void			print_map(t_cw *cw)
 		while (j < (MEM_SIZE / cw->num_of_champs) * (i + 1) && j < MEM_SIZE)
 		{
 			wattron(cw->visu.map, COLOR_PAIR(9));
-			if (j < cw->champ[i]->head.prog_size + (MEM_SIZE / cw->num_of_champs) * i)
+			if (j < cw->champ[i]->head.prog_size +\
+								(MEM_SIZE / cw->num_of_champs) * i)
 				wattron(cw->visu.map, COLOR_PAIR(i * 2 + 1));
 			mvwprintw(cw->visu.map, k, m++, "%.2x", cw->map[j++].v.code);
 			m += 2;
-            if (m > MAP_X && k++)
-                m = 1;
+			if (m > MAP_X && k++)
+				m = 1;
 		}
 		i++;
 	}
@@ -48,14 +49,20 @@ void			print_header_1(t_cw *cw)
 
 	k = 10 + 4 * cw->num_of_champs;
 	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
-	mvwprintw(cw->visu.header, k, 1, "%s", "Live breakdown for current period :");
-	mvwprintw(cw->visu.header, k += 3, 1, "%s", "Live breakdown for last period :");
+	mvwprintw(cw->visu.header, k, 1, "%s",\
+			"Live breakdown for current period :");
+	mvwprintw(cw->visu.header, k += 3, 1, "%s",\
+			"Live breakdown for last period :");
 	wattron(cw->visu.header, COLOR_PAIR(9) | A_BOLD);
-	mvwprintw(cw->visu.header, k -= 2, 1, "%s", "[------------------------------------------------]");
-	mvwprintw(cw->visu.header, k += 3, 1, "%s", "[------------------------------------------------]");
+	mvwprintw(cw->visu.header, k -= 2, 1, "%s",\
+			"[------------------------------------------------]");
+	mvwprintw(cw->visu.header, k += 3, 1, "%s",\
+			"[------------------------------------------------]");
 	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
-	mvwprintw(cw->visu.header, k += 2, 1, "%s : %-10d", "CYCLE_TO_DIE", cw->cycle_to_die);
-	mvwprintw(cw->visu.header, k += 2, 1, "%s : %d", "CYCLE_DELTA", CYCLE_DELTA);
+	mvwprintw(cw->visu.header, k += 2, 1, "%s : %-10d", "CYCLE_TO_DIE",\
+														cw->cycle_to_die);
+	mvwprintw(cw->visu.header, k += 2, 1, "%s : %d", "CYCLE_DELTA",\
+															CYCLE_DELTA);
 	mvwprintw(cw->visu.header, k += 2, 1, "%s : %d", "NBR_LIVE", NBR_LIVE);
 	mvwprintw(cw->visu.header, k += 2, 1, "%s : %d", "MAX_CHECKS", MAX_CHECKS);
 }
@@ -69,17 +76,21 @@ void			print_header(t_cw *cw)
 	k = 9;
 	wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
 	mvwprintw(cw->visu.header, 1, 1, "%s", "** PAUSED **");
-    mvwprintw(cw->visu.header, 3, 1, "%s %5d", "Cycles/second limit :", 1000 - (cw->visu.delay * 10));
+	mvwprintw(cw->visu.header, 3, 1, "%s %5d", "Cycles/second limit :",\
+											1000 - (cw->visu.delay * 10));
 	mvwprintw(cw->visu.header, 6, 1, "%s %-6d", "Cycle :", cw->cycles);
 	mvwprintw(cw->visu.header, 8, 1, "%s %d", "Processes :", cw->num_of_cars);
 	while (i < cw->num_of_champs)
 	{
 		mvwprintw(cw->visu.header, ++k, 1, "%s%d : ", "Player -", i + 1);
 		wattron(cw->visu.header, COLOR_PAIR(i * 2 + 1) | A_BOLD);
-		mvwprintw(cw->visu.header, k++, 14, "%.52s", cw->champ[i]->head.prog_name);
+		mvwprintw(cw->visu.header, k++, 14, "%.52s",\
+											cw->champ[i]->head.prog_name);
 		wattron(cw->visu.header, COLOR_PAIR(10) | A_BOLD);
-		mvwprintw(cw->visu.header, k++, 5, "%-27s %d", "Last live :", cw->champ[i]->last_live);
-		mvwprintw(cw->visu.header, k++, 5, "%-27s %d", "Lives in current period :", cw->champ[i++]->lives);
+		mvwprintw(cw->visu.header, k++, 5, "%-27s %d", "Last live :",\
+											cw->champ[i]->last_live);
+		mvwprintw(cw->visu.header, k++, 5, "%-27s %d",\
+					"Lives in current period :", cw->champ[i++]->lives);
 	}
 	print_header_1(cw);
 	wnoutrefresh(cw->visu.header);
@@ -99,16 +110,16 @@ void			print_menu(t_cw *cw)
 	wnoutrefresh(cw->visu.menu);
 }
 
-void            print_maps(t_cw *cw)
+void			print_maps(t_cw *cw)
 {
-    wbkgd(cw->visu.bkg, COLOR_PAIR(11));
-    wrefresh(cw->visu.bkg);
-    print_map(cw);
-    wrefresh(cw->visu.map);
+	wbkgd(cw->visu.bkg, COLOR_PAIR(11));
+	wrefresh(cw->visu.bkg);
+	print_map(cw);
+	wrefresh(cw->visu.map);
 	print_header(cw);
 	print_menu(cw);
 	doupdate();
-    nodelay(cw->visu.menu, true);
+	nodelay(cw->visu.menu, true);
 	cbreak();
 	noecho();
 	wtimeout(cw->visu.menu, cw->visu.delay);
@@ -138,5 +149,5 @@ void			init_visu(t_cw *cw)
 	cw->visu.menu = newwin(10, 262, 69, 1);
 	cw->f.lg.pause = 1;
 	cw->visu.delay = 95;
-    print_maps(cw);
+	print_maps(cw);
 }

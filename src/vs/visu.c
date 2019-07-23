@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/22 21:05:11 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/23 13:43:03 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void			vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod)
 		wattroff(cw->visu.map, A_BOLD);
 	while (++i <= st_op->size)
 	{
-		mvwprintw(cw->visu.map, VPCY(pc), VPCX(pc), "%.2x", cw->map[PCV(pc)].v.code);
+		mvwprintw(cw->visu.map, VPCY(pc), VPCX(pc), "%.2x",\
+					cw->map[PCV(pc)].v.code);
 		pc++;
 	}
 	if (mod)
@@ -44,7 +45,8 @@ void			vs_backlight_car(t_cw *cw, size_t i_car, int32_t step)
 	pc = PCV(pc_prev + step);
 	col = -cw->car[i_car]->reg[0];
 	wattron(cw->visu.map, COLOR_PAIR(col * 2 - 1));
-	mvwprintw(cw->visu.map, VPCY(pc_prev), VPCX(pc_prev), "%.2x", cw->map[pc_prev].v.code);
+	mvwprintw(cw->visu.map, VPCY(pc_prev), VPCX(pc_prev), "%.2x",\
+				cw->map[pc_prev].v.code);
 	wattron(cw->visu.map, COLOR_PAIR(col * 2));
 	mvwprintw(cw->visu.map, VPCY(pc), VPCX(pc), "%.2x", cw->map[pc].v.code);
 	wrefresh(cw->visu.map);
@@ -54,7 +56,7 @@ void			vs_backlight_new_car(t_cw *cw, uint8_t col, int32_t pc)
 {
 	wattron(cw->visu.map, COLOR_PAIR(col * 2));
 	mvwprintw(cw->visu.map, VPCY(pc), VPCX(pc), "%.2x", cw->map[pc].v.code);
-	mvwprintw(cw->visu.header, 8, 13,"%-6d", cw->num_of_cars);
+	mvwprintw(cw->visu.header, 8, 13, "%-6d", cw->num_of_cars);
 	wnoutrefresh(cw->visu.map);
 	wnoutrefresh(cw->visu.header);
 }
@@ -63,7 +65,7 @@ void			vs_backlight_del_car(t_cw *cw, uint8_t col, int32_t pc)
 {
 	wattron(cw->visu.map, COLOR_PAIR(col * 2 - 1));
 	mvwprintw(cw->visu.map, VPCY(pc), VPCX(pc), "%.2x", cw->map[pc].v.code);
-	mvwprintw(cw->visu.header, 8, 13,"%-6d", cw->num_of_cars);
+	mvwprintw(cw->visu.header, 8, 13, "%-6d", cw->num_of_cars);
 	wnoutrefresh(cw->visu.map);
 	wnoutrefresh(cw->visu.header);
 }
@@ -91,5 +93,5 @@ void			visu(t_cw *cw)
 		}
 		if (!tmp)
 			cw->visu.st_op = tmp;
-	}	
+	}
 }

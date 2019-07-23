@@ -10,7 +10,8 @@ size_t		code_to_byte(const union u_map *src, int32_t pos, size_t n)
 	return (dst);
 }
 
-void		byte_to_code(union u_map *dst, int32_t pos, const void *src, size_t n)
+void		byte_to_code(union u_map *dst, int32_t pos, const void *src,\
+														size_t n)
 {
 	size_t	i;
 

@@ -24,10 +24,11 @@ static void			ind(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 		return ;
 	cw->pos = cw->car[i_car]->pc + cw->step;
 	cw->arg_code[i_arg] = code_to_byte(cw->map, cw->pos, IND_SIZE);
-	cw->arg[i_arg] = PCV(((int16_t)cw->arg_code[i_arg]) % IDX_MOD + cw->car[i_car]->pc);
+	cw->arg[i_arg] = PCV(((int16_t)cw->arg_code[i_arg]) % IDX_MOD +\
+												cw->car[i_car]->pc);
 }
 
-static void		dir(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
+static void			dir(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 {
 	cw->step += cw->op[i_op].label_size;
 	if (!(cw->op[i_op].args[i_arg] & T_DIR))
@@ -35,14 +36,15 @@ static void		dir(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 	if (cw->err)
 		return ;
 	cw->pos = cw->car[i_car]->pc + cw->step;
-	cw->arg_code[i_arg] = code_to_byte(cw->map, cw->pos, cw->op[i_op].label_size);
+	cw->arg_code[i_arg] = code_to_byte(cw->map, cw->pos,\
+												cw->op[i_op].label_size);
 	cw->arg[i_arg] = cw->pos;
 }
 
-int8_t			codage_validator(t_cw *cw, size_t i_car, uint8_t i_op)
+int8_t				codage_validator(t_cw *cw, size_t i_car, uint8_t i_op)
 {
-	int8_t		i_arg;
-	uint8_t		code;
+	int8_t			i_arg;
+	uint8_t			code;
 
 	cw->step = OPC_SIZE;
 	ft_bzero(cw->arg, sizeof(*cw->arg) * OP_NUM_ARGS);
@@ -60,7 +62,8 @@ int8_t			codage_validator(t_cw *cw, size_t i_car, uint8_t i_op)
 		else
 			cw->err = -1;
 	if (cw->f.lg.dbg || cw->f.lg.vs)
-		(cw->f.lg.dbg) ? dbg_log_cod(cw, i_car) : vs_backlight_car(cw, i_car, cw->step);
+		(cw->f.lg.dbg) ? dbg_log_cod(cw, i_car) :\
+										vs_backlight_car(cw, i_car, cw->step);
 	if (!cw->err)
 		return (0);
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);

@@ -15,12 +15,13 @@ static t_champ		*new_champ(uint8_t id_champ)
 int8_t				add_champ(t_cw *cw, uint8_t id_champ)
 {
 	uint8_t			i;
-	
+
 	i = 0;
 	while (i < cw->num_of_champs && id_champ)
 		if (cw->champ[i++]->id == id_champ)
 			return (-1);
-	if (!(cw->champ = (t_champ **)realloc(cw->champ, sizeof(t_champ *) * ++cw->num_of_champs)))
+	if (!(cw->champ = (t_champ **)realloc(cw->champ, sizeof(t_champ *) *\
+													++cw->num_of_champs)))
 		exit(ft_printf("%w\033[1;31mError\033[0m\n", STDERR));
 	if (!(cw->champ[IN(cw->num_of_champs)] = new_champ(id_champ)))
 		exit(ft_printf("%w\033[1;31mError\033[0m\n", STDERR));
