@@ -30,7 +30,7 @@ static int8_t	dies_checker(t_cw *cw)
 static void		car_cycler(t_cw *cw)
 {
 	size_t		i_car;
-	uint8_t		show;
+	int8_t		show;
 
 	show = 1;
 	i_car = cw->num_of_cars;
@@ -41,14 +41,14 @@ static void		car_cycler(t_cw *cw)
 			cw->car[i_car]->op_code = cw->map[cw->car[i_car]->pc].v.code;
 			if (cw->car[i_car]->op_code < 1 || OP_NUM < cw->car[i_car]->op_code)
 			{
-				cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + 1);
+				cw->car[i_car]->pc = (cw->car[i_car]->pc + 1) % MEM_SIZE;
 				i_car++;
 				continue ;
 			}
 			cw->car[i_car]->cycle_to_wait = cw->op[IN(cw->car[i_car]->op_code)].cycles;
 		}
-		if (cw->f.lg.dbg_c && cw->car[i_car]->cycle_to_wait == 1 && show-- > 0)
-			ft_printf("%38\033[37m|\033[1m%8s  Cycle: %7zu%9\033[22m|\n\r", "", cw->cycles);
+		if (cw->f.lg.dbg_c && show && cw->car[i_car]->cycle_to_wait == 1)
+			ft_printf("%38\033[37m|\033[1m%9d  Cycle: %7zu%9\033[22m|\n\r", show = 0, cw->cycles);
 		if (!(cw->car[i_car]->cycle_to_wait = IN(cw->car[i_car]->cycle_to_wait)))
 			cw->op[IN(cw->car[i_car]->op_code)].f(cw, i_car);
 	}
