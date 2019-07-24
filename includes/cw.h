@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/23 22:29:05 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/24 20:11:44 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 
 # include "op.h"
 # include "libft.h"
-# include "stack.h"
 # include <ncurses.h>
 
 # define AF						0x01
 # define DUMP					0x02
 # define VISU					0x04
 # define DEBUG					0x08
-# define PAUSE					0x10 | VISU
+# define PAUSE					0x10 | vs
 # define DUMP64					0x20 | DUMP
 # define DEBUG_C				0x40 | DEBUG
 # define DEBUG_R				0x80 | DEBUG
@@ -31,6 +30,33 @@
 
 # define CYCLE_TO_SHOW			50
 # define LIVES_TO_SHOW			50
+# define MAP_X					192
+
+# define COLOR_BRIGHT			0x8
+# define COLOR_GRAY				COLOR_BLACK | COLOR_BRIGHT
+# define COLOR_B_WHITE			COLOR_WHITE | COLOR_BRIGHT
+# define COL_CODE_CH1			1
+# define COL_CODE_CH2			2
+# define COL_CODE_CH3			3
+# define COL_CODE_CH4			4
+# define COL_CODE				5
+# define COL_BACK_CH1			6
+# define COL_BACK_CH2			7
+# define COL_BACK_CH3			8
+# define COL_BACK_CH4			9
+# define COL_BACK				10
+# define COL_LIVE_CODE_CH1		11
+# define COL_LIVE_CODE_CH2		12
+# define COL_LIVE_CODE_CH3		13
+# define COL_LIVE_CODE_CH4		14
+# define COL_GRAY_WHITE			15
+# define COL_LIVE_CAR_CH1		16
+# define COL_LIVE_CAR_CH2		17
+# define COL_LIVE_CAR_CH3		18
+# define COL_LIVE_CAR_CH4		19
+# define COL_TEXT				20
+# define COL_STEP				COL_BACK - COL_CODE
+# define COL_LIVE_STEP			COL_LIVE_CODE_CH1 - COL_CODE_CH1
 
 # define MAGIC_HEADER_SIZE		4
 # define DELIMETR_SIZE			4
@@ -66,21 +92,17 @@
 # define IN(x)					((x) ? ((x) - 1) : (x))
 # define PCV(x)					((((x) < 0) ? (MEM_SIZE - -(x)) : (x)) % MEM_SIZE)
 # define PC(x)					(PCV(IN(x)))
-
-# define COLOR_GRAY				8
-# define MAP_X					192
 # define VPCY(x)				((x) * 3 / MAP_X + 1)
 # define VPCX(x)				((x) * 3 % MAP_X + 1)
 
-typedef struct					s_visu
+typedef struct					s_vs
 {
 	WINDOW						*map;
 	WINDOW						*header;
 	WINDOW						*menu;
 	WINDOW						*bkg;
-	t_stack						*st_op;
 	uint32_t					delay;
-}								t_visu;
+}								t_vs;
 
 typedef struct					s_champ
 {
@@ -118,7 +140,7 @@ typedef struct					s_op
 
 struct							s_cw
 {
-	t_visu						visu;
+	t_vs						vs;
 	t_op						*op;
 	t_car						**car;
 	t_champ						**champ;
@@ -217,22 +239,15 @@ void							del_all_cars(t_cw *cw);
 
 int8_t							add_champ(t_cw *cw, uint8_t id_champ);
 
-void							st_del(t_stack **st_p);
-int8_t							st_err(int8_t retv, t_stack **st_p);
-t_stack							*st_new(t_cw *cw, size_t i_car, int32_t pc, size_t n);
-t_stack							*st_add(t_cw *cw, size_t i_car, int32_t pc, t_stack *st_dst);
-
-void							visu(t_cw *cw);
-void							wait_key(t_cw *cw);
-void							init_visu(t_cw *cw);
-void							visu_exit(t_cw *cw);
-void							print_cycles(t_cw *cw);
+void							vs(t_cw *cw);
+void							vs_init(t_cw *cw);
+void							vs_exit(t_cw *cw);
+void							vs_print_windows(t_cw *cw);
 void							vs_log(t_cw *cw, size_t i_car, int32_t pc);
-void							vs_backlight_map(t_cw *cw, t_stack *st_op, uint8_t mod);
-void							vs_backlight_car(t_cw *cw, size_t i_car, int32_t step);
-void							vs_backlight_new_car(t_cw *cw, uint8_t col, int32_t pc);
+void							vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mod);
+void							vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod);
 void							vs_backlight_del_car(t_cw *cw, int32_t pc);
 void							vs_checker(t_cw *cw, uint8_t mod);
-void							print_lives(t_cw *cw, uint8_t mod);
+void							vs_print_lives(t_cw *cw, uint8_t mod);
 
 #endif

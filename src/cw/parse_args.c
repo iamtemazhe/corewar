@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/24 12:34:28 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/24 18:42:01 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ void			fill_map(t_cw *cw)
 		while (j < cw->champ[i]->head.prog_size)
 		{
 			cw->map[k].v.code = cw->champ[i]->exec[j++];
-			cw->map[k++].v.col = cw->champ[i]->id * 2 - 1;
+			cw->map[k++].v.col = cw->champ[i]->id;
 		}
+		j = (MEM_SIZE / cw->num_of_champs) * (i + 1);
+		while (k < j)
+			cw->map[k++].v.col = COL_CODE;
 		i++;
 	}
 }

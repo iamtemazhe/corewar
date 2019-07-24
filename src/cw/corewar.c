@@ -8,7 +8,7 @@ static int8_t	dies_checker(t_cw *cw)
 	// ft_printf("checks = %d, lives = %d, cycle = %u, die = %d\n\r", cw->checks, cw->lives, cw->cycles, cw->cycle_to_die);
 	i = cw->num_of_cars;
 	if (cw->f.lg.vs)
-		print_lives(cw, 1);
+		vs_print_lives(cw, 1);
 	while (i-- > 0)
 		if ((int32_t)(cw->cycles - cw->car[i]->last_live) >= cw->cycle_to_die)
 			del_car(cw, i);
@@ -43,7 +43,7 @@ static void		car_cycler(t_cw *cw)
 			if (cw->car[i_car]->op_code < 1 || OP_NUM < cw->car[i_car]->op_code)
 			{
 				if (cw->f.lg.vs)
-					vs_backlight_car(cw, i_car, 1);
+					vs_backlight_car(cw, i_car, 1, 1);
 				cw->car[i_car]->pc = (cw->car[i_car]->pc + 1) % MEM_SIZE;
 				i_car++;
 				continue ;
@@ -59,8 +59,6 @@ static void		car_cycler(t_cw *cw)
 
 void				fight(t_cw *cw)
 {
-	// int				k;
-
 	while (1)
 	{
 		if (cw->f.lg.dump && cw->cycles == cw->cycle_to_dump)
@@ -71,7 +69,7 @@ void				fight(t_cw *cw)
 		car_cycler(cw);
 		cw->cycles++;
 		if (cw->f.lg.vs)
-			visu(cw);
+			vs(cw);
 	}
 }
 
@@ -81,17 +79,6 @@ int					main(int ac, char **av)
 
 	init_cw(&cw);
 	fill_cw(ac, av, &cw);
-	// ft_printf("num_of_champs = %d\n\r", cw.num_of_champs);
-	// ft_printf("cw->cycle_to_dump = %d\n\r", cw.cycle_to_dump);
-	// j = 0;
-	// while (j < cw.num_of_champs)
-	// {
-	// 	ft_printf("name_%d = %s\n\r", j, cw.champ[j].head.prog_name);
-	// 	ft_printf("size = %ud\n\r", j, cw.champ[j].head.prog_size);
-	// 	ft_printf("comment = %s\n\r", cw.champ[j].head.comment);
-	// 	ft_printf("id = %d\n\r", cw.champ[j].id);
-	// 	j++;
-	// }
 	// j = 0;
 	// while (j < 4096)
 	// {
@@ -100,23 +87,12 @@ int					main(int ac, char **av)
 	// }
 	// ft_printf("\n\r");
 	if (cw.f.lg.vs)
-		init_visu(&cw);
+		vs_init(&cw);
 	if (cw.f.lg.dbg)
 		dbg_log_top();
 	add_car(&cw, 0, 0);
-	cw.cycles++;
 	if (cw.f.lg.vs)
-	{
-		cw.f.lg.pause = 1;
-	// int		key = 0;
-	// while ((key = wgetch(cw.visu.menu)) != 32 && key != 'r')
-    //     if (key == 'q')
-	// 	    visu_exit(&cw);
-	// if (key == 'r')
-	// 	cw.f.lg.pause = 1;
-	// mvwprintw(cw.visu.header, 1, 1, "%s", "** RUNNIG **");
-		visu(&cw);
-	}
+		vs(&cw);
 	fight(&cw);
 	if (cw.f.lg.dbg)
 		dbg_log_bot();
@@ -135,7 +111,7 @@ int					main(int ac, char **av)
 	ft_printf("\n\rcycles = %u\n", cw.cycles);
 	if (cw.f.lg.vs)
 	{
-		while (wgetch(cw.visu.menu) != 'q')
+		while (wgetch(cw.vs.menu) == ERR)
 			sleep(1);
 		endwin();
 	}

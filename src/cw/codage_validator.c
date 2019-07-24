@@ -70,7 +70,7 @@ int8_t				codage_validator(t_cw *cw, size_t i_car, uint8_t i_op)
 			cw->err = -1;
 	if (cw->f.lg.dbg || cw->f.lg.vs)
 		(cw->f.lg.dbg) ? dbg_log_cod(cw, i_car) :\
-										vs_backlight_car(cw, i_car, cw->step);
+							vs_backlight_car(cw, i_car, cw->step, 1);
 	if (!cw->err)
 		return (0);
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);

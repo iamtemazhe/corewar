@@ -10,12 +10,12 @@ inline void		usage(int prnt, char *prog_name)
 	ft_printf("********************* TEXT OUTPUT MODE ********************************\n");
 	ft_printf("| -dump N       : Dumps memory by 32 octets after N cycles then exits |\n");
 	ft_printf("| -dump64 N     : Dumps memory by 64 octets after N cycles then exits |\n");
-	ft_printf("********************* VISUAL OUTPUT MODE ******************************\n");
+	ft_printf("********************* vsAL OUTPUT MODE ******************************\n");
 	ft_printf("| -d            : Debug mode                                          |\n");
 	ft_printf("| -dc           : Debug mode with cycles                              |\n");
 	ft_printf("| -dr           : Debug mode with car death                           |\n");
 	ft_printf("| -df           : Debug mode with all modifications                   |\n");
-	ft_printf("| -v            : Visual (by Ncurses) output mode                     |\n");
+	ft_printf("| -v            : vsal (by Ncurses) output mode                     |\n");
 	ft_printf("***********************************************************************\033[0m\n");
 	exit((prnt) ? -1 : 0);
 }
