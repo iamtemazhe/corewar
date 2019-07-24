@@ -9,7 +9,7 @@ static int8_t	dies_checker(t_cw *cw)
 	i = cw->num_of_cars;
 	if (cw->f.lg.vs)
 		vs_print_lives(cw, 1);
-	while (i-- > 0)
+	while (--i > 0)
 		if ((int32_t)(cw->cycles - cw->car[i]->last_live) >= cw->cycle_to_die)
 			del_car(cw, i);
 	if (++cw->checks == MAX_CHECKS || cw->lives >= NBR_LIVE)
@@ -45,13 +45,15 @@ static void		car_cycler(t_cw *cw)
 				if (cw->f.lg.vs)
 					vs_backlight_car(cw, i_car, 1, 1);
 				cw->car[i_car]->pc = (cw->car[i_car]->pc + 1) % MEM_SIZE;
-				i_car++;
 				continue ;
 			}
 			cw->car[i_car]->cycle_to_wait = cw->op[IN(cw->car[i_car]->op_code)].cycles;
 		}
 		if (cw->f.lg.dbg_c && show && cw->car[i_car]->cycle_to_wait == 1)
-			ft_printf("%38\033[37m|\033[1m%9d  Cycle: %7zu%9\033[22m|\n\r", show = 0, cw->cycles);
+		{
+			show = 0;
+			ft_printf("%38\033[37m|\033[1m%9d  Cycle: %7zu%9\033[22m|\n\r", cw->cycles);
+		}
 		if (!(cw->car[i_car]->cycle_to_wait = IN(cw->car[i_car]->cycle_to_wait)))
 			cw->op[IN(cw->car[i_car]->op_code)].f(cw, i_car);
 	}
@@ -61,6 +63,8 @@ void				fight(t_cw *cw)
 {
 	while (1)
 	{
+		if (cw->f.lg.vs)
+			vs(cw);
 		if (cw->f.lg.dump && cw->cycles == cw->cycle_to_dump)
 			dump(cw);
 		if (cw->cycle_to_die <= 0 || !(cw->cycles % cw->cycle_to_die))
@@ -68,8 +72,6 @@ void				fight(t_cw *cw)
 				return ;
 		car_cycler(cw);
 		cw->cycles++;
-		if (cw->f.lg.vs)
-			vs(cw);
 	}
 }
 
@@ -79,20 +81,20 @@ int					main(int ac, char **av)
 
 	init_cw(&cw);
 	fill_cw(ac, av, &cw);
-	// j = 0;
-	// while (j < 4096)
-	// {
-	// 	ft_printf("%x",  cw.map[j].v.code);
-	// 	j++;
-	// }
-	// ft_printf("\n\r");
 	if (cw.f.lg.vs)
 		vs_init(&cw);
 	if (cw.f.lg.dbg)
 		dbg_log_top();
 	add_car(&cw, 0, 0);
-	if (cw.f.lg.vs)
-		vs(&cw);
+	if (!cw.f.lg.vs)
+	{
+		ft_printf("Introducing contestants...\n");
+		int i = -1;
+		while (++i < cw.num_of_champs)
+			ft_printf("* Player %u, weighing %u bytes, \"%s\" (\"%s\") !\n",\
+								cw.champ[i]->id, cw.champ[i]->head.prog_size,\
+						cw.champ[i]->head.prog_name, cw.champ[i]->head.comment);
+	}
 	fight(&cw);
 	if (cw.f.lg.dbg)
 		dbg_log_bot();
@@ -108,7 +110,7 @@ int					main(int ac, char **av)
 	// 	ft_printf("%u ", PCV(i));
 	// 	i++;
 	// }
-	ft_printf("\n\rcycles = %u\n", cw.cycles);
+	// ft_printf("\n\rcycles = %u\n", cw.cycles);
 	if (cw.f.lg.vs)
 	{
 		while (wgetch(cw.vs.menu) == ERR)

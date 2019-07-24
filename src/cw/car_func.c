@@ -54,7 +54,7 @@ uint8_t				add_car(t_cw *cw, size_t i_car, int32_t pc)
 	cw->car[IN(cw->num_of_cars)]->carry = cw->car[i_car]->carry;
 	cw->car[IN(cw->num_of_cars)]->last_live = cw->car[i_car]->last_live;
 	ft_memcpy(cw->car[IN(cw->num_of_cars)]->reg, cw->car[i_car]->reg,\
-										REG_NUMBER * sizeof(uint32_t));
+										REG_NUMBER * sizeof(int32_t));
 	return (IN(cw->num_of_cars));
 }
 

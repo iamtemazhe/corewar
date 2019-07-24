@@ -14,7 +14,7 @@ void			op_live(t_cw *cw, size_t i_car)
 		while (++i < cw->num_of_champs)
 			if (cw->arg[0] == cw->champ[i]->id)
 			{
-				cw->champ[i]->last_live = cw->cycles;
+				cw->champ[i]->last_live = cw->cycles + 1;
 				cw->champ[i]->lives++;
 				cw->lives++;
 				break ;

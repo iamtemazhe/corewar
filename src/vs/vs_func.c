@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/24 20:16:45 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/24 22:21:04 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void			vs_print_lives(t_cw *cw, uint8_t mod)
 	{
 		if ((lives = ((cw->champ[i]->lives / cw->lives) * LIVES_TO_SHOW)))
 			wattron(cw->vs.header, COLOR_PAIR(cw->champ[i]->id));
-		while (lives-- > 0 && ++colum < 50)
+		while (lives-- > 0 && ++colum < 52)
 			mvwaddch(cw->vs.header, raw, colum, '-');
 		i++;
 	}
