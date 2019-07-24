@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/23 22:36:09 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/24 13:27:12 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,26 @@ void			vs_backlight_car(t_cw *cw, size_t i_car, int32_t step)
 
 	pc_prev = cw->car[i_car]->pc;
 	pc = PCV(pc_prev + step);
-	col = (cw->map[pc_prev].v.col) ? cw->map[pc_prev].v.col + 1 : -cw->car[i_car]->reg[0] * 2;
-	if (--cw->map[pc_prev].v.car)
+	//col = (cw->map[pc_prev].v.col) ? cw->map[pc_prev].v.col + 1 : -cw->car[i_car]->reg[0] * 2;
+	col = (cw->map[pc].v.col) ? cw->map[pc].v.col + 1 : -cw->car[i_car]->reg[0] * 2;
+	// if (--cw->map[pc_prev].v.car)
+	// {
+	// 	if (cw->map[pc_prev].v.live)
+	// 		wattron(cw->visu.map, COLOR_PAIR((cw->map[pc_prev].v.col + 8) | A_BOLD));
+	// 	else
+	// 		wattron(cw->visu.map, COLOR_PAIR(cw->map[pc_prev].v.col + 1) |\
+	// 							(cw->map[pc_prev].v.bold) ? A_BOLD : 0);
+	// 	mvwprintw(cw->visu.map, VPCY(pc_prev), VPCX(pc_prev), "%.2x",\
+	// 				cw->map[pc_prev].v.code);
+	// }
+	if (!(--cw->map[pc_prev].v.car) && !cw->map[pc_prev].v.live)
 	{
-		if (cw->map[pc_prev].v.live)
-			wattron(cw->visu.map, COLOR_PAIR((cw->map[pc_prev].v.col + 8) | A_BOLD));
-		else
-			wattron(cw->visu.map, COLOR_PAIR(cw->map[pc_prev].v.col) |\
-								(cw->map[pc_prev].v.bold) ? A_BOLD : 0);
+		wattron(cw->visu.map, COLOR_PAIR(cw->map[pc_prev].v.col));
 		mvwprintw(cw->visu.map, VPCY(pc_prev), VPCX(pc_prev), "%.2x",\
 					cw->map[pc_prev].v.code);
 	}
 	cw->map[pc].v.car++;
-	if (cw->map[pc_prev].v.live)
+	if (cw->map[pc].v.live)
 		wattron(cw->visu.map, COLOR_PAIR((cw->map[pc_prev].v.col + 8) | A_BOLD));
 	else
 		wattron(cw->visu.map, COLOR_PAIR(col));
