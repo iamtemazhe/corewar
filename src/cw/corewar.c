@@ -9,7 +9,7 @@ static int8_t	dies_checker(t_cw *cw)
 	i = cw->num_of_cars;
 	if (cw->f.lg.vs)
 		vs_print_lives(cw, 1);
-	while (--i > 0)
+	while (i-- > 0)
 		if ((int32_t)(cw->cycles - cw->car[i]->last_live) >= cw->cycle_to_die)
 			del_car(cw, i);
 	if (++cw->checks == MAX_CHECKS || cw->lives >= NBR_LIVE)
@@ -52,7 +52,7 @@ static void		car_cycler(t_cw *cw)
 		if (cw->f.lg.dbg_c && show && cw->car[i_car]->cycle_to_wait == 1)
 		{
 			show = 0;
-			ft_printf("%38\033[37m|\033[1m%9d  Cycle: %7zu%9\033[22m|\n\r", cw->cycles);
+			ft_printf("%38\033[37m|\033[1m%9s Cycle: %7zu%9\033[22m|\n\r", "", cw->cycles + 1);
 		}
 		if (!(cw->car[i_car]->cycle_to_wait = IN(cw->car[i_car]->cycle_to_wait)))
 			cw->op[IN(cw->car[i_car]->op_code)].f(cw, i_car);
@@ -113,6 +113,7 @@ int					main(int ac, char **av)
 	// ft_printf("\n\rcycles = %u\n", cw.cycles);
 	if (cw.f.lg.vs)
 	{
+		vs(&cw);
 		while (wgetch(cw.vs.menu) == ERR)
 			sleep(1);
 		endwin();

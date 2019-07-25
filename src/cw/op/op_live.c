@@ -3,16 +3,18 @@
 void			op_live(t_cw *cw, size_t i_car)
 {
 	int16_t		i;
+	int32_t		id;
 
-	cw->car[i_car]->last_live = cw->cycles;
+	cw->car[i_car]->last_live = cw->cycles + 1;
 	cw->step = OP_SIZE + cw->op[LIVE].label_size;
 	cw->pos = PCV(cw->car[i_car]->pc + cw->step);
-	cw->arg[0] = -code_to_byte(cw->map, cw->pos, cw->op[LIVE].label_size);
-	if (1 <= cw->arg[0] && cw->arg[0] <= MAX_PLAYERS)
+	cw->arg[0] = code_to_byte(cw->map, cw->pos, cw->op[LIVE].label_size);
+	id = -cw->arg[0];
+	if (1 <= id && id <= MAX_PLAYERS)
 	{
 		i = -1;
 		while (++i < cw->num_of_champs)
-			if (cw->arg[0] == cw->champ[i]->id)
+			if (id == cw->champ[i]->id)
 			{
 				cw->champ[i]->last_live = cw->cycles + 1;
 				cw->champ[i]->lives++;

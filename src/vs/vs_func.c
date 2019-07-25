@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/25 13:55:42 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/25 16:54:01 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 #include "libft.h"
 #include <ncurses.h>
 
-void			vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mod)
+void		vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mod)
 {
 	cw->map[pc].v.car++;
-	// (cw->map[pc].v.bold) ? wattron(cw->vs.map, A_BOLD) :\
-	// 						wattroff(cw->vs.map, A_BOLD);
-	//mvwprintw(cw->vs.header, 40 + col, 1, "id =  %d", col);	
-	wattroff(cw->vs.map, A_BOLD);
+	(cw->map[pc].v.bold) ? wattron(cw->vs.map, A_BOLD) :\
+											wattroff(cw->vs.map, A_BOLD);
+	//wattroff(cw->vs.map, A_BOLD);
 	if (cw->map[pc].v.live)
 		wattron(cw->vs.map,\
 			COLOR_PAIR(cw->map[pc].v.col + COL_LIVE_STEP + COL_STEP) | A_BOLD);
@@ -33,9 +32,9 @@ void			vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mod)
 		mvwprintw(cw->vs.header, 8, 13, "%-6d", cw->num_of_cars);
 }
 
-void			vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod)
+void		vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod)
 {
-	int32_t		pc;
+	int32_t	pc;
 
 	pc = cw->car[i_car]->pc;
 	if (!(--cw->map[pc].v.car))
@@ -50,18 +49,13 @@ void			vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod)
 			wattroff(cw->vs.map, A_BOLD);
 	}
 	if (mod)
-	{
 		vs_backlight_on_car(cw, -cw->car[i_car]->reg[0], PCV(pc + step), 0);
-		//uint8_t id = -cw->car[i_car]->reg[0];
-		//mvwprintw(cw->vs.header, 40 + id, 1, "id =  %u", id);
-	}
-		
 }
 
-void			vs_log(t_cw *cw, size_t i_car, int32_t pc)
+void		vs_log(t_cw *cw, size_t i_car, int32_t pc)
 {
-	uint8_t		i;
-	uint8_t		id;
+	uint8_t	i;
+	uint8_t	id;
 
 	id = -cw->car[i_car]->reg[0];
 	if (cw->car[i_car]->op_code == cw->op[LIVE].code)
@@ -79,19 +73,18 @@ void			vs_log(t_cw *cw, size_t i_car, int32_t pc)
 	wattron(cw->vs.map, COLOR_PAIR(id) | A_BOLD);
 	while (++i <= REG_SIZE)
 	{
-		mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%.2x",\
-					cw->map[pc].v.code);
-		cw->map[pc].v.col = id; 	
+		mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%.2x", cw->map[pc].v.code);
+		cw->map[pc].v.col = id;
 		cw->map[pc].v.bold = CYCLE_TO_SHOW;
 		pc = PCV(pc + 1);
 	}
 	wattroff(cw->vs.map, A_BOLD);
 }
 
-void			vs_checker(t_cw *cw, uint8_t mod)
+void		vs_checker(t_cw *cw, uint8_t mod)
 {
-	uint8_t		i;
-	uint8_t		raw;
+	uint8_t	i;
+	uint8_t	raw;
 
 	if (mod)
 	{
@@ -102,15 +95,15 @@ void			vs_checker(t_cw *cw, uint8_t mod)
 	i = 0;
 	raw = 8;
 	while (i < cw->num_of_champs)
-		mvwprintw(cw->vs.header, raw += 4 , 31, "%7u", cw->champ[i++]->lives);
+		mvwprintw(cw->vs.header, raw += 4, 31, "%7u", cw->champ[i++]->lives);
 }
 
-void			vs_print_lives(t_cw *cw, uint8_t mod)
+void		vs_print_lives(t_cw *cw, uint8_t mod)
 {
-	uint8_t		i;
-	uint8_t		raw;
-	uint8_t		colum;
-	uint8_t		lives;
+	uint8_t	i;
+	uint8_t	raw;
+	uint8_t	colum;
+	uint8_t	lives;
 
 	if (!cw->lives)
 		return ;
