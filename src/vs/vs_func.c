@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_func.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/24 22:21:04 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/25 13:55:42 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 void			vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mod)
 {
 	cw->map[pc].v.car++;
-	(cw->map[pc].v.bold) ? wattron(cw->vs.map, A_BOLD) :\
-							wattroff(cw->vs.map, A_BOLD);
+	// (cw->map[pc].v.bold) ? wattron(cw->vs.map, A_BOLD) :\
+	// 						wattroff(cw->vs.map, A_BOLD);
+	//mvwprintw(cw->vs.header, 40 + col, 1, "id =  %d", col);	
+	wattroff(cw->vs.map, A_BOLD);
 	if (cw->map[pc].v.live)
 		wattron(cw->vs.map,\
 			COLOR_PAIR(cw->map[pc].v.col + COL_LIVE_STEP + COL_STEP) | A_BOLD);
@@ -48,7 +50,12 @@ void			vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod)
 			wattroff(cw->vs.map, A_BOLD);
 	}
 	if (mod)
+	{
 		vs_backlight_on_car(cw, -cw->car[i_car]->reg[0], PCV(pc + step), 0);
+		//uint8_t id = -cw->car[i_car]->reg[0];
+		//mvwprintw(cw->vs.header, 40 + id, 1, "id =  %u", id);
+	}
+		
 }
 
 void			vs_log(t_cw *cw, size_t i_car, int32_t pc)
