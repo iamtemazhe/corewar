@@ -114,9 +114,13 @@ int					main(int ac, char **av)
 	if (cw.f.lg.vs)
 	{
 		vs(&cw);
+		mvwprintw(cw.vs.header, 40, 1, "Winner : %s", cw.champ[0]->head.prog_name);
+		mvwprintw(cw.vs.header, 41, 1, "To exit, press any key.");
+		wrefresh(cw.vs.header);
 		while (wgetch(cw.vs.menu) == ERR)
 			sleep(1);
-		endwin();
+		vs_exit(&cw);
+		//endwin();
 	}
 	return (0);
 }

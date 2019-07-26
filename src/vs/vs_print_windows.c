@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:47:11 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/25 17:55:31 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/26 13:02:38 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void		print_header(t_cw *cw)
 	raw = 9;
 	mvwprintw(cw->vs.header, 1, 1, "%s", "** PAUSED **");
 	mvwprintw(cw->vs.header, 3, 1, "%s %-4u", "Cycles/second limit :",\
-											1000 - (cw->vs.delay * 10));
+											150 - (cw->vs.delay * 10));
 	mvwprintw(cw->vs.header, 6, 1, "%s %-7u", "Cycle :", cw->cycles);
 	mvwprintw(cw->vs.header, 8, 1, "%s %-7u", "Processes :", cw->num_of_cars);
 	while (i < cw->num_of_champs)
@@ -96,12 +96,12 @@ static void		print_menu(t_cw *cw)
 
 void			vs_print_windows(t_cw *cw)
 {
-	cw->vs.bkg = newwin(80, 264, 0, 0);
+	cw->vs.bkg = newwin(74, 254, 0, 0);
 	cw->vs.map = newwin(67, 194, 1, 1);
-	cw->vs.header = newwin(67, 67, 1, 196);
-	cw->vs.menu = newwin(10, 262, 69, 1);
+	cw->vs.header = newwin(67, 57, 1, 196);
+	cw->vs.menu = newwin(4, 252, 69, 1);
 	cw->f.lg.pause = 1;
-	cw->vs.delay = 95;
+	cw->vs.delay = 10;
 	wbkgd(cw->vs.bkg, COLOR_PAIR(COL_BACK));
 	wattron(cw->vs.menu, COLOR_PAIR(COL_TEXT) | A_BOLD);
 	wattron(cw->vs.header, COLOR_PAIR(COL_TEXT) | A_BOLD);

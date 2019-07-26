@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/24 19:34:13 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/26 12:44:51 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ static void		vs_map(t_cw *cw)
 
 static void		select_key(t_cw *cw, int key)
 {
-	if (key == 'q' && cw->vs.delay <= 95)
+	if (key == 'q' && cw->vs.delay <= 15)
 		cw->vs.delay += 5;
-	else if (key == 'w' && cw->vs.delay < 100)
+	else if (key == 'w' && cw->vs.delay < 150)
 		cw->vs.delay++;
 	else if (key == 'r' && cw->vs.delay >= 5)
 		cw->vs.delay -= 5;
 	else if (key == 'e' && cw->vs.delay >= 1)
 		cw->vs.delay--;
-	mvwprintw(cw->vs.header, 3, 23, "%-4u", 1000 - (cw->vs.delay * 10));
+	mvwprintw(cw->vs.header, 3, 23, "%-4u", 150 - (cw->vs.delay * 10));
 	wrefresh(cw->vs.header);
 	wtimeout(cw->vs.menu, cw->vs.delay);
 }
