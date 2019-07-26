@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/26 18:55:47 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/26 19:07:08 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,7 @@ void							dbg_log_top();
 void							dbg_log_bot();
 void							dump(t_cw *cw);
 void							present(t_cw *cw);
+void							results(t_cw *cw);
 void							usage(int prnt, char *prog_name);
 
 uint8_t							add_car(t_cw *cw, size_t i_car, int32_t pc);

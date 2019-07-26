@@ -66,10 +66,6 @@ static void			fight(t_cw *cw)
 		car_cycler(cw);
 		cw->cycles++;
 	}
-	if (cw->f.lg.dbg)
-		dbg_log_bot();
-	else if (cw->f.lg.vs)
-		vs_out(cw);
 }
 
 int					main(int ac, char **av)
@@ -83,5 +79,6 @@ int					main(int ac, char **av)
 	add_car(&cw, 0, 0);
 	present(&cw);
 	fight(&cw);
+	results(&cw);
 	return (0);
 }

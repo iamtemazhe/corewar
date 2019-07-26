@@ -15,7 +15,7 @@ void			usage(int prnt, char *prog_name)
 	ft_printf("| -dc           : Debug mode with cycles                              |\n");
 	ft_printf("| -dr           : Debug mode with car death                           |\n");
 	ft_printf("| -df           : Debug mode with all modifications                   |\n");
-	ft_printf("| -v            : vsal (by Ncurses) output mode                     |\n");
+	ft_printf("| -v            : visual (by Ncurses) output mode                     |\n");
 	ft_printf("***********************************************************************\033[0m\n");
 	exit((prnt) ? -1 : 0);
 }
@@ -32,11 +32,23 @@ void			present(t_cw *cw)
 	i_champ = 0;
 	while (i_champ < cw->num_of_champs)
 	{
-		ft_printf("* Player %u, weighing %u bytes, \"%s\" (\"%s\") !\n",\
+		ft_printf("* Player %u, weighing %u bytes, \"%s\" (\"%s\") !\n\r",\
 				cw->champ[i_champ]->id, cw->champ[i_champ]->head.prog_size,\
 				cw->champ[i_champ]->head.prog_name, cw->champ[i_champ]->head.comment);
 		i_champ++;
 	}
+}
+
+void			results(t_cw *cw)
+{
+	if (cw->f.lg.dbg)
+		dbg_log_bot();
+	else if (cw->f.lg.vs)
+		vs_out(cw);
+	if (cw->f.lg.vs || cw->f.lg.dbg)
+		return ;
+	ft_printf("Contestant %u, \"%s\", has won !\n\r",\
+				cw->last_live_id, cw->champ[cw->last_live_id - 1]->head.prog_name);
 }
 
 void			dump(t_cw *cw)
