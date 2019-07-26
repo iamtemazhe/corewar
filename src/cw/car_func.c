@@ -16,7 +16,6 @@ static t_car		*new_car(t_cw *cw, uint8_t id_champ, int32_t pc)
 	new_car->pc = pc;
 	ft_bzero(new_car->reg, REG_NUMBER * sizeof(uint32_t));
 	new_car->reg[0] = -id_champ;
-	mvwprintw(cw->vs.header, 40 + id_champ, 1, "id_champ from new car =  %u | id_champ = %u, cycle = %u", id_champ, -new_car->reg[0], cw->cycles);
 	if (cw->f.lg.vs)
 		vs_backlight_on_car(cw, id_champ, pc, 1);
 	return (new_car);

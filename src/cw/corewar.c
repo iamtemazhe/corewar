@@ -46,7 +46,8 @@ static void		car_cycler(t_cw *cw)
 			}
 			cw->car[i_car]->cycle_to_wait = cw->op[IN(cw->car[i_car]->op_code)].cycles;
 		}
-		if (!(cw->car[i_car]->cycle_to_wait = IN(cw->car[i_car]->cycle_to_wait)))
+		if (!(--cw->car[i_car]->cycle_to_wait))
+		// if (!(cw->car[i_car]->cycle_to_wait = IN(cw->car[i_car]->cycle_to_wait)))
 			cw->op[IN(cw->car[i_car]->op_code)].f(cw, i_car);
 	}
 }
@@ -56,7 +57,7 @@ static void			fight(t_cw *cw)
 	while (1)
 	{
 		if (cw->f.lg.vs)
-			vs(cw, 1);
+			vs(cw);
 		if (cw->f.lg.dump && cw->cycles == cw->cycle_to_dump)
 			dump(cw);
 		if (cw->cycle_to_die <= 0 || cw->cycles == cw->cycle_to_check)
@@ -68,7 +69,7 @@ static void			fight(t_cw *cw)
 	if (cw->f.lg.dbg)
 		dbg_log_bot();
 	else if (cw->f.lg.vs)
-		vs(cw, 0);
+		vs_out(cw);
 }
 
 int					main(int ac, char **av)

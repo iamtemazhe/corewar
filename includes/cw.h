@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/26 16:47:18 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/26 18:55:47 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ struct							s_cw
 	int32_t						arg[OP_NUM_ARGS];
 	uint32_t					lives;
 	uint32_t					arg_code[OP_NUM_ARGS];
-	size_t						last_live;
+	size_t						last_live_id;
 	size_t						cycles;
 	size_t						cycle_to_dump;
 	size_t						cycle_to_check;
@@ -241,7 +241,8 @@ void							del_cars(t_cw *cw);
 
 int8_t							add_champ(t_cw *cw, uint8_t id_champ);
 
-void							vs(t_cw *cw, uint8_t mode);
+void							vs(t_cw *cw);
+void							vs_out(t_cw *cw);
 void							vs_init(t_cw *cw);
 void							vs_exit(t_cw *cw);
 void							vs_print_windows(t_cw *cw);

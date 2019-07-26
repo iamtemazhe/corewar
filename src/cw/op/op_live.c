@@ -17,6 +17,7 @@ void			op_live(t_cw *cw, size_t i_car)
 			if (id == cw->champ[i]->id)
 			{
 				cw->champ[i]->last_live = cw->cycles + 1;
+				cw->last_live_id = id;
 				cw->champ[i]->lives++;
 				cw->lives++;
 				break ;
