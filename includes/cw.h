@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/26 19:07:08 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/26 19:17:35 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,8 @@ struct							s_cw
 	int32_t						step;
 	int32_t						cycle_to_die;
 	int32_t						arg[OP_NUM_ARGS];
-	uint32_t					lives;
 	uint32_t					arg_code[OP_NUM_ARGS];
+	size_t						lives;
 	size_t						last_live_id;
 	size_t						cycles;
 	size_t						cycle_to_dump;
