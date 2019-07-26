@@ -2,7 +2,7 @@
 #include "cw.h"
 #include "libft.h"
 
-void				init_cw(t_cw *cw)
+void				cw_init(t_cw *cw)
 {
 	cw->champ = NULL;
 	cw->car = NULL;
@@ -14,6 +14,7 @@ void				init_cw(t_cw *cw)
 	cw->checks = 0;
 	cw->cycles = 0;
 	cw->cycle_to_die = CYCLE_TO_DIE;
+	cw->cycle_to_check = CYCLE_TO_DIE;
 	cw->cycle_to_dump = 0;
 	cw->step = 0;
 	cw->pos = 0;

@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/24 20:11:44 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/26 16:47:18 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ struct							s_cw
 	size_t						last_live;
 	size_t						cycles;
 	size_t						cycle_to_dump;
+	size_t						cycle_to_check;
 	size_t						num_of_cars;
 	size_t						max_num_of_cars;
 		union
@@ -171,6 +172,7 @@ struct							s_cw
 			uint8_t				pause	: 1;
 			uint8_t				dump64	: 1;
 			uint8_t				dbg_c	: 1;
+			uint8_t				dbg_cm	: 1;
 			uint8_t				dbg_r	: 1;
 			uint8_t				vs_live	: 1;
 		}						lg;
@@ -222,24 +224,24 @@ size_t							code_to_byte(const union u_map *src, int32_t pos, size_t n);
 void							byte_to_code(union u_map *dst, int32_t pos, const void *src, size_t n);
 
 int8_t							codage_validator(t_cw *cw, size_t i_car, uint8_t i_op);
-void							fill_cw(int ac, char **av, t_cw *cw);
+void							cw_fill(int ac, char **av, t_cw *cw);
 int								ft_strrstr(const char *haystack, const char *needle);
 
+void							cw_init(t_cw *cw);
 void							dbg_log(t_cw *cw, size_t i_car);
 void							dbg_log_cod(t_cw *cw, size_t i_car);
 void							dbg_log_top();
 void							dbg_log_bot();
-void							usage(int prnt, char *prog_name);
-void							init_cw(t_cw *cw);
 void							dump(t_cw *cw);
+void							present(t_cw *cw);
+void							usage(int prnt, char *prog_name);
 
 uint8_t							add_car(t_cw *cw, size_t i_car, int32_t pc);
-void							del_car(t_cw *cw, size_t i_car);
-void							del_all_cars(t_cw *cw);
+void							del_cars(t_cw *cw);
 
 int8_t							add_champ(t_cw *cw, uint8_t id_champ);
 
-void							vs(t_cw *cw);
+void							vs(t_cw *cw, uint8_t mode);
 void							vs_init(t_cw *cw);
 void							vs_exit(t_cw *cw);
 void							vs_print_windows(t_cw *cw);

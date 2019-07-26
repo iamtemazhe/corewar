@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_print_windows.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:47:11 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/26 13:02:38 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/26 17:00:33 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void		print_map(t_cw *cw)
 	while (j < MEM_SIZE)
 	{
 		wattron(cw->vs.map, COLOR_PAIR(cw->map[j].v.col));
-		mvwprintw(cw->vs.map, raw, col++, "%.2x", cw->map[j++].v.code);
+		mvwprintw(cw->vs.map, raw, col++, "%02x", cw->map[j++].v.code);
 		col += 2;
 		if (col > MAP_X && raw++)
 			col = 1;

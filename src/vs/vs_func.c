@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_func.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/25 16:54:01 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/26 17:00:34 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@ void		vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mod)
 	cw->map[pc].v.car++;
 	(cw->map[pc].v.bold) ? wattron(cw->vs.map, A_BOLD) :\
 											wattroff(cw->vs.map, A_BOLD);
-	//wattroff(cw->vs.map, A_BOLD);
 	if (cw->map[pc].v.live)
 		wattron(cw->vs.map,\
 			COLOR_PAIR(cw->map[pc].v.col + COL_LIVE_STEP + COL_STEP) | A_BOLD);
 	else
 		wattron(cw->vs.map, COLOR_PAIR(((cw->map[pc].v.col == COL_CODE) ?\
 										col : cw->map[pc].v.col) + COL_STEP));
-	mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%.2x", cw->map[pc].v.code);
+	mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%02x", cw->map[pc].v.code);
 	wattroff(cw->vs.map, A_BOLD);
 	if (mod)
-		mvwprintw(cw->vs.header, 8, 13, "%-6d", cw->num_of_cars);
+		mvwprintw(cw->vs.header, 8, 13, "%-7u", cw->num_of_cars);
 }
 
 void		vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod)
@@ -43,7 +42,7 @@ void		vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod)
 						((cw->map[pc].v.live) ? COL_LIVE_STEP : 0)));
 		if (cw->map[pc].v.bold)
 			wattron(cw->vs.map, A_BOLD);
-		mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%.2x",\
+		mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%02x",\
 												cw->map[pc].v.code);
 		if (cw->map[pc].v.bold && !mod)
 			wattroff(cw->vs.map, A_BOLD);
@@ -73,7 +72,7 @@ void		vs_log(t_cw *cw, size_t i_car, int32_t pc)
 	wattron(cw->vs.map, COLOR_PAIR(id) | A_BOLD);
 	while (++i <= REG_SIZE)
 	{
-		mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%.2x", cw->map[pc].v.code);
+		mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%02x", cw->map[pc].v.code);
 		cw->map[pc].v.col = id;
 		cw->map[pc].v.bold = CYCLE_TO_SHOW;
 		pc = PCV(pc + 1);

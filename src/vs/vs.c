@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/26 12:44:51 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/26 17:00:33 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void		vs_backlight_off_map(t_cw *cw, int32_t pc)
 	else if (pc > 0 && (cw->map[pc - 1].v.col != cw->map[pc].v.col ||\
 												cw->map[pc - 1].v.car))
 		wattron(cw->vs.map, COLOR_PAIR(cw->map[pc].v.col));
-	mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%.2x",\
+	mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%02x",\
 												cw->map[pc].v.code);
 }
 
@@ -80,14 +80,40 @@ static void		wait_key(t_cw *cw)
 		}
 }
 
-void			vs(t_cw *cw)
+void			vs(t_cw *cw, uint8_t mode)
 {
 	vs_map(cw);
 	wnoutrefresh(cw->vs.map);
 	mvwprintw(cw->vs.header, 6, 9, "%-7u", cw->cycles);
-	wait_key(cw);
-	if (cw->f.lg.vs_live)
-		vs_print_lives(cw, 0);
+	if (mode)
+	{
+		wait_key(cw);
+		if (cw->f.lg.vs_live)
+			vs_print_lives(cw, 0);
+	}
+	else
+	{
+		uint8_t		raw;
+
+		raw = 11 + 4 * cw->num_of_champs;
+		mvwprintw(cw->vs.header, 6, 9, "%-7u", cw->cycles);
+		mvwprintw(cw->vs.header, 8, 13, "%-7u", cw->num_of_cars);
+		mvwprintw(cw->vs.header, 40, 1, "The winner is : ");
+		mvwprintw(cw->vs.header, 42, 1, "Press any key to exit");
+		wattroff(cw->vs.header, A_BOLD);
+		mvwprintw(cw->vs.header, raw, 1, "%s",\
+			"[--------------------------------------------------]");
+		mvwprintw(cw->vs.header, raw += 3, 1, "%s",\
+			"[--------------------------------------------------]");	
+		wattron(cw->vs.header, COLOR_PAIR(cw->champ[0]->id) | A_BOLD);
+		mvwprintw(cw->vs.header, 40, 17, "%s", cw->champ[0]->head.prog_name);
+	}
 	wnoutrefresh(cw->vs.header);
 	doupdate();
+	if (!mode)
+	{
+		while (wgetch(cw->vs.menu) == ERR)
+			sleep(1);
+		vs_exit(cw);
+	}
 }

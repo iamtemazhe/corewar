@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/24 18:42:01 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/26 16:25:03 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ static void		sort_champs(t_cw *cw)
 	}
 }
 
-void			fill_cw(int ac, char **av, t_cw *cw)
+void			cw_fill(int ac, char **av, t_cw *cw)
 {
 	if (ac == 1)
 		usage(0, av[0]);

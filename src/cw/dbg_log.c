@@ -1,6 +1,6 @@
 #include "cw.h"
 
-inline void		dbg_log_top(void)
+inline void			dbg_log_top(void)
 {
 	ft_printf("\033[0m\033[2J");
 	ft_printf(",---------------------------------------------------------------------------------------,\n\r");
@@ -8,14 +8,22 @@ inline void		dbg_log_top(void)
 	ft_printf("|------|----|-------|----|-----------|--------|--------|--------|-----|-----|-----|-----|\n\r");
 }
 
-inline void		dbg_log_bot(void)
+inline void			dbg_log_bot(void)
 {
 	ft_printf("\033[0m");
 	ft_printf("'---------------------------------------------------------------------------------------'\n\r");
 }
 
-inline void		dbg_log_cod(t_cw *cw, size_t i_car)
+static inline void	dbg_log_cycles(t_cw *cw)
 {
+	cw->f.lg.dbg_cm = 0;
+	ft_printf("%38\033[37m|\033[1m%9s Cycle: %7zu%9\033[22m|\n\r", "", cw->cycles + 1);
+}
+
+inline void			dbg_log_cod(t_cw *cw, size_t i_car)
+{
+	if (cw->f.lg.dbg_cm && cw->f.lg.dbg_c)
+		dbg_log_cycles(cw);
 	ft_printf("\033[3%1um|\033[1m%5u \033[22m|%4u|%6s | %02x |%02b %02b %02b %02b|%8x|%8x|%8x|%5s|%5d|%5d|%5d|\n\r",
 				cw->car[i_car]->id % 6 + 1, cw->car[i_car]->id, cw->car[i_car]->pc,
 				cw->op[IN(cw->car[i_car]->op_code)].name, cw->car[i_car]->op_code,
@@ -24,8 +32,10 @@ inline void		dbg_log_cod(t_cw *cw, size_t i_car)
 				cw->arg[0], cw->arg[1], cw->arg[2]);
 }
 
-inline void		dbg_log(t_cw *cw, size_t i_car)
+inline void			dbg_log(t_cw *cw, size_t i_car)
 {
+	if (cw->f.lg.dbg_cm && cw->f.lg.dbg_c)
+		dbg_log_cycles(cw);
 	ft_printf("\033[3%1um|\033[1m%5u \033[22m|%4u|%6s | %02x |%12|%8x|%9|%9|%5s|%5d|%6|%6|\n\r",
 				cw->car[i_car]->id % 6 + 1, cw->car[i_car]->id, cw->car[i_car]->pc,
 				cw->op[IN(cw->car[i_car]->op_code)].name, cw->car[i_car]->op_code, cw->arg[0],

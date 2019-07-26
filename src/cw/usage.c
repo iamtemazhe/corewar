@@ -1,7 +1,7 @@
 #include "cw.h"
 #include "libft.h"
 
-inline void		usage(int prnt, char *prog_name)
+void			usage(int prnt, char *prog_name)
 {
 	ft_printf("\033[1;30mUsage: %s [-dump N | -dump64 N] [-d | -dc | -v] [-a] [-n N] <champion.cor> <...>\n", prog_name);
 	ft_printf("*********************** PROGRAMM FLAGS ********************************\n");
@@ -20,9 +20,28 @@ inline void		usage(int prnt, char *prog_name)
 	exit((prnt) ? -1 : 0);
 }
 
+void			present(t_cw *cw)
+{
+	uint8_t		i_champ;
+
+	if (cw->f.lg.dbg)
+		dbg_log_top();
+	if (cw->f.lg.vs || cw->f.lg.dbg)
+		return ;
+	ft_printf("Introducing contestants...\n\r");
+	i_champ = 0;
+	while (i_champ < cw->num_of_champs)
+	{
+		ft_printf("* Player %u, weighing %u bytes, \"%s\" (\"%s\") !\n",\
+				cw->champ[i_champ]->id, cw->champ[i_champ]->head.prog_size,\
+				cw->champ[i_champ]->head.prog_name, cw->champ[i_champ]->head.comment);
+		i_champ++;
+	}
+}
+
 void			dump(t_cw *cw)
 {
-	size_t		i;
+	int32_t		i;
 	uint8_t		num_of_oct;
 
 	i = 0;
@@ -31,10 +50,7 @@ void			dump(t_cw *cw)
 	{
 		if (!(i % num_of_oct))
 			ft_printf("0x%04zx : ", i);
-		// ft_printf("%02x%c", cw->map[i].v.code, ((i % num_of_oct) == num_of_oct - 1) ? '\n' : ' ');
-		ft_printf("%02x%c", cw->map[i].v.code, ' ');
-		if ((i % num_of_oct) == num_of_oct - 1)
-			write(1, "\n", 1);
+		ft_printf("%02x%c", cw->map[i].v.code, ((i % num_of_oct) == num_of_oct - 1) ? '\n' : ' ');
 		i++;
 	}
 	exit(0);

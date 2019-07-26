@@ -64,19 +64,29 @@ static void			del_one_car(t_cw *cw, size_t i_car)
 	if (cw->f.lg.dbg_r)
 		ft_printf("%38\033[3%1um|%9s Carry# %7u DEAD! %2|\n\r",\
 					cw->car[i_car]->id % 6 + 1, "", cw->car[i_car]->id);
-	if (cw->f.lg.vs)
+	else if (cw->f.lg.vs)
 		vs_backlight_car(cw, i_car, 0, 0);
 	free(cw->car[i_car]);
 	cw->car[i_car] = NULL;
+	cw->num_of_cars--;
 }
 
-void				del_car(t_cw *cw, size_t i_car)
+void				del_cars(t_cw *cw)
 {
-	del_one_car(cw, i_car);
-	while (++i_car < cw->num_of_cars)
-	{
-		cw->car[IN(i_car)] = cw->car[i_car];
-		cw->car[i_car] = NULL;
-	}
-	cw->num_of_cars--;
+	size_t		i_car;
+	size_t		first_car;
+	size_t		num_of_cars;
+
+	i_car = cw->num_of_cars;
+	num_of_cars = cw->num_of_cars;
+	while (i_car-- > 0)
+		if ((int32_t)(cw->cycles - cw->car[i_car]->last_live) >= cw->cycle_to_die)
+		{
+			del_one_car(cw, i_car);
+			first_car = i_car;
+		}
+	i_car = first_car;
+	while (++first_car < num_of_cars)
+		if (cw->car[first_car])
+			cw->car[i_car++] = cw->car[first_car];
 }
