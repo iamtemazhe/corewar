@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_print_windows.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:47:11 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/26 17:00:33 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/27 20:13:49 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,12 @@ static void		print_header(t_cw *cw)
 
 static void		print_menu(t_cw *cw)
 {
-	mvwprintw(cw->vs.menu, 1, 129, "%s", "MENU");
-	mvwprintw(cw->vs.menu, 2, 1, "%s", "Esc for exit");
-	mvwprintw(cw->vs.menu, 2, 20, "%s", "Spase for pause | run");
-	mvwprintw(cw->vs.menu, 2, 50, "%s", "For step by step s");
-	mvwprintw(cw->vs.menu, 2, 80, "%s", "Speed q | w | e | r");
+	mvwprintw(cw->vs.menu, 0, 129, "%s", "MENU");
+	mvwprintw(cw->vs.menu, 2, 16, "%s", "'Esc' for exit");
+	mvwprintw(cw->vs.menu, 2, 55, "%s", "'Spase' for pause | run");
+	mvwprintw(cw->vs.menu, 2, 95, "%s", "For step by step press 's'");
+	mvwprintw(cw->vs.menu, 2, 135, "%s", "Speed 'q' | 'w' | 'e' | 'r'");
+	mvwprintw(cw->vs.menu, 2, 175, "%s", "To turn on the audio press 'a'");	
 	keypad(cw->vs.menu, TRUE);
 }
 
@@ -114,4 +115,5 @@ void			vs_print_windows(t_cw *cw)
 	noecho();
 	wtimeout(cw->vs.menu, cw->vs.delay);
 	wnoutrefresh(cw->vs.menu);
+	//vs_audio(0);
 }

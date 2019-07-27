@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   vs_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:31:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/24 20:28:57 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/27 13:26:18 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw.h"
 #include "libft.h"
 #include <ncurses.h>
+
+void			vs_audio(uint8_t mod)
+{
+	(mod) ? system("afplay src/audio/win.mp3 &> /dev/null &") :\
+					system("afplay src/audio/fail.mp3 &> /dev/null &");
+}
 
 void			vs_exit(t_cw *cw)
 {

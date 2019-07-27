@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/27 14:56:01 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/27 17:33:17 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,5 +255,6 @@ void							vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod);
 void							vs_backlight_del_car(t_cw *cw, int32_t pc);
 void							vs_checker(t_cw *cw, uint8_t mod);
 void							vs_print_lives(t_cw *cw, uint8_t mod);
+void							vs_audio(uint8_t mod);
 
 #endif
