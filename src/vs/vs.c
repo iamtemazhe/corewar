@@ -6,29 +6,19 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/26 18:58:42 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/27 16:21:17 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw.h"
-/*
-static void		vs_backlight_off_map(t_cw *cw, int32_t pc)
-{
-	if (cw->map[pc].v.car)
-		wattron(cw->vs.map, COLOR_PAIR(cw->map[pc].v.col + COL_STEP));
-	else if (pc > 0 && (cw->map[pc - 1].v.col != cw->map[pc].v.col ||\
-												cw->map[pc - 1].v.car))
-		wattron(cw->vs.map, COLOR_PAIR(cw->map[pc].v.col));
-	mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%02x",\
-												cw->map[pc].v.code);
-}
-*/
+
 static void		vs_map(t_cw *cw)
 {
 	int32_t		pc;
+	uint8_t		col;
 
+	col = 0;
 	pc = -1;
-	wattron(cw->vs.map, COLOR_PAIR(cw->map[0].v.col));
 	while (++pc < MEM_SIZE)
 		if (cw->map[pc].v.bold)
 			if (!(--cw->map[pc].v.bold))
@@ -36,13 +26,11 @@ static void		vs_map(t_cw *cw)
 				if (cw->map[pc].v.live)
 					cw->map[pc].v.live = 0;
 				if (cw->map[pc].v.car)
-					wattron(cw->vs.map, COLOR_PAIR(cw->map[pc].v.col + COL_STEP));
-				else if (pc > 0 && (cw->map[pc - 1].v.col != cw->map[pc].v.col ||\
-															cw->map[pc - 1].v.car))
+					wattron(cw->vs.map, COLOR_PAIR((col = cw->map[pc].v.col + COL_STEP)));
+				else if (col != cw->map[pc].v.col)
 					wattron(cw->vs.map, COLOR_PAIR(cw->map[pc].v.col));
 				mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%02x",\
 												cw->map[pc].v.code);
-				// vs_backlight_off_map(cw, pc);
 			}
 }
 

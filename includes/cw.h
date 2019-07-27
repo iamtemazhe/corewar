@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/26 19:17:35 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/27 14:56:01 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,10 +222,12 @@ void							op_aff(t_cw *cw, size_t i_car);
 
 size_t							code_to_byte(const union u_map *src, int32_t pos, size_t n);
 void							byte_to_code(union u_map *dst, int32_t pos, const void *src, size_t n);
-
 int8_t							codage_validator(t_cw *cw, size_t i_car, uint8_t i_op);
-void							cw_fill(int ac, char **av, t_cw *cw);
-int								ft_strrstr(const char *haystack, const char *needle);
+
+
+uint8_t							cw_strrstr(const char *haystack, const char *needle);
+void							cw_map_filler(int ac, char **av, t_cw *cw);
+void							cw_flg_analis(int ac, char **av, t_cw *cw, int i);
 
 void							cw_init(t_cw *cw);
 void							dbg_log(t_cw *cw, size_t i_car);
@@ -237,7 +239,7 @@ void							present(t_cw *cw);
 void							results(t_cw *cw);
 void							usage(int prnt, char *prog_name);
 
-uint8_t							add_car(t_cw *cw, size_t i_car, int32_t pc);
+void							add_car(t_cw *cw, size_t i_car, int32_t pc);
 void							del_cars(t_cw *cw);
 
 int8_t							add_champ(t_cw *cw, uint8_t id_champ);

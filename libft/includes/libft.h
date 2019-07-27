@@ -6,13 +6,14 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 13:25:51 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/19 19:07:00 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/27 15:13:11 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stdlib.h>
+# include <stdint.h>
 # include <unistd.h>
 # include <wchar.h>
 # include <fcntl.h>

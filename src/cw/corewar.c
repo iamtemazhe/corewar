@@ -47,7 +47,6 @@ static void		car_cycler(t_cw *cw)
 			cw->car[i_car]->cycle_to_wait = cw->op[IN(cw->car[i_car]->op_code)].cycles;
 		}
 		if (!(--cw->car[i_car]->cycle_to_wait))
-		// if (!(cw->car[i_car]->cycle_to_wait = IN(cw->car[i_car]->cycle_to_wait)))
 			cw->op[IN(cw->car[i_car]->op_code)].f(cw, i_car);
 	}
 }
@@ -73,7 +72,7 @@ int					main(int ac, char **av)
 	t_cw			cw;
 
 	cw_init(&cw);
-	cw_fill(ac, av, &cw);
+	cw_map_filler(ac, av, &cw);
 	if (cw.f.lg.vs)
 		vs_init(&cw);
 	add_car(&cw, 0, 0);

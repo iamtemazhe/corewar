@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/26 17:00:34 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/27 16:22:29 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void		vs_log(t_cw *cw, size_t i_car, int32_t pc)
 	uint8_t	i;
 	uint8_t	id;
 
-	id = -cw->car[i_car]->reg[0];
+	id = cw->map[cw->car[i_car]->pc].v.col;
 	if (cw->car[i_car]->op_code == cw->op[LIVE].code)
 	{
 		wattron(cw->vs.header, COLOR_PAIR(COL_TEXT) | A_BOLD);

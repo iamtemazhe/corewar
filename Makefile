@@ -6,7 +6,7 @@
 #    By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 13:26:35 by jwinthei          #+#    #+#              #
-#    Updated: 2019/07/26 16:26:08 by jwinthei         ###   ########.fr        #
+#    Updated: 2019/07/27 15:08:35 by jwinthei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,14 +24,15 @@ LIB_D= libft/
 INC_S= includes/
 INC_L= libft/includes/
 
-OP_S =	op_add.c		op_aff.c	op_and.c	op_fork.c	op_ld.c		op_ldi.c\
-		op_lfork.c		op_live.c	op_lld.c	op_lldi.c	op_or.c		op_st.c\
-		op_sti.c		op_sub.c	op_xor.c	op_zjmp.c
+OP_S =	op_add.c	op_aff.c	op_and.c	op_fork.c	op_ld.c		op_ldi.c\
+		op_lfork.c	op_live.c	op_lld.c	op_lldi.c	op_or.c		op_st.c\
+		op_sti.c	op_sub.c	op_xor.c	op_zjmp.c
 
 VS_S =	vs.c			vs_init.c	vs_func.c	vs_print_windows.c
 
-CW_S =	corewar.c		byte_func.c	codage_validator.c		parse_args.c		ft_strrstr.c\
-		dbg_log.c		car_func.c	champ_func.c 			cw_init.c			usage.c
+CW_S =	corewar.c		cw_init.c	cw_usage.c	cw_strrstr.c\
+		champ_func.c	car_func.c	dbg_log.c	byte_func.c\
+		cw_map_filler.c	cw_validator.c			codage_validator.c
 
 
 CW_C =	$(addprefix $(SRC_D)/$(CW_D), $(CW_S))	$(addprefix $(SRC_D)/$(CW_D)/$(OP_D)/, $(OP_S))\

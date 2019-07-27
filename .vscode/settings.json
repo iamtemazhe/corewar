@@ -13,6 +13,8 @@
         "string_view": "c",
         "utility": "c",
         "vector": "c",
-        "op.h": "c"
+        "op.h": "c",
+        "libft.h": "c",
+        "ft_printf.h": "c"
     }
 }
