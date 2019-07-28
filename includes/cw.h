@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/27 17:33:17 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 13:59:42 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
 # define DUMP					0x02
 # define VISU					0x04
 # define DEBUG					0x08
-# define PAUSE					0x10 | vs
-# define DUMP64					0x20 | DUMP
-# define DEBUG_C				0x40 | DEBUG
-# define DEBUG_R				0x80 | DEBUG
+# define DUMP64					0x10 | DUMP
+# define DEBUG_C				0x20 | DEBUG
+# define DEBUG_R				0x40 | DEBUG
 # define DEBUG_F				DEBUG | DEBUG_C | DEBUG_R
-# define VS_LIVE				0x100
+# define VS_LIVE				0x100 | VISU
+# define VS_PAUSE				0x200 | VISU
+# define VS_AUDIO				0x400 | VISU
 
 # define CYCLE_TO_SHOW			50
 # define LIVES_TO_SHOW			50
@@ -169,12 +170,13 @@ struct							s_cw
 			uint8_t				dump	: 1;
 			uint8_t				vs		: 1;
 			uint8_t				dbg		: 1;
-			uint8_t				pause	: 1;
 			uint8_t				dump64	: 1;
 			uint8_t				dbg_c	: 1;
 			uint8_t				dbg_cm	: 1;
 			uint8_t				dbg_r	: 1;
 			uint8_t				vs_live	: 1;
+			uint8_t				vs_pause: 1;
+			uint8_t				vs_audio: 1;
 		}						lg;
 	}							f;
 	union

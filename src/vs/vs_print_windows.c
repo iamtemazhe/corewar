@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_print_windows.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:47:11 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/27 20:13:49 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 13:59:59 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void			vs_print_windows(t_cw *cw)
 	cw->vs.map = newwin(67, 194, 1, 1);
 	cw->vs.header = newwin(67, 57, 1, 196);
 	cw->vs.menu = newwin(4, 252, 69, 1);
-	cw->f.lg.pause = 1;
+	cw->f.lg.vs_pause = 1;
 	cw->vs.delay = 10;
 	wbkgd(cw->vs.bkg, COLOR_PAIR(COL_BACK));
 	wattron(cw->vs.menu, COLOR_PAIR(COL_TEXT) | A_BOLD);

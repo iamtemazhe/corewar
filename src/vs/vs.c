@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/27 16:21:17 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/28 13:59:59 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,17 @@ static void		wait_key(t_cw *cw)
 	while (1)
 		if ((key = wgetch(cw->vs.menu)) == 27)
 			vs_exit(cw);
-		else if (key == 32 || (key == 's' && !cw->f.lg.pause))
-			cw->f.lg.pause =\
-				(key == 's' || (key == 32 && !cw->f.lg.pause)) ? 1 : 0;
+		else if (key == 32 || (key == 's' && !cw->f.lg.vs_pause))
+			cw->f.lg.vs_pause =\
+				(key == 's' || (key == 32 && !cw->f.lg.vs_pause)) ? 1 : 0;
 		else if (key == 'q' || key == 'w' || key == 'e' || key == 'r')
 			select_key(cw, key);
-		else if (!cw->f.lg.pause || key == 's')
+		else if (!cw->f.lg.vs_pause || key == 's')
 		{
 			mvwprintw(cw->vs.header, 1, 1, "%s", "** RUNNIG **");
 			break ;
 		}
-		else if (cw->f.lg.pause && prnt--)
+		else if (cw->f.lg.vs_pause && prnt--)
 		{
 			mvwprintw(cw->vs.header, 1, 1, "%s", "** PAUSED **");
 			wrefresh(cw->vs.header);
