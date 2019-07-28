@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/28 19:57:12 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:21:44 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ typedef struct					s_vs
 	WINDOW						*map;
 	WINDOW						*header;
 	WINDOW						*bkg;
-	WINDOW						*aff;	
+	WINDOW						*aff;
+	size_t						champs_lives;
 	uint32_t					delay;
 }								t_vs;
 
@@ -161,7 +162,6 @@ struct							s_cw
 	int32_t						arg[OP_NUM_ARGS];
 	uint32_t					arg_code[OP_NUM_ARGS];
 	size_t						lives;
-	size_t						champ_lives;
 	size_t						last_live_id;
 	size_t						cycles;
 	size_t						start_cycle;

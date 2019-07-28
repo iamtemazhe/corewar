@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:31:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 15:07:05 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:30:05 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void			vs_audio(uint8_t mod)
 {
+	system("pkill afplay");
 	(mod) ? system("afplay src/audio/win.mp3 &> /dev/null &") :\
 					system("afplay src/audio/fail.mp3 &> /dev/null &");
 }

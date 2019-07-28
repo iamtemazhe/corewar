@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 20:04:09 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:24:31 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void		wait_key(t_cw *cw)
 		else if (key == 32 || (key == 's' && !cw->f.lg.vs_pause))
 			cw->f.lg.vs_pause =\
 				(key == 's' || (key == 32 && !cw->f.lg.vs_pause)) ? 1 : 0;
-		else if (key == 'q' || key == 'w' || key == 'e' || key == 'r')
+		else if (key == 'q' || key == 'w' || key == 'e' || key == 'r' || key == 'a')
 			select_key(cw, key);
 		else if (!cw->f.lg.vs_pause || key == 's')
 		{
@@ -91,7 +91,9 @@ void			vs_out(t_cw *cw)
 	mvwprintw(cw->vs.header, raw, 1, "%s",\
 		"[--------------------------------------------------]");
 	mvwprintw(cw->vs.header, raw + 3, 1, "%s",\
-		"[--------------------------------------------------]");	
+		"[--------------------------------------------------]");
+	if (cw->f.lg.vs_audio)
+		vs_audio(1);
 	wattron(cw->vs.header, COLOR_PAIR(cw->last_live_id) | A_BOLD);
 	mvwprintw(cw->vs.header, raw + 14, 17, "%s", cw->champ[cw->last_live_id - 1]->head.prog_name);
 	wnoutrefresh(cw->vs.header);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_func.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 20:11:53 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:21:22 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc)
 
 	if (cw->car[i_car]->op_code == cw->op[LIVE].code)
 	{
-		cw->champ_lives++;
+		cw->vs.champs_lives++;
 		cw->map[pc].v.bold = CYCLE_TO_SHOW;
 		cw->map[pc].v.live = 1;
 		cw->f.lg.vs_live = 1;
@@ -104,7 +104,7 @@ void		vs_print_lives(t_cw *cw, uint8_t mod)
 	uint8_t	colum;
 	uint8_t	lives;
 
-	if (!cw->lives)
+	if (!cw->vs.champs_lives)
 		return ;
 	i = 0;
 	lives = 0;
@@ -112,11 +112,12 @@ void		vs_print_lives(t_cw *cw, uint8_t mod)
 	raw = (mod) ? 14 + cw->num_of_champs * 4 : 11 + cw->num_of_champs * 4;
 	while (i < cw->num_of_champs)
 	{
-		if ((lives = ((cw->champ[i]->lives / cw->lives) * LIVES_TO_SHOW)))
+		if ((lives = cw->champ[i]->lives * LIVES_TO_SHOW / cw->vs.champs_lives))
 			wattron(cw->vs.header, COLOR_PAIR(cw->champ[i]->id));
 		while (lives-- > 0 && ++colum < 52)
 			mvwaddch(cw->vs.header, raw, colum, '-');
 		i++;
 	}
+	cw->vs.champs_lives = (mod) ? 0 : cw->vs.champs_lives;
 	wattron(cw->vs.header, COLOR_PAIR(COL_TEXT) | A_BOLD);
 }

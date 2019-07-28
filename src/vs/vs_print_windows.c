@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_print_windows.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:47:11 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 18:40:34 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/28 19:58:33 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static void		print_menu(t_cw *cw)
 	mvwprintw(cw->vs.bkg, 70, 55, "%s", "'Spase' for pause | run");
 	mvwprintw(cw->vs.bkg, 70, 95, "%s", "For step by step press 's'");
 	mvwprintw(cw->vs.bkg, 70, 135, "%s", "Speed 'q' | 'w' | 'e' | 'r'");
-	mvwprintw(cw->vs.bkg, 70, 175, "%s", "To turn on the audio press 'a'");
+	mvwprintw(cw->vs.bkg, 70, 175, "%s", "To turn on/off the audio press 'a'");
 	keypad(cw->vs.bkg, TRUE);
 }
 

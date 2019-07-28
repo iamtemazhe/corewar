@@ -14,7 +14,7 @@ void				cw_init(t_cw *cw)
 	cw->num_of_champs = 0;
 	cw->err = 0;
 	cw->lives = 0;
-	cw->champ_lives = 0;
+	cw->vs.champs_lives = 0;
 	cw->checks = 0;
 	cw->cycles = 0;
 	cw->start_cycle = 0;
