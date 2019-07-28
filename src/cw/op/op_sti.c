@@ -11,6 +11,6 @@ void			op_sti(t_cw *cw, size_t i_car)
 	cw->pos = PCV(cw->pos % IDX_MOD + cw->car[i_car]->pc);
 	byte_to_code(cw->map, cw->pos, &cw->car[i_car]->reg[IN(cw->arg[0])], REG_SIZE);
 	if (cw->f.lg.vs)
-		vs_log(cw, i_car, cw->pos);
+		vs_log(cw, i_car, 0, cw->pos);
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);
 }

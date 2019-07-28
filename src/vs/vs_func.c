@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/27 16:22:29 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/28 16:56:36 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,23 @@ void		vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod)
 		vs_backlight_on_car(cw, -cw->car[i_car]->reg[0], PCV(pc + step), 0);
 }
 
-void		vs_log(t_cw *cw, size_t i_car, int32_t pc)
+void		vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc)
 {
 	uint8_t	i;
 	uint8_t	id;
 
-	id = cw->map[cw->car[i_car]->pc].v.col;
 	if (cw->car[i_car]->op_code == cw->op[LIVE].code)
 	{
-		wattron(cw->vs.header, COLOR_PAIR(COL_TEXT) | A_BOLD);
 		cw->map[pc].v.bold = CYCLE_TO_SHOW;
 		cw->map[pc].v.live = 1;
 		cw->f.lg.vs_live = 1;
-		i = 7 + id * 4;
-		mvwprintw(cw->vs.header, i++, 31, "%7u", cw->champ[IN(id)]->last_live);
-		mvwprintw(cw->vs.header, i, 31, "%7u", cw->champ[IN(id)]->lives);
+		i = 11 + i_champ * 4;
+		mvwprintw(cw->vs.header, i++, 31, "%7u", cw->champ[i_champ]->last_live);
+		mvwprintw(cw->vs.header, i, 31, "%7u", cw->champ[i_champ]->lives);
 		return ;
 	}
 	i = 0;
+	id = (uint8_t)(-cw->car[i_car]->reg[0]);
 	wattron(cw->vs.map, COLOR_PAIR(id) | A_BOLD);
 	while (++i <= REG_SIZE)
 	{

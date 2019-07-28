@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 14:56:46 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 18:26:36 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,12 @@ void			vs_out(t_cw *cw)
 void			vs(t_cw *cw)
 {
 	vs_map(cw);
-	wnoutrefresh(cw->vs.map);
 	mvwprintw(cw->vs.header, 6, 9, "%-7u", cw->cycles);
-	wait_key(cw);
 	if (cw->f.lg.vs_live)
 		vs_print_lives(cw, 0);
-	wnoutrefresh(cw->vs.header);
-	doupdate();
+	if (cw->vs.cycles > cw->cycles)
+		return ;
+	wnoutrefresh(cw->vs.map);
+	wait_key(cw);
+	wrefresh(cw->vs.header);
 }

@@ -4,7 +4,7 @@
 static t_car		*new_car(t_cw *cw, uint8_t id_champ, int32_t pc)
 {
 	t_car			*new_car;
-	static uint8_t	id_car = 0;
+	static size_t	id_car = 0;
 
 	if (!(new_car = (t_car *)malloc(sizeof(t_car))))
 		return (NULL);
@@ -50,12 +50,12 @@ void				add_car(t_cw *cw, size_t i_car, int32_t pc)
 			exit (ft_puterr(-1, "Error"));
 		cw->max_num_of_cars = cw->num_of_cars;
 	}
-	if (!(cw->car[IN(cw->num_of_cars)] = new_car(cw,\
-											-cw->car[i_car]->reg[0], pc)))
+	if (!(cw->car[cw->num_of_cars - 1] = new_car(cw,\
+									(uint8_t)(-cw->car[i_car]->reg[0]), pc)))
 		exit (ft_puterr(-1, "Error"));
-	cw->car[IN(cw->num_of_cars)]->carry = cw->car[i_car]->carry;
-	cw->car[IN(cw->num_of_cars)]->last_live = cw->car[i_car]->last_live;
-	ft_memcpy(cw->car[IN(cw->num_of_cars)]->reg, cw->car[i_car]->reg,\
+	cw->car[cw->num_of_cars - 1]->carry = cw->car[i_car]->carry;
+	cw->car[cw->num_of_cars - 1]->last_live = cw->car[i_car]->last_live;
+	ft_memcpy(cw->car[cw->num_of_cars - 1]->reg, cw->car[i_car]->reg,\
 										REG_NUMBER * sizeof(int32_t));
 }
 
@@ -88,5 +88,10 @@ void				del_cars(t_cw *cw)
 	i_car = first_car;
 	while (++first_car < num_of_cars)
 		if (cw->car[first_car])
+		{
 			cw->car[i_car++] = cw->car[first_car];
+			cw->car[first_car] = NULL;
+		}
+	if (cw->num_of_cars != num_of_cars)
+		mvwprintw(cw->vs.header, 8, 13, "%-7u", cw->num_of_cars);
 }

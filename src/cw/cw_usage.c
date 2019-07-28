@@ -28,11 +28,11 @@ void			present(t_cw *cw)
 		dbg_log_top();
 	if (cw->f.lg.vs || cw->f.lg.dbg)
 		return ;
-	ft_printf("Introducing contestants...\n\r");
+	ft_printf("Introducing contestants...\n");
 	i_champ = 0;
 	while (i_champ < cw->num_of_champs)
 	{
-		ft_printf("* Player %u, weighing %u bytes, \"%s\" (\"%s\") !\n\r",\
+		ft_printf("* Player %u, weighing %u bytes, \"%s\" (\"%s\") !\n",\
 				cw->champ[i_champ]->id, cw->champ[i_champ]->head.prog_size,\
 				cw->champ[i_champ]->head.prog_name, cw->champ[i_champ]->head.comment);
 		i_champ++;
@@ -63,7 +63,10 @@ void			dump(t_cw *cw)
 	{
 		if (!(i % num_of_oct))
 			ft_printf("0x%04zx : ", i);
-		ft_printf("%02x%c", cw->map[i].v.code, ((i % num_of_oct) == num_of_oct - 1) ? '\n' : ' ');
+		// ft_printf("%02x%c", cw->map[i].v.code, ((i % num_of_oct) == num_of_oct - 1) ? '\n' : ' ');
+		ft_printf("%02x ", cw->map[i].v.code);
+		if ((i % num_of_oct) == num_of_oct - 1)
+			write (1, "\n", 1);
 		i++;
 	}
 	exit(0);

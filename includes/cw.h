@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/28 16:13:10 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 18:01:31 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,18 @@
 # include "libft.h"
 # include <ncurses.h>
 
-# define AF						0x01
-# define DUMP					0x02
-# define VISU					0x04
-# define DEBUG					0x08
-# define DUMP64					0x10 | DUMP
-# define DEBUG_C				0x20 | DEBUG
-# define DEBUG_R				0x40 | DEBUG
+# define AF						0x001
+# define DUMP					0x002
+# define VISU					0x004
+# define DEBUG					0x008
+# define DUMP64					0x010 | DUMP
+# define DEBUG_C				0x020 | DEBUG
+# define DEBUG_R				0x040 | DEBUG
 # define DEBUG_F				DEBUG | DEBUG_C | DEBUG_R
 # define VS_LIVE				0x100 | VISU
 # define VS_PAUSE				0x200 | VISU
 # define VS_AUDIO				0x400 | VISU
+# define VS_DBG					0x800 | VISU
 
 # define CYCLE_TO_SHOW			50
 # define LIVES_TO_SHOW			50
@@ -103,6 +104,7 @@ typedef struct					s_vs
 	WINDOW						*bkg;
 	WINDOW						*aff;	
 	uint32_t					delay;
+	size_t						cycles;
 }								t_vs;
 
 typedef struct					s_champ
@@ -177,6 +179,7 @@ struct							s_cw
 			uint8_t				vs_live	: 1;
 			uint8_t				vs_pause: 1;
 			uint8_t				vs_audio: 1;
+			uint8_t				vs_dbg	: 1;
 		}						lg;
 	}							f;
 	union
@@ -252,7 +255,7 @@ void							vs_init(t_cw *cw);
 void							vs_exit(t_cw *cw);
 void							vs_audio(uint8_t mod);
 void							vs_print_windows(t_cw *cw);
-void							vs_log(t_cw *cw, size_t i_car, int32_t pc);
+void							vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc);
 void							vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mod);
 void							vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod);
 void							vs_backlight_del_car(t_cw *cw, int32_t pc);

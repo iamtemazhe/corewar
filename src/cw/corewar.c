@@ -77,6 +77,7 @@ int					main(int ac, char **av)
 		vs_init(&cw);
 	add_car(&cw, 0, 0);
 	present(&cw);
+	cw.vs.cycles = 6300;
 	fight(&cw);
 	results(&cw);
 	return (0);
