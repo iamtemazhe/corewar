@@ -17,13 +17,7 @@ static t_car		*new_car(t_cw *cw, uint8_t id_champ, int32_t pc)
 	ft_bzero(new_car->reg, REG_NUMBER * sizeof(uint32_t));
 	new_car->reg[0] = -id_champ;
 	if (cw->f.lg.vs)
-	{
 		vs_backlight_on_car(cw, id_champ, pc, 1);
-	// mvwprintw(cw->vs.header, id_car + 40, 1,
-							// "id[%u] = %-7u, cycle = %-7u", id_car, id_champ, cw->cycles);
-	// wrefresh(cw->vs.menu);
-
-	}
 	return (new_car);
 }
 
@@ -63,13 +57,6 @@ void				add_car(t_cw *cw, size_t i_car, int32_t pc)
 	cw->car[IN(cw->num_of_cars)]->last_live = cw->car[i_car]->last_live;
 	ft_memcpy(cw->car[IN(cw->num_of_cars)]->reg, cw->car[i_car]->reg,\
 										REG_NUMBER * sizeof(int32_t));
-	int i;
-	i = cw->num_of_cars;
-	while (i-- > 0)
-		mvwprintw(cw->vs.header, i + 40, 1,\
-							"id[%u] = %-7u, cycle = %-7u", i, cw->champ[-cw->car[i]->reg[0] - 1]->id, cw->cycles);
-	wrefresh(cw->vs.menu);
-
 }
 
 static void			del_one_car(t_cw *cw, size_t i_car)

@@ -6,7 +6,7 @@
 #    By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 13:26:35 by jwinthei          #+#    #+#              #
-#    Updated: 2019/07/27 15:08:35 by jwinthei         ###   ########.fr        #
+#    Updated: 2019/07/28 14:19:47 by jwinthei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ CW_C =	$(addprefix $(SRC_D)/$(CW_D), $(CW_S))	$(addprefix $(SRC_D)/$(CW_D)/$(OP_
 		$(addprefix $(SRC_D)/$(VS_D), $(VS_S))
 
 FLG  = -Wall -Wextra -Werror
-CFLAGS=-O3 -I $(INC_L) -I $(INC_S) $(FLG) 
+CFLAGS=-O2 -I $(INC_L) -I $(INC_S) $(FLG) 
 
 CW_O = $(CW_C:.c=.o)
 
