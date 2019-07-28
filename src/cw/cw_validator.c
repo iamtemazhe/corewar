@@ -100,13 +100,10 @@ static int		flg_analis_2(char **av, t_cw *cw, int i, size_t j)
 	}
 	else if (av[i][j] == 'v' && !av[i][j + 1] && !cw->f.lg.err && !cw->f.lg.vs)
 			cw->f.lag |= VISU;
-	else if (av[i][j] == 's' && !av[i][j + 1])
-		{
-			cw->f.lag |= PRG_STRT;
-			if (++i == cw->pos || (!(cw->start_cycle = ft_atoi(av[i])) && av[i][0] != '0'))
+	else if (av[i][j] == 's' && !av[i][j + 1] && (cw->f.lag |= PRG_STRT) &&\
+				(++i == cw->pos || (!(cw->start_cycle = ft_atoi(av[i])) && av[i][0] != '0')))
 				usage(ft_printf("%w\033[1;31mInvalid dump size: %s [arg#: %d]\n",\
 									STDERR, (i == cw->pos) ? NULL : av[i], i), av[0]);
-		}
 	else
 		cw->f.lg.err = 1;
 	if (cw->f.lg.vs_err || cw->f.lg.dbg_err)
