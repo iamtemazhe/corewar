@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/28 13:59:42 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/28 15:02:35 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ typedef struct					s_vs
 {
 	WINDOW						*map;
 	WINDOW						*header;
-	WINDOW						*menu;
 	WINDOW						*bkg;
+	WINDOW						*aff;	
 	uint32_t					delay;
 }								t_vs;
 
