@@ -89,7 +89,9 @@ static int		args_analis(char *arg, char **av, t_cw *cw, int i)
 
 static void		flg_analis_2(char **av, t_cw *cw, int i, size_t j)
 {
-	if (av[i][j] == 'd' && !av[i][j + 1] && !cw->f.lg.dbg)
+	if (av[i][j] == 'a' && !av[i][j + 1] && !cw->f.lg.af)
+		cw->f.lag |= AF;
+	else if (av[i][j] == 'd' && !av[i][j + 1] && !cw->f.lg.dbg)
 		cw->f.lag |= DEBUG;
 	else if (av[i][j] == 'd' && av[i][j + 1] == 'c' && !av[i][j + 2])
 		cw->f.lag |= DEBUG_C;
@@ -97,7 +99,7 @@ static void		flg_analis_2(char **av, t_cw *cw, int i, size_t j)
 		cw->f.lag |= DEBUG_R;
 	else if (av[i][j] == 'd' && av[i][j + 1] == 'f' && !av[i][j + 2])
 		cw->f.lag |= DEBUG_F;
-	else if (av[i][j] == 'v' && !av[i][j + 1] && !cw->f.lg.err && !cw->f.lg.vs)
+	else if (av[i][j] == 'v' && !av[i][j + 1] && !cw->f.lg.vs)
 		cw->f.lag |= VISU;
 	else
 		usage(ft_printf("%w\033[1;31mInvalid flag: %s [arg#: %d]\n",\

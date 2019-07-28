@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/28 20:21:44 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 21:22:11 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@
 # define VS_PAUSE				0x0200 | VISU
 # define VS_AUDIO				0x0400 | VISU
 # define PRG_STRT				0x0800
-# define FLG_ERR				0x8000
-# define DUMP_ERR				0x1000 | FLG_ERR
-# define DBG_ERR				0x2000 | FLG_ERR
-# define VS_ERR					0x4000 | FLG_ERR
 
 # define CYCLE_TO_SHOW			50
 # define LIVES_TO_SHOW			50
@@ -169,11 +165,11 @@ struct							s_cw
 	size_t						cycle_to_check;
 	size_t						num_of_cars;
 	size_t						max_num_of_cars;
-		union
+	union
 	{
 		uint16_t				lag;
 		struct
-		{	
+		{
 			uint8_t				af		: 1;
 			uint8_t				dump	: 1;
 			uint8_t				vs		: 1;
@@ -186,17 +182,13 @@ struct							s_cw
 			uint8_t				vs_pause: 1;
 			uint8_t				vs_audio: 1;
 			uint8_t				prg_strt: 1;
-			uint8_t				dump_err: 1;
-			uint8_t				dbg_err	: 1;
-			uint8_t				vs_err	: 1;
-			uint8_t				err		: 1;
 		}						lg;
 	}							f;
 	union
 	{
 		uint8_t					age;
 		struct
-		{	
+		{
 			uint8_t				v4 : 2;
 			uint8_t				v3 : 2;
 			uint8_t				v2 : 2;

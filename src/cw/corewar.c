@@ -57,6 +57,8 @@ static void			fight(t_cw *cw)
 	{
 		if (cw->f.lg.vs)
 			vs(cw);
+		if (cw->f.lg.dbg_c && cw->f.lg.prg_strt && cw->start_cycle == cw->cycles)
+			exit (0);
 		if (cw->f.lg.dump && cw->cycles == cw->cycle_to_dump)
 			dump(cw);
 		if (cw->cycle_to_die <= 0 || cw->cycles == cw->cycle_to_check)

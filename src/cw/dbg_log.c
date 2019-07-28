@@ -22,7 +22,7 @@ static inline void	dbg_log_cycles(t_cw *cw)
 
 inline void			dbg_log_cod(t_cw *cw, size_t i_car)
 {
-	if (cw->start_cycle > cw->cycles)
+	if (cw->start_cycle > cw->cycles + 1)
 		return ;
 	if (cw->f.lg.dbg_cm && cw->f.lg.dbg_c)
 		dbg_log_cycles(cw);
@@ -36,7 +36,7 @@ inline void			dbg_log_cod(t_cw *cw, size_t i_car)
 
 inline void			dbg_log(t_cw *cw, size_t i_car)
 {
-	if (cw->start_cycle > cw->cycles)
+	if (cw->start_cycle > cw->cycles + 1)
 		return ;
 	if (cw->f.lg.dbg_cm && cw->f.lg.dbg_c)
 		dbg_log_cycles(cw);
