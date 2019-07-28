@@ -11,14 +11,14 @@ void			op_live(t_cw *cw, size_t i_car)
 	cw->arg[0] = code_to_byte(cw->map, cw->pos, cw->op[LIVE].label_size);
 	cw->arg_code[0] = -cw->arg[0];
 	i_champ = cw->num_of_champs;
-	if (1 <= cw->arg[0] && cw->arg[0] <= MAX_PLAYERS)
+	if (1 <= cw->arg_code[0] && cw->arg_code[0] <= MAX_PLAYERS)
 		while (i_champ-- > 0)
-			if (cw->arg[0] == cw->champ[i_champ]->id)
+			if (cw->arg_code[0] == cw->champ[i_champ]->id)
 			{
 				cw->champ_lives++;
 				cw->champ[i_champ]->lives++;
 				cw->champ[i_champ]->last_live = cw->cycles + 1;
-				cw->last_live_id = cw->arg[0];
+				cw->last_live_id = cw->arg_code[0];
 				if (cw->f.lg.vs)
 					vs_log(cw, i_car, i_champ, cw->car[i_car]->pc);
 				break ;

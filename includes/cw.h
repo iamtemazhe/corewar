@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/28 19:49:21 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/28 19:57:12 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ typedef struct					s_vs
 	WINDOW						*bkg;
 	WINDOW						*aff;	
 	uint32_t					delay;
-	size_t						cycles;
 }								t_vs;
 
 typedef struct					s_champ
@@ -165,6 +164,7 @@ struct							s_cw
 	size_t						champ_lives;
 	size_t						last_live_id;
 	size_t						cycles;
+	size_t						start_cycle;
 	size_t						cycle_to_dump;
 	size_t						cycle_to_check;
 	size_t						num_of_cars;

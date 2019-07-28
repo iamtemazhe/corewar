@@ -17,6 +17,7 @@ void				cw_init(t_cw *cw)
 	cw->champ_lives = 0;
 	cw->checks = 0;
 	cw->cycles = 0;
+	cw->start_cycle = 0;
 	cw->cycle_to_die = CYCLE_TO_DIE;
 	cw->cycle_to_check = CYCLE_TO_DIE;
 	cw->cycle_to_dump = 0;
