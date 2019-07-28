@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/28 18:01:31 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/28 19:49:21 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,23 @@
 # include "libft.h"
 # include <ncurses.h>
 
-# define AF						0x001
-# define DUMP					0x002
-# define VISU					0x004
-# define DEBUG					0x008
-# define DUMP64					0x010 | DUMP
-# define DEBUG_C				0x020 | DEBUG
-# define DEBUG_R				0x040 | DEBUG
+# define AF						0x0001
+# define DUMP					0x0002
+# define VISU					0x0004
+# define DEBUG					0x0008
+# define DUMP64					0x0010 | DUMP
+# define DEBUG_C				0x0020 | DEBUG
+# define DEBUG_CM				0x0040 | DEBUG
+# define DEBUG_R				0x0080 | DEBUG
 # define DEBUG_F				DEBUG | DEBUG_C | DEBUG_R
-# define VS_LIVE				0x100 | VISU
-# define VS_PAUSE				0x200 | VISU
-# define VS_AUDIO				0x400 | VISU
-# define VS_DBG					0x800 | VISU
+# define VS_LIVE				0x0100 | VISU
+# define VS_PAUSE				0x0200 | VISU
+# define VS_AUDIO				0x0400 | VISU
+# define PRG_STRT				0x0800
+# define FLG_ERR				0x8000
+# define DUMP_ERR				0x1000 | FLG_ERR
+# define DBG_ERR				0x2000 | FLG_ERR
+# define VS_ERR					0x4000 | FLG_ERR
 
 # define CYCLE_TO_SHOW			50
 # define LIVES_TO_SHOW			50
@@ -157,6 +162,7 @@ struct							s_cw
 	int32_t						arg[OP_NUM_ARGS];
 	uint32_t					arg_code[OP_NUM_ARGS];
 	size_t						lives;
+	size_t						champ_lives;
 	size_t						last_live_id;
 	size_t						cycles;
 	size_t						cycle_to_dump;
@@ -179,7 +185,11 @@ struct							s_cw
 			uint8_t				vs_live	: 1;
 			uint8_t				vs_pause: 1;
 			uint8_t				vs_audio: 1;
-			uint8_t				vs_dbg	: 1;
+			uint8_t				prg_strt: 1;
+			uint8_t				dump_err: 1;
+			uint8_t				dbg_err	: 1;
+			uint8_t				vs_err	: 1;
+			uint8_t				err		: 1;
 		}						lg;
 	}							f;
 	union
