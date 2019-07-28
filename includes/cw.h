@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/28 15:02:35 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 16:13:10 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,7 @@ void							vs(t_cw *cw);
 void							vs_out(t_cw *cw);
 void							vs_init(t_cw *cw);
 void							vs_exit(t_cw *cw);
+void							vs_audio(uint8_t mod);
 void							vs_print_windows(t_cw *cw);
 void							vs_log(t_cw *cw, size_t i_car, int32_t pc);
 void							vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mod);
@@ -257,6 +258,5 @@ void							vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod);
 void							vs_backlight_del_car(t_cw *cw, int32_t pc);
 void							vs_checker(t_cw *cw, uint8_t mod);
 void							vs_print_lives(t_cw *cw, uint8_t mod);
-void							vs_audio(uint8_t mod);
 
 #endif

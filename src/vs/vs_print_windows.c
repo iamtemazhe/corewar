@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:47:11 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 15:13:02 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 16:09:26 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,25 +87,24 @@ static void		print_header(t_cw *cw)
 static void		print_menu(t_cw *cw)
 {
 	mvwprintw(cw->vs.bkg, 68, 129, "%s", "MENU");
-	mvwprintw(cw->vs.bkg, 69, 16, "%s", "'Esc' for exit");
-	mvwprintw(cw->vs.bkg, 69, 55, "%s", "'Spase' for pause | run");
-	mvwprintw(cw->vs.bkg, 69, 95, "%s", "For step by step press 's'");
-	mvwprintw(cw->vs.bkg, 69, 135, "%s", "Speed 'q' | 'w' | 'e' | 'r'");
-	mvwprintw(cw->vs.bkg, 69, 175, "%s", "To turn on the audio press 'a'");	
-	
+	mvwprintw(cw->vs.bkg, 70, 16, "%s", "'Esc' for exit");
+	mvwprintw(cw->vs.bkg, 70, 55, "%s", "'Spase' for pause | run");
+	mvwprintw(cw->vs.bkg, 70, 95, "%s", "For step by step press 's'");
+	mvwprintw(cw->vs.bkg, 70, 135, "%s", "Speed 'q' | 'w' | 'e' | 'r'");
+	mvwprintw(cw->vs.bkg, 70, 175, "%s", "To turn on the audio press 'a'");
 	keypad(cw->vs.bkg, TRUE);
 }
 
 void			vs_print_windows(t_cw *cw)
 {
-	cw->vs.bkg = newwin(77, 254, 0, 0);
+	cw->vs.bkg = newwin(78, 254, 0, 0);
 	cw->vs.map = newwin(66, 194, 1, 1);
 	cw->vs.header = newwin(66, 57, 1, 196);
-	cw->vs.aff = newwin(4, 252, 72, 1);
+	cw->vs.aff = newwin(4, 252, 73, 1);
 	cw->f.lg.vs_pause = 1;
 	cw->vs.delay = 10;
 	wbkgd(cw->vs.bkg, COLOR_PAIR(COL_BACK));
-	wbkgd(cw->vs.aff, COLOR_PAIR(COL_CODE));	
+	wbkgd(cw->vs.aff, COLOR_PAIR(COL_BACK));
 	wattron(cw->vs.header, COLOR_PAIR(COL_TEXT) | A_BOLD);
 	print_map(cw);
 	print_header(cw);
@@ -115,9 +114,6 @@ void			vs_print_windows(t_cw *cw)
 	noecho();
 	wtimeout(cw->vs.bkg, cw->vs.delay);
 	wrefresh(cw->vs.bkg);
-	if (!cw->f.lg.af)
-	{
-		mvwprintw(cw->vs.bkg, 71, 129, "%s", "AFF");
-		wrefresh(cw->vs.aff);
-	}
+	if (cw->f.lg.af)
+		mvwprintw(cw->vs.bkg, 72, 129, "%s", "AFF");
 }
