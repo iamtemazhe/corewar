@@ -6,7 +6,7 @@
 /*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:47:11 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 16:09:26 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 16:16:56 by hgysella         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void		print_header(t_cw *cw)
 	raw = 9;
 	mvwprintw(cw->vs.header, 1, 1, "%s", "** PAUSED **");
 	mvwprintw(cw->vs.header, 3, 1, "%s %-4u", "Cycles/second limit :",\
-											150 - (cw->vs.delay * 10));
+											1000 - (cw->vs.delay * 10));
 	mvwprintw(cw->vs.header, 6, 1, "%s %-7u", "Cycle :", cw->cycles);
 	mvwprintw(cw->vs.header, 8, 1, "%s %-7u", "Processes :", cw->num_of_cars);
 	while (i < cw->num_of_champs)
