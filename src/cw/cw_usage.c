@@ -44,12 +44,10 @@ void			results(t_cw *cw)
 	if (cw->f.lg.dbg)
 		dbg_log_bot();
 	else if (cw->f.lg.vs)
-	{
 		vs_out(cw);
-		return ;
-	}
-	ft_printf("Contestant %u, \"%s\", has won !\n\r",\
-				cw->last_live_id, cw->champ[cw->last_live_id - 1]->head.prog_name);
+	else
+		ft_printf("Contestant %u, \"%s\", has won !\n\r",\
+			cw->last_live_id, cw->champ[cw->last_live_id - 1]->head.prog_name);
 }
 
 void			dump(t_cw *cw)

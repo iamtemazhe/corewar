@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_func.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 20:21:22 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 21:04:35 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void		vs_checker(t_cw *cw, uint8_t mod)
 	uint8_t	i;
 	uint8_t	raw;
 
+	raw = (mod) ? 14 + cw->num_of_champs * 4 : 11 + cw->num_of_champs * 4;
 	if (mod)
 	{
 		raw = cw->num_of_champs * 4 + 16;
@@ -104,20 +105,23 @@ void		vs_print_lives(t_cw *cw, uint8_t mod)
 	uint8_t	colum;
 	uint8_t	lives;
 
-	if (!cw->vs.champs_lives)
-		return ;
 	i = 0;
-	lives = 0;
 	colum = 1;
 	raw = (mod) ? 14 + cw->num_of_champs * 4 : 11 + cw->num_of_champs * 4;
-	while (i < cw->num_of_champs)
+	while (colum < 52)
 	{
-		if ((lives = cw->champ[i]->lives * LIVES_TO_SHOW / cw->vs.champs_lives))
-			wattron(cw->vs.header, COLOR_PAIR(cw->champ[i]->id));
+		lives = (cw->vs.champs_lives) ?\
+			((cw->champ[i]->lives * (LIVES_TO_SHOW + cw->num_of_champs))\
+									/ cw->vs.champs_lives) : LIVES_TO_SHOW;
+		wattron(cw->vs.header, COLOR_PAIR((cw->vs.champs_lives) ?\
+									cw->champ[i++]->id : COL_CODE));
 		while (lives-- > 0 && ++colum < 52)
 			mvwaddch(cw->vs.header, raw, colum, '-');
-		i++;
 	}
-	cw->vs.champs_lives = (mod) ? 0 : cw->vs.champs_lives;
+	if (mod)
+	{
+		cw->vs.champs_lives = 0;
+		vs_print_lives(cw, 0);
+	}
 	wattron(cw->vs.header, COLOR_PAIR(COL_TEXT) | A_BOLD);
 }

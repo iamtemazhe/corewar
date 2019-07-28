@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 20:24:31 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 21:07:10 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,18 @@ void			vs_out(t_cw *cw)
 	mvwprintw(cw->vs.header, 8, 13, "%-7u", cw->num_of_cars);
 	mvwprintw(cw->vs.header, raw + 14, 1, "The winner is : ");
 	mvwprintw(cw->vs.header, raw + 16, 1, "Press any key to exit");
-	wattroff(cw->vs.header, A_BOLD);
+	wattron(cw->vs.header, COLOR_PAIR(COL_CODE));
 	mvwprintw(cw->vs.header, raw, 1, "%s",\
 		"[--------------------------------------------------]");
 	mvwprintw(cw->vs.header, raw + 3, 1, "%s",\
 		"[--------------------------------------------------]");
-	if (cw->f.lg.vs_audio)
-		vs_audio(1);
 	wattron(cw->vs.header, COLOR_PAIR(cw->last_live_id) | A_BOLD);
-	mvwprintw(cw->vs.header, raw + 14, 17, "%s", cw->champ[cw->last_live_id - 1]->head.prog_name);
+	mvwprintw(cw->vs.header, raw + 14, 17, "%s",\
+				cw->champ[cw->last_live_id - 1]->head.prog_name);
 	wnoutrefresh(cw->vs.header);
 	doupdate();
+	if (cw->f.lg.vs_audio)
+		vs_audio(1);
 	while (wgetch(cw->vs.bkg) == ERR)
 		sleep(1);
 	vs_exit(cw);

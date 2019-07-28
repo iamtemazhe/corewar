@@ -67,10 +67,8 @@ static void			del_one_car(t_cw *cw, size_t i_car)
 	else if (cw->f.lg.vs)
 	{
 		vs_backlight_car(cw, i_car, 0, 0);
-		mvwprintw(cw->vs.header, 30, 1, "%0x", cw->f.lg.vs_audio);
 		if (cw->f.lg.vs_audio)
-			vs_audio(0);
-			
+			vs_audio(0);			
 	}
 	free(cw->car[i_car]);
 	cw->car[i_car] = NULL;

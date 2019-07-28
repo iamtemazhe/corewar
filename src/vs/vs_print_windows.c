@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_print_windows.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:47:11 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 19:58:33 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/28 21:03:59 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void		print_header_1(t_cw *cw)
 			"Live breakdown for current period :");
 	mvwprintw(cw->vs.header, raw += 3, 1, "%s",\
 			"Live breakdown for last period :");
-	wattroff(cw->vs.header, A_BOLD);
+	wattron(cw->vs.header, COLOR_PAIR(COL_CODE));
 	mvwprintw(cw->vs.header, raw -= 2, 1, "%s",\
 			"[--------------------------------------------------]");
 	mvwprintw(cw->vs.header, raw += 3, 1, "%s",\
