@@ -18,6 +18,10 @@ else
             then
                 echo -e "\033[31mDiff on cycle $i\033[0m"
                 cat res
+                rm res
+                rm cor_ex
+                rm cor_our
+                # ./corewar $1 -dc -s $i
                 break
             fi
         done

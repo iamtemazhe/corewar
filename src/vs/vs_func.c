@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_func.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/29 18:36:11 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/29 21:00:01 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ void		vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc)
 	}
 	i = 0;
 	id = (uint8_t)(-cw->car[i_car]->reg[0]);
-	wattron(cw->vs.map, (cw->map[pc].v.car) ? COLOR_PAIR(id + COL_STEP) : COLOR_PAIR(id) | A_BOLD);
+
+		wattron(cw->vs.map, (cw->map[pc].v.car) ?\
+						COLOR_PAIR(id + COL_STEP) : COLOR_PAIR(id) | A_BOLD);
 	while (++i <= REG_SIZE)
 	{
 		mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%02x", cw->map[pc].v.code);

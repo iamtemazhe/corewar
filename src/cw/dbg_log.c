@@ -17,12 +17,12 @@ inline void			dbg_log_bot(void)
 static inline void	dbg_log_cycles(t_cw *cw)
 {
 	cw->f.lg.dbg_cm = 0;
-	ft_printf("%38\033[37m|\033[1m%9s Cycle: %7zu%9\033[22m|\n\r", "", cw->cycles + 1);
+	ft_printf("%38\033[37m|\033[1m%9s Cycle: %7zu%9\033[22m|\n\r", "", cw->cycles);
 }
 
 inline void			dbg_log_cod(t_cw *cw, size_t i_car)
 {
-	if (cw->start_cycle > cw->cycles + 1)
+	if (cw->start_cycle > cw->cycles)
 		return ;
 	if (cw->f.lg.dbg_cm && cw->f.lg.dbg_c)
 		dbg_log_cycles(cw);
@@ -36,7 +36,7 @@ inline void			dbg_log_cod(t_cw *cw, size_t i_car)
 
 inline void			dbg_log(t_cw *cw, size_t i_car)
 {
-	if (cw->start_cycle > cw->cycles + 1)
+	if (cw->start_cycle > cw->cycles)
 		return ;
 	if (cw->f.lg.dbg_cm && cw->f.lg.dbg_c)
 		dbg_log_cycles(cw);
