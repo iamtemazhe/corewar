@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/29 21:08:35 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/29 21:18:51 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ void			vs(t_cw *cw)
 {
 	vs_map(cw);
 	mvwprintw(cw->vs.header, 6, 9, "%-7u", cw->cycles);
-	// if (cw->f.lg.vs_live)
-		// vs_print_lives(cw, 0);
+	if (cw->f.lg.vs_live)
+		vs_print_lives(cw, 0);
 	if (cw->f.lg.prg_strt && cw->start_cycle > cw->cycles)
 		return ;
 	wnoutrefresh(cw->vs.map);
