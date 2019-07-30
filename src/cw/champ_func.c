@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:01:06 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 16:00:24 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 20:47:51 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static t_champ		*new_champ(uint8_t id_champ)
 		return (NULL);
 	new_champ->id = id_champ;
 	new_champ->lives = 0;
+	new_champ->last_live = 0;
+	new_champ->flg_live = 0;
 	return (new_champ);
 }
 

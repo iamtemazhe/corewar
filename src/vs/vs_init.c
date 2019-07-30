@@ -6,16 +6,16 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:31:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/30 17:41:49 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 20:48:03 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw.h"
 
-void			vs_audio(uint8_t mod)
+void			vs_audio(uint8_t mode)
 {
 	system("pkill afplay");
-	(mod) ? system("afplay src/audio/win.mp3 &> /dev/null &") :\
+	(mode) ? system("afplay src/audio/win.mp3 &> /dev/null &") :\
 			system("afplay src/audio/fail.mp3 &> /dev/null &");
 }
 

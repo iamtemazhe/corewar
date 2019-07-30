@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:01:44 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 18:19:32 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 20:49:15 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static int8_t	dies_checker(t_cw *cw)
 {
-	uint8_t		i_champ;
-
 	if (cw->f.lg.vs)
 		vs_print_lives(cw, 1);
 	del_cars(cw);
@@ -23,15 +21,10 @@ static int8_t	dies_checker(t_cw *cw)
 	{
 		cw->cycle_to_die -= CYCLE_DELTA;
 		cw->checks = 0;
-		if (cw->f.lg.vs)
-			vs_checker(cw, 1);
 	}
-	i_champ = 0;
-	while (i_champ < cw->num_of_champs)
-		cw->champ[i_champ++]->lives = 0;
 	cw->lives = 0;
 	if (cw->f.lg.vs)
-		vs_checker(cw, 0);
+		vs_checker(cw, 1);
 	cw->cycle_to_check += cw->cycle_to_die;
 	return ((cw->num_of_cars) ? 0 : -1);
 }

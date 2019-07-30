@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/30 18:16:11 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 20:50:21 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <ncurses.h>
 
-void		vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mod)
+void		vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mode)
 {
 	cw->map[pc].v.car++;
 	(cw->map[pc].v.bold) ? wattron(cw->vs.map, A_BOLD) :\
@@ -27,11 +27,11 @@ void		vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mod)
 										col : cw->map[pc].v.col) + COL_STEP));
 	mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%02x", cw->map[pc].v.code);
 	wattroff(cw->vs.map, A_BOLD);
-	if (mod)
+	if (mode)
 		mvwprintw(cw->vs.header, 8, 13, "%-7u", cw->num_of_cars);
 }
 
-void		vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod)
+void		vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mode)
 {
 	int32_t	pc;
 
@@ -44,10 +44,10 @@ void		vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod)
 			wattron(cw->vs.map, A_BOLD);
 		mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%02x",\
 												cw->map[pc].v.code);
-		if (cw->map[pc].v.bold && !mod)
+		if (cw->map[pc].v.bold && !mode)
 			wattroff(cw->vs.map, A_BOLD);
 	}
-	if (mod)
+	if (mode)
 		vs_backlight_on_car(cw, -cw->car[i_car]->reg[0], PCV(pc + step), 0);
 }
 
@@ -63,9 +63,7 @@ void		vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc)
 		cw->map[pc].v.live = 1;
 		cw->f.lg.vs_live = 1;
 		i = 11 + i_champ * 4;
-	mvwprintw(cw->vs.header, i++, 31, "%7u",\
-										cw->champ[i_champ]->last_live);
-		mvwprintw(cw->vs.header, i, 31, "%7u", cw->champ[i_champ]->lives);
+
 		return ;
 	}
 	i = 0;
@@ -82,25 +80,40 @@ void		vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc)
 	wattroff(cw->vs.map, A_BOLD);
 }
 
-void		vs_checker(t_cw *cw, uint8_t mod)
+void		vs_checker(t_cw *cw, uint8_t mode)
 {
-	uint8_t	i;
-	uint8_t	raw;
+	uint8_t	i_champ;
 
-	raw = (mod) ? 14 + cw->num_of_champs * 4 : 11 + cw->num_of_champs * 4;
-	if (mod)
+	i_champ = 0;
+	if (mode)
 	{
-		raw = cw->num_of_champs * 4 + 16;
-		mvwprintw(cw->vs.header, raw, 16, "%-7d", cw->cycle_to_die);
+		if (!cw->checks)
+			mvwprintw(cw->vs.header, 16 + cw->num_of_champs * 4, 16, "%-7d",\
+															cw->cycle_to_die);
+		while (i_champ < cw->num_of_champs)
+		{
+			cw->champ[i_champ]->lives = 0;
+			mvwprintw(cw->vs.header, 12 + i_champ * 4, 31, "%7u",\
+										cw->champ[i_champ]->lives);
+			i_champ++;
+		}
 		return ;
 	}
-	i = 0;
-	raw = 8;
-	while (i < cw->num_of_champs)
-		mvwprintw(cw->vs.header, raw += 4, 31, "%7u", cw->champ[i++]->lives);
+	while (i_champ < cw->num_of_champs)
+	{
+		if (cw->champ[i_champ]->flg_live)
+		{
+			mvwprintw(cw->vs.header, 11 + i_champ * 4, 31, "%7u",\
+										cw->champ[i_champ]->last_live);
+			mvwprintw(cw->vs.header, 12 + i_champ * 4, 31, "%7u",\
+										cw->champ[i_champ]->lives);
+			cw->champ[i_champ]->flg_live = 0;
+		}
+		i_champ++;
+	}
 }
 
-void		vs_print_lives(t_cw *cw, uint8_t mod)
+void		vs_print_lives(t_cw *cw, uint8_t mode)
 {
 	uint8_t	i_champ;
 	uint8_t	raw;
@@ -109,7 +122,7 @@ void		vs_print_lives(t_cw *cw, uint8_t mod)
 
 	i_champ = 0;
 	colum = 1;
-	raw = (mod) ? 14 + cw->num_of_champs * 4 : 11 + cw->num_of_champs * 4;
+	raw = (mode) ? 14 + cw->num_of_champs * 4 : 11 + cw->num_of_champs * 4;
 	while (colum < 52)
 	{
 		lives = (cw->vs.champs_lives) ?\
@@ -119,13 +132,12 @@ void		vs_print_lives(t_cw *cw, uint8_t mod)
 									cw->champ[i_champ++]->id : COL_CODE));
 		while (lives-- > 0 && ++colum < 52)
 			mvwaddch(cw->vs.header, raw, colum, '-');
-	
-										// i_champ++;
 	}
-	if (mod)
+	if (mode)
 	{
 		cw->vs.champs_lives = 0;
 		vs_print_lives(cw, 0);
 	}
 	wattron(cw->vs.header, COLOR_PAIR(COL_TEXT) | A_BOLD);
+	vs_checker(cw, 0);
 }

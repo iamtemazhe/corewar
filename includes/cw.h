@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 17:33:06 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 20:47:24 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct					s_champ
 	header_t					head;
 	uint8_t						id;
 	uint8_t						*exec;
+	uint8_t						flg_live;
 	uint32_t					lives;
 	size_t						last_live;
 }								t_champ;
@@ -256,13 +257,13 @@ void							del_all_champs(t_cw *cw);
 void							vs(t_cw *cw);
 void							vs_out(t_cw *cw);
 void							vs_init(t_cw *cw);
-void							vs_audio(uint8_t mod);
+void							vs_audio(uint8_t mode);
 void							vs_print_windows(t_cw *cw);
 void							vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc);
-void							vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mod);
-void							vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mod);
+void							vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mode);
+void							vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mode);
 void							vs_backlight_del_car(t_cw *cw, int32_t pc);
-void							vs_checker(t_cw *cw, uint8_t mod);
-void							vs_print_lives(t_cw *cw, uint8_t mod);
+void							vs_checker(t_cw *cw, uint8_t mode);
+void							vs_print_lives(t_cw *cw, uint8_t mode);
 
 #endif
