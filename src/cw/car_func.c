@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 14:58:38 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 17:40:35 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 18:19:16 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_car		*new_car(t_cw *cw, uint8_t id_champ, int32_t pc)
 	new_car->last_live = 0;
 	new_car->cycle_to_wait = 0;
 	new_car->pc = pc;
-	ft_bzero(new_car->reg, sizeof(new_car->reg) * REG_NUMBER);
+	ft_bzero(new_car->reg, sizeof(*new_car->reg) * REG_NUMBER);
 	new_car->reg[0] = -id_champ;
 	if (cw->f.lg.vs)
 		vs_backlight_on_car(cw, id_champ, pc, 1);
@@ -71,7 +71,7 @@ void				add_car(t_cw *cw, size_t i_car, int32_t pc)
 	cw->car[cw->num_of_cars - 1]->carry = cw->car[i_car]->carry;
 	cw->car[cw->num_of_cars - 1]->last_live = cw->car[i_car]->last_live;
 	ft_memcpy(cw->car[cw->num_of_cars - 1]->reg, cw->car[i_car]->reg,\
-							sizeof(cw->car[i_car]->reg) * REG_NUMBER);
+							sizeof(*cw->car[i_car]->reg) * REG_NUMBER);
 }
 
 static void			del_one_car(t_cw *cw, size_t i_car)

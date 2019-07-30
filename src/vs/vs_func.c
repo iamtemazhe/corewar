@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/30 17:57:27 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 18:16:11 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void		vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc)
 		cw->map[pc].v.live = 1;
 		cw->f.lg.vs_live = 1;
 		i = 11 + i_champ * 4;
-		mvwprintw(cw->vs.header, i++, 31, "%7u", cw->champ[i_champ]->last_live);
+	mvwprintw(cw->vs.header, i++, 31, "%7u",\
+										cw->champ[i_champ]->last_live);
 		mvwprintw(cw->vs.header, i, 31, "%7u", cw->champ[i_champ]->lives);
 		return ;
 	}
@@ -101,23 +102,25 @@ void		vs_checker(t_cw *cw, uint8_t mod)
 
 void		vs_print_lives(t_cw *cw, uint8_t mod)
 {
-	uint8_t	i;
+	uint8_t	i_champ;
 	uint8_t	raw;
 	uint8_t	colum;
 	uint8_t	lives;
 
-	i = 0;
+	i_champ = 0;
 	colum = 1;
 	raw = (mod) ? 14 + cw->num_of_champs * 4 : 11 + cw->num_of_champs * 4;
 	while (colum < 52)
 	{
 		lives = (cw->vs.champs_lives) ?\
-			((cw->champ[i]->lives * (LIVES_TO_SHOW + cw->num_of_champs))\
+			((cw->champ[i_champ]->lives * (LIVES_TO_SHOW + cw->num_of_champs))\
 									/ cw->vs.champs_lives) : LIVES_TO_SHOW;
 		wattron(cw->vs.header, COLOR_PAIR((cw->vs.champs_lives) ?\
-									cw->champ[i++]->id : COL_CODE));
+									cw->champ[i_champ++]->id : COL_CODE));
 		while (lives-- > 0 && ++colum < 52)
 			mvwaddch(cw->vs.header, raw, colum, '-');
+	
+										// i_champ++;
 	}
 	if (mod)
 	{
