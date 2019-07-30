@@ -1,5 +1,28 @@
 #include "cw.h"
 #include "libft.h"
+void				check_delimetr(t_cw *cw, uint8_t *head, uint8_t i_champ, uint8_t mod)
+{
+	int32_t			j;
+	unsigned int	size;
+
+	j = (mod) ? MAGIC_HEADER_SIZE + PROG_NAME_LENGTH :\
+					HEADER_SIZE - CHAMP_EXEC_SIZE;
+	size = (head[j + 3] & 0x000000FF) << 0 |\
+			(head[j + 2] & 0xFF) << 8 | (head[j + 1] & 0xFF) << 16 |\
+				(head[j] & 0xFF) << 24;
+	if (size)
+		cw_out(cw, ft_printf("%w\033[1;31mMissing separator\033[0m\n", STDERR), 0);
+	if (mod)
+	{
+		j += DELIMETR_SIZE;
+		size = (head[j + 3] & 0x000000FF) << 0 |\
+				(head[j + 2] & 0xFF) << 8 | (head[j + 1] & 0xFF) << 16 |\
+					(head[j] & 0xFF) << 24;
+		if (size != cw->champ[i_champ]->head.prog_size)
+			cw_out(cw, ft_printf("%w\033[1;31mChampion %s has a code size that differ from what it's header says\033[0m\n",\
+									STDERR, cw->champ[i_champ]->head.prog_name), 0);	
+	}
+}
 
 static void		fill_head(t_cw *cw, uint8_t *head, uint8_t *exec,\
 														uint8_t i_champ)
@@ -17,9 +40,11 @@ static void		fill_head(t_cw *cw, uint8_t *head, uint8_t *exec,\
 	while (++j < MAGIC_HEADER_SIZE + PROG_NAME_LENGTH)
 		cw->champ[i_champ]->head.prog_name[++k] = head[j];
 	k = -1;
+	check_delimetr(cw, head, i_champ, 1);
 	j = MAGIC_HEADER_SIZE + PROG_NAME_LENGTH + DELIMETR_SIZE * 2 - 1;
 	while (++j < HEADER_SIZE - CHAMP_EXEC_SIZE)
 		cw->champ[i_champ]->head.comment[++k] = head[j];
+	check_delimetr(cw, head, i_champ, 0);	
 	if (!(cw->champ[i_champ]->exec = (uint8_t*)malloc(sizeof(uint8_t) *\
 									(cw->champ[i_champ]->head.prog_size + 1))))
 		cw_out(cw, ft_printf("%w\033[1;31mError\033[0m\n", STDERR), 0);
