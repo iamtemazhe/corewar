@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   op_st.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/30 15:07:04 by jwinthei          #+#    #+#             */
+/*   Updated: 2019/07/30 15:34:17 by jwinthei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cw.h"
 
 void			op_st(t_cw *cw, size_t i_car)
 {
-	if (codage_validator(cw, i_car, ST))
+	if (cw_codage_validator(cw, i_car, ST))
 		return ;
 	if (cw->cod.arg.v2 == IND_CODE)
-		byte_to_code(cw->map, cw->arg[1], &cw->car[i_car]->reg[IN(cw->arg[0])], REG_SIZE);
+		cw_byte_to_code(cw->map, cw->arg[1], &cw->car[i_car]->reg[IN(cw->arg[0])], REG_SIZE);
 	else
 	{
 		cw->pos = cw->car[i_car]->reg[IN(cw->arg[0])];

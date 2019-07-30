@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   op_add.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/30 15:05:41 by jwinthei          #+#    #+#             */
+/*   Updated: 2019/07/30 15:33:37 by jwinthei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cw.h"
 
 void			op_add(t_cw *cw, size_t i_car)
 {
-	if (codage_validator(cw, i_car, ADD))
+	if (cw_codage_validator(cw, i_car, ADD))
 		return ;
 	cw->pos = cw->car[i_car]->reg[IN(cw->arg[0])] +\
 											cw->car[i_car]->reg[IN(cw->arg[1])];

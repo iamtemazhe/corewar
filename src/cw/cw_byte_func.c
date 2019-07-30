@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   op_aff.c                                           :+:      :+:    :+:   */
+/*   byte_func.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/30 15:05:48 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 15:33:37 by jwinthei         ###   ########.fr       */
+/*   Created: 2019/07/30 14:58:12 by jwinthei          #+#    #+#             */
+/*   Updated: 2019/07/30 15:34:17 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw.h"
 
-void				op_aff(t_cw *cw, size_t i_car)
+size_t		cw_code_to_byte(const union u_map *src, int32_t pos, size_t n)
 {
-	uint8_t			letter;
-	static int32_t	col = 0;
-	static int32_t	raw = 0;
+	size_t	dst;
 
-	if (cw_codage_validator(cw, i_car, AFF) || !cw->f.lg.af)
-		return ;
-	letter = (char)cw->car[i_car]->reg[IN(cw->arg[0])];
-	if (cw->f.lg.vs)
+	dst = 0;
+	while (n-- > 0)
+		dst += src[PC(pos - n)].v.code << (n * 8);
+	return (dst);
+}
+
+void		cw_byte_to_code(union u_map *dst, int32_t pos, const void *src,\
+																size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (n-- > 0)
 	{
-		mvwprintw(cw->vs.aff, raw, col += 2, "%c ", letter);
-		if (!(col % 254))
-		{
-			raw++;
-			col = 0;
-		}
-		wnoutrefresh(cw->vs.aff);
+		dst[PCV(pos + i)].v.code = ((uint8_t *)src)[n];
+		i++;
 	}
-	else 
-		ft_printf("Aff: %c\n", letter);
 }

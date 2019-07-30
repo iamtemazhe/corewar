@@ -1,7 +1,18 @@
-#include "cw.h"
-#include "libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cw_usage.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/30 15:05:10 by jwinthei          #+#    #+#             */
+/*   Updated: 2019/07/30 15:37:58 by jwinthei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void			usage(int prnt, char *prog_name)
+#include "cw.h"
+
+inline static void	usage(char *prog_name)
 {
 	ft_printf("\033[1;30mUsage: %s [-dump N | -dump64 N] [-d | -dc | -v] [-a] [-n N] <champion.cor> <...>\n", prog_name);
 	ft_printf("*********************** PROGRAMM FLAGS ********************************\n");
@@ -17,15 +28,33 @@ void			usage(int prnt, char *prog_name)
 	ft_printf("| -df           : Debug mode with all modifications                   |\n");
 	ft_printf("| -v            : visual (by Ncurses) output mode                     |\n");
 	ft_printf("***********************************************************************\033[0m\n");
+}
+
+void				cw_out(t_cw *cw, int prnt, char *prog_name)
+{
+	if (prog_name)
+		usage(prog_name);
+	if (cw->f.lg.vs)
+	{
+		delwin(cw->vs.aff);
+		delwin(cw->vs.map);
+		delwin(cw->vs.header);
+		delwin(cw->vs.bkg);
+		endwin();
+	}
+	cw->cycle_to_die = 0;
+	del_cars(cw);
+	del_all_champs(cw);
 	exit((prnt) ? -1 : 0);
 }
 
-void			present(t_cw *cw)
+
+void				cw_present(t_cw *cw)
 {
 	uint8_t		i_champ;
 
 	if (cw->f.lg.dbg)
-		dbg_log_top();
+		dbg_log_table(0);
 	if (cw->f.lg.vs || cw->f.lg.dbg)
 		return ;
 	ft_printf("Introducing contestants...\n");
@@ -39,18 +68,18 @@ void			present(t_cw *cw)
 	}
 }
 
-void			results(t_cw *cw)
+void			cw_results(t_cw *cw)
 {
 	if (cw->f.lg.dbg)
-		dbg_log_bot();
+		dbg_log_table(1);
 	else if (cw->f.lg.vs)
 		vs_out(cw);
 	else
-		ft_printf("Contestant %u, \"%s\", has won !\n\r",\
+		ft_printf("Contestant %u, \"%s\", has won !\n",\
 			cw->last_live_id, cw->champ[cw->last_live_id - 1]->head.prog_name);
 }
 
-void			dump(t_cw *cw)
+void			cw_dump(t_cw *cw)
 {
 	int32_t		i;
 	uint8_t		num_of_oct;
@@ -61,11 +90,9 @@ void			dump(t_cw *cw)
 	{
 		if (!(i % num_of_oct))
 			ft_printf("0x%04zx : ", i);
-		// ft_printf("%02x%c", cw->map[i].v.code, ((i % num_of_oct) == num_of_oct - 1) ? '\n' : ' ');
-		ft_printf("%02x ", cw->map[i].v.code);
-		if ((i % num_of_oct) == num_of_oct - 1)
-			write (1, "\n", 1);
+		ft_printf("%02x%c", cw->map[i].v.code,\
+				((i % num_of_oct) == num_of_oct - 1) ? '\n' : ' ');
 		i++;
 	}
-	exit(0);
+	cw_out(cw, 0, 0);
 }

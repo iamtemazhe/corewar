@@ -3,32 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   vs_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:31:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 20:30:05 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/30 15:29:29 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw.h"
-#include "libft.h"
-#include <ncurses.h>
 
 void			vs_audio(uint8_t mod)
 {
 	system("pkill afplay");
 	(mod) ? system("afplay src/audio/win.mp3 &> /dev/null &") :\
 					system("afplay src/audio/fail.mp3 &> /dev/null &");
-}
-
-void			vs_exit(t_cw *cw)
-{
-	delwin(cw->vs.aff);
-	delwin(cw->vs.map);
-	delwin(cw->vs.header);
-	delwin(cw->vs.bkg);
-	endwin();
-	exit(0);
 }
 
 void			vs_init(t_cw *cw)

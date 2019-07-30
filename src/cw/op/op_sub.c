@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   op_sub.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/30 15:07:23 by jwinthei          #+#    #+#             */
+/*   Updated: 2019/07/30 15:33:37 by jwinthei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cw.h"
 
 void			op_sub(t_cw *cw, size_t i_car)
 {
-	if (codage_validator(cw, i_car, SUB))
+	if (cw_codage_validator(cw, i_car, SUB))
 		return ;
 	cw->pos = cw->car[i_car]->reg[IN(cw->arg[0])] -\
 									cw->car[i_car]->reg[IN(cw->arg[1])];

@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   car_func.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/30 14:58:38 by jwinthei          #+#    #+#             */
+/*   Updated: 2019/07/30 15:39:37 by jwinthei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cw.h"
-#include "libft.h"
 
 static t_car		*new_car(t_cw *cw, uint8_t id_champ, int32_t pc)
 {
@@ -26,12 +37,13 @@ static void			init_cars(t_cw *cw, size_t i_car)
 	cw->num_of_cars = cw->num_of_champs;
 	cw->max_num_of_cars = cw->num_of_cars;
 	if (!(cw->car = (t_car **)malloc(sizeof(t_car *) * cw->num_of_cars)))
-		exit (ft_puterr(-1, "Error"));
+		cw_out(cw, ft_printf("%w\033[1;31mCars malloc error\033[0m\n", STDERR), 0);
 	while (i_car < cw->num_of_cars)
 	{
 		if (!(cw->car[i_car] = new_car(cw, cw->champ[i_car]->id,\
 									(MEM_SIZE / cw->num_of_cars) * i_car)))
-			exit (ft_puterr(-1, "Error"));
+			cw_out(cw, ft_printf("%w\033[1;31mNew car Malloc error\033[0m\n",\
+																		STDERR), 0);
 		i_car++;
 	}
 }
@@ -47,12 +59,12 @@ void				add_car(t_cw *cw, size_t i_car, int32_t pc)
 	{
 		if (!(cw->car = (t_car **)realloc(cw->car,\
 									sizeof(t_car *) * cw->num_of_cars)))
-			exit (ft_puterr(-1, "Error"));
+			cw_out(cw, ft_printf("%w\033[1;31mCars malloc error\033[0m\n", STDERR), 0);
 		cw->max_num_of_cars = cw->num_of_cars;
 	}
 	if (!(cw->car[cw->num_of_cars - 1] = new_car(cw,\
-									(uint8_t)(-cw->car[i_car]->reg[0]), pc)))
-		exit (ft_puterr(-1, "Error"));
+									-cw->car[i_car]->reg[0], pc)))
+		cw_out(cw, ft_printf("%w\033[1;31mNew car malloc error\033[0m\n", STDERR), 0);
 	cw->car[cw->num_of_cars - 1]->carry = cw->car[i_car]->carry;
 	cw->car[cw->num_of_cars - 1]->last_live = cw->car[i_car]->last_live;
 	ft_memcpy(cw->car[cw->num_of_cars - 1]->reg, cw->car[i_car]->reg,\
@@ -84,7 +96,8 @@ void				del_cars(t_cw *cw)
 	i_car = cw->num_of_cars;
 	num_of_cars = cw->num_of_cars;
 	while (i_car-- > 0)
-		if ((int32_t)(cw->cycles - cw->car[i_car]->last_live) >= cw->cycle_to_die)
+		if ((int32_t)(cw->cycles - cw->car[i_car]->last_live) >=\
+												cw->cycle_to_die)
 		{
 			del_one_car(cw, i_car);
 			first_car = i_car;

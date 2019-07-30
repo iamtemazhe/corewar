@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cw_codage_validator.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/30 15:03:57 by jwinthei          #+#    #+#             */
+/*   Updated: 2019/07/30 15:03:59 by jwinthei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cw.h"
 
 static void			reg(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
@@ -25,7 +37,7 @@ static void			ind(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 		return ;
 	}
 	cw->pos = cw->car[i_car]->pc + cw->step;
-	cw->arg_code[i_arg] = code_to_byte(cw->map, cw->pos, IND_SIZE);
+	cw->arg_code[i_arg] = cw_code_to_byte(cw->map, cw->pos, IND_SIZE);
 	cw->arg[i_arg] = PCV((int16_t)cw->arg_code[i_arg] % IDX_MOD + cw->car[i_car]->pc);
 }
 
@@ -40,7 +52,7 @@ static void			dir(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 	cw->pos = cw->car[i_car]->pc + cw->step;
 	if (cw->f.lg.dbg)
 	{
-		cw->arg_code[i_arg] = code_to_byte(cw->map, cw->pos,\
+		cw->arg_code[i_arg] = cw_code_to_byte(cw->map, cw->pos,\
 												cw->op[i_op].label_size);
 		if (cw->op[i_op].label_size == IND_SIZE)
 			cw->arg_code[i_arg] = (int16_t)cw->arg_code[i_arg];
@@ -48,7 +60,7 @@ static void			dir(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 	cw->arg[i_arg] = PCV(cw->pos);
 }
 
-int8_t				codage_validator(t_cw *cw, size_t i_car, uint8_t i_op)
+int8_t				cw_codage_validator(t_cw *cw, size_t i_car, uint8_t i_op)
 {
 	int8_t			i_arg;
 	uint8_t			code;

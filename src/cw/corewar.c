@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   corewar.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/30 15:01:44 by jwinthei          #+#    #+#             */
+/*   Updated: 2019/07/30 15:32:50 by jwinthei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cw.h"
-#include "libft.h"
 
 static int8_t	dies_checker(t_cw *cw)
 {
@@ -44,23 +55,25 @@ static void		car_cycler(t_cw *cw)
 				cw->car[i_car]->pc = (cw->car[i_car]->pc + 1) % MEM_SIZE;
 				continue ;
 			}
-			cw->car[i_car]->cycle_to_wait = cw->op[IN(cw->car[i_car]->op_code)].cycles;
+			cw->car[i_car]->cycle_to_wait =\
+									cw->op[IN(cw->car[i_car]->op_code)].cycles;
 		}
 		if (!(--cw->car[i_car]->cycle_to_wait))
 			cw->op[IN(cw->car[i_car]->op_code)].f(cw, i_car);
 	}
 }
 
-static void			fight(t_cw *cw)
+static void		fight(t_cw *cw)
 {
 	while (1)
 	{
 		if (cw->f.lg.vs)
 			vs(cw);
-		else if (cw->f.lg.dbg_c && cw->f.lg.prg_strt && cw->start_cycle < cw->cycles)
+		else if (cw->f.lg.dbg_c && cw->f.lg.prg_strt &&\
+											cw->start_cycle < cw->cycles)
 			break ;
 		if (cw->f.lg.dump && cw->cycles == cw->cycle_to_dump)
-			dump(cw);
+			cw_dump(cw);
 		else if (cw->cycle_to_die <= 0 || cw->cycles == cw->cycle_to_check)
 			if (dies_checker(cw))
 				break ;
@@ -69,17 +82,17 @@ static void			fight(t_cw *cw)
 	}
 }
 
-int					main(int ac, char **av)
+int				main(int ac, char **av)
 {
-	t_cw			cw;
+	t_cw		cw;
 
 	cw_init(&cw);
 	cw_map_filler(ac, av, &cw);
 	if (cw.f.lg.vs)
 		vs_init(&cw);
 	add_car(&cw, 0, 0);
-	present(&cw);
+	cw_present(&cw);
 	fight(&cw);
-	results(&cw);
+	cw_results(&cw);
 	return (0);
 }

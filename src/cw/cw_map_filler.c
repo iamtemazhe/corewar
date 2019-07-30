@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/28 19:48:12 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 15:40:26 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ static void		sort_champs(t_cw *cw)
 void			cw_map_filler(int ac, char **av, t_cw *cw)
 {
 	if (ac == 1)
-		usage(0, av[0]);
+		cw_out(cw, 0, av[0]);
 	cw_flg_analis(ac, av, cw, 0);
 	sort_champs(cw);
 	if (!cw->num_of_champs)
-		usage(ft_printf("%w\033[1;31mWhere is players O_o?\n", STDERR), av[0]);
+		cw_out(cw, ft_printf("%w\033[1;31mWhere is players O_o?\n", STDERR), av[0]);
 	if (cw->num_of_champs > MAX_PLAYERS)
-		usage(ft_printf("%w\033[1;31mThe number of players (%u) ",\
+		cw_out(cw, ft_printf("%w\033[1;31mThe number of players (%u) ",\
 					STDERR, cw->num_of_champs) +
 				ft_printf("%wis more than MAX_PLAYERS (%u)\n",\
 					STDERR, MAX_PLAYERS), av[0]);

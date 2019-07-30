@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   op_ld.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/30 15:06:10 by jwinthei          #+#    #+#             */
+/*   Updated: 2019/07/30 15:33:55 by jwinthei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cw.h"
 
 void			op_ld(t_cw *cw, size_t i_car)
 {
-	if (codage_validator(cw, i_car, LD))
+	if (cw_codage_validator(cw, i_car, LD))
 		return ;
-	cw->pos = code_to_byte(cw->map, cw->arg[0], REG_SIZE);
+	cw->pos = cw_code_to_byte(cw->map, cw->arg[0], REG_SIZE);
 	if (cw->arg[1] > 0x1 || (cw->arg[1] == 0x1 && 1 <= -cw->pos && -cw->pos <= cw->num_of_champs))
 	{
 		cw->car[i_car]->reg[IN(cw->arg[1])] = cw->pos;

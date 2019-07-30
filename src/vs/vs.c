@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/29 21:18:51 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 15:30:42 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void		wait_key(t_cw *cw)
 	prnt = 1;
 	while (1)
 		if ((key = wgetch(cw->vs.bkg)) == 27)
-			vs_exit(cw);
+			cw_out(cw, 0, 0);
 		else if (key == 32 || (key == 's' && !cw->f.lg.vs_pause))
 			cw->f.lg.vs_pause =\
 				(key == 's' || (key == 32 && !cw->f.lg.vs_pause)) ? 1 : 0;
@@ -101,7 +101,7 @@ void			vs_out(t_cw *cw)
 		vs_audio(1);
 	while (wgetch(cw->vs.bkg) == ERR)
 		sleep(1);
-	vs_exit(cw);
+	cw_out(cw, 0, 0);
 }
 
 void			vs(t_cw *cw)

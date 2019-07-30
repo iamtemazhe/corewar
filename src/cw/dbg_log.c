@@ -1,17 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dbg_log.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/30 15:05:24 by jwinthei          #+#    #+#             */
+/*   Updated: 2019/07/30 15:37:28 by jwinthei         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cw.h"
 
-inline void			dbg_log_top(void)
+inline void			dbg_log_table(uint8_t mode)
 {
-	ft_printf("\033[0m\033[2J");
-	ft_printf(",---------------------------------------------------------------------------------------,\n\r");
-	ft_printf("|car id| pc |op name|code|  codage   |  arg1  |  arg2  |  arg3  |param|val 1|val 2|val 3|\n\r");
-	ft_printf("|------|----|-------|----|-----------|--------|--------|--------|-----|-----|-----|-----|\n\r");
-}
-
-inline void			dbg_log_bot(void)
-{
-	ft_printf("\033[0m");
-	ft_printf("'---------------------------------------------------------------------------------------'\n\r");
+	if (mode)
+	{
+		ft_printf("\033[0m");
+		ft_printf("'---------------------------------------------------------------------------------------'\n\r");
+	}
+	else
+	{
+		ft_printf("\033[0m\033[2J");
+		ft_printf(",---------------------------------------------------------------------------------------,\n\r");
+		ft_printf("|car id| pc |op name|code|  codage   |  arg1  |  arg2  |  arg3  |param|val 1|val 2|val 3|\n\r");
+		ft_printf("|------|----|-------|----|-----------|--------|--------|--------|-----|-----|-----|-----|\n\r");
+	}
 }
 
 static inline void	dbg_log_cycles(t_cw *cw)
@@ -20,7 +34,7 @@ static inline void	dbg_log_cycles(t_cw *cw)
 	ft_printf("%38\033[37m|\033[1m%9s Cycle: %7zu%9\033[22m|\n\r", "", cw->cycles);
 }
 
-inline void			dbg_log_cod(t_cw *cw, size_t i_car)
+void				dbg_log_cod(t_cw *cw, size_t i_car)
 {
 	if (cw->start_cycle > cw->cycles)
 		return ;
@@ -34,7 +48,7 @@ inline void			dbg_log_cod(t_cw *cw, size_t i_car)
 				cw->arg[0], cw->arg[1], cw->arg[2]);
 }
 
-inline void			dbg_log(t_cw *cw, size_t i_car)
+void				dbg_log(t_cw *cw, size_t i_car)
 {
 	if (cw->start_cycle > cw->cycles)
 		return ;
