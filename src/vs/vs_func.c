@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/30 17:46:54 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 17:57:27 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void		vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc)
 		return ;
 	}
 	i = 0;
-	id = (uint8_t)(-cw->car[i_car]->reg[0]);
+	id = -cw->car[i_car]->reg[0];
 	while (++i <= REG_SIZE)
 	{
 		wattron(cw->vs.map, (cw->map[pc].v.car) ?\
