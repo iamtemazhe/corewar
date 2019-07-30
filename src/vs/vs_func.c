@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/30 20:50:21 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 22:03:46 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ void		vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc)
 		cw->map[pc].v.bold = CYCLE_TO_SHOW;
 		cw->map[pc].v.live = 1;
 		cw->f.lg.vs_live = 1;
-		i = 11 + i_champ * 4;
-
+		cw->champ[i_champ]->flg_live = 1;
 		return ;
 	}
 	i = 0;
