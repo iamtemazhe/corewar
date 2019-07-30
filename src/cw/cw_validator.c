@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 16:47:07 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 17:33:04 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 17:51:42 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ static void		fill_champ(t_cw *cw, char *file_name, uint8_t id_champ, int arg)
 		cw_out(cw, ft_printf("%w\033[1;31mFile %s read error\033[0m\n",\
 												STDERR, file_name), 0);
 	if (cw->champ[IN(cw->num_of_champs)]->head.prog_size > CHAMP_MAX_SIZE)
-		cw_out(cw, ft_printf("\033[1;31mFile %s %s %u > %s(%u)%s",\
-			"has too large executable code:", STDERR, file_name,\
+		cw_out(cw, ft_printf("%w\033[1;31mFile %s %s %u > %s(%u)%s",\
+			STDERR, file_name, "has too large executable code:",\
 			cw->champ[IN(cw->num_of_champs)]->head.prog_size,\
 			"CHAMP_MAX_SIZE", CHAMP_MAX_SIZE, "\033[0m\n"), 0);
 	fill_head(cw, head, exec, IN(cw->num_of_champs));

@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/30 15:30:42 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 17:45:45 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ static void		vs_map(t_cw *cw)
 				if (cw->map[pc].v.live)
 					cw->map[pc].v.live = 0;
 				if (cw->map[pc].v.car)
-					wattron(cw->vs.map, COLOR_PAIR((col = cw->map[pc].v.col + COL_STEP)));
+					wattron(cw->vs.map,\
+						COLOR_PAIR((col = cw->map[pc].v.col + COL_STEP)));
 				else if (col != cw->map[pc].v.col)
-					wattron(cw->vs.map, COLOR_PAIR(cw->map[pc].v.col));
+					wattron(cw->vs.map,\
+						COLOR_PAIR((col = cw->map[pc].v.col)));
 				mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%02x",\
 												cw->map[pc].v.code);
 			}
@@ -63,7 +65,8 @@ static void		wait_key(t_cw *cw)
 		else if (key == 32 || (key == 's' && !cw->f.lg.vs_pause))
 			cw->f.lg.vs_pause =\
 				(key == 's' || (key == 32 && !cw->f.lg.vs_pause)) ? 1 : 0;
-		else if (key == 'q' || key == 'w' || key == 'e' || key == 'r' || key == 'a')
+		else if (key == 'q' || key == 'w' || key == 'e' ||\
+								key == 'r' || key == 'a')
 			select_key(cw, key);
 		else if (!cw->f.lg.vs_pause || key == 's')
 		{

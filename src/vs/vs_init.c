@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:31:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/30 15:29:29 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 17:41:49 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void			vs_audio(uint8_t mod)
 {
 	system("pkill afplay");
 	(mod) ? system("afplay src/audio/win.mp3 &> /dev/null &") :\
-					system("afplay src/audio/fail.mp3 &> /dev/null &");
+			system("afplay src/audio/fail.mp3 &> /dev/null &");
 }
 
 void			vs_init(t_cw *cw)

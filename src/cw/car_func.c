@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 14:58:38 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 15:39:37 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 17:40:35 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_car		*new_car(t_cw *cw, uint8_t id_champ, int32_t pc)
 	new_car->last_live = 0;
 	new_car->cycle_to_wait = 0;
 	new_car->pc = pc;
-	ft_bzero(new_car->reg, REG_NUMBER * sizeof(uint32_t));
+	ft_bzero(new_car->reg, sizeof(new_car->reg) * REG_NUMBER);
 	new_car->reg[0] = -id_champ;
 	if (cw->f.lg.vs)
 		vs_backlight_on_car(cw, id_champ, pc, 1);
@@ -37,13 +37,14 @@ static void			init_cars(t_cw *cw, size_t i_car)
 	cw->num_of_cars = cw->num_of_champs;
 	cw->max_num_of_cars = cw->num_of_cars;
 	if (!(cw->car = (t_car **)malloc(sizeof(t_car *) * cw->num_of_cars)))
-		cw_out(cw, ft_printf("%w\033[1;31mCars malloc error\033[0m\n", STDERR), 0);
+		cw_out(cw, ft_printf("%w\033[1;31mCars malloc error\033[0m\n",\
+															STDERR), 0);
 	while (i_car < cw->num_of_cars)
 	{
 		if (!(cw->car[i_car] = new_car(cw, cw->champ[i_car]->id,\
 									(MEM_SIZE / cw->num_of_cars) * i_car)))
 			cw_out(cw, ft_printf("%w\033[1;31mNew car Malloc error\033[0m\n",\
-																		STDERR), 0);
+															STDERR), 0);
 		i_car++;
 	}
 }
@@ -59,16 +60,18 @@ void				add_car(t_cw *cw, size_t i_car, int32_t pc)
 	{
 		if (!(cw->car = (t_car **)realloc(cw->car,\
 									sizeof(t_car *) * cw->num_of_cars)))
-			cw_out(cw, ft_printf("%w\033[1;31mCars malloc error\033[0m\n", STDERR), 0);
+			cw_out(cw, ft_printf("%w\033[1;31mCars malloc error\033[0m\n",\
+																STDERR), 0);
 		cw->max_num_of_cars = cw->num_of_cars;
 	}
 	if (!(cw->car[cw->num_of_cars - 1] = new_car(cw,\
 									-cw->car[i_car]->reg[0], pc)))
-		cw_out(cw, ft_printf("%w\033[1;31mNew car malloc error\033[0m\n", STDERR), 0);
+		cw_out(cw, ft_printf("%w\033[1;31mNew car malloc error\033[0m\n",\
+																STDERR), 0);
 	cw->car[cw->num_of_cars - 1]->carry = cw->car[i_car]->carry;
 	cw->car[cw->num_of_cars - 1]->last_live = cw->car[i_car]->last_live;
 	ft_memcpy(cw->car[cw->num_of_cars - 1]->reg, cw->car[i_car]->reg,\
-										REG_NUMBER * sizeof(int32_t));
+							sizeof(cw->car[i_car]->reg) * REG_NUMBER);
 }
 
 static void			del_one_car(t_cw *cw, size_t i_car)
@@ -80,7 +83,7 @@ static void			del_one_car(t_cw *cw, size_t i_car)
 	{
 		vs_backlight_car(cw, i_car, 0, 0);
 		if (cw->f.lg.vs_audio)
-			vs_audio(0);			
+			vs_audio(0);
 	}
 	free(cw->car[i_car]);
 	cw->car[i_car] = NULL;

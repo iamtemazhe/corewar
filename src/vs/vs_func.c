@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/30 16:20:56 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 17:46:54 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,10 @@ void		vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc)
 	}
 	i = 0;
 	id = (uint8_t)(-cw->car[i_car]->reg[0]);
-
-		wattron(cw->vs.map, (cw->map[pc].v.car) ?\
-						COLOR_PAIR(id + COL_STEP) : COLOR_PAIR(id) | A_BOLD);
 	while (++i <= REG_SIZE)
 	{
+		wattron(cw->vs.map, (cw->map[pc].v.car) ?\
+					COLOR_PAIR(id + COL_STEP) : COLOR_PAIR(id) | A_BOLD);
 		mvwprintw(cw->vs.map, VPCY(pc), VPCX(pc), "%02x", cw->map[pc].v.code);
 		cw->map[pc].v.col = id;
 		cw->map[pc].v.bold = CYCLE_TO_SHOW;
