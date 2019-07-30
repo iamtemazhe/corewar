@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:07:08 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 15:34:17 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 15:54:16 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@ void			op_sti(t_cw *cw, size_t i_car)
 {
 	if (cw_codage_validator(cw, i_car, STI))
 		return ;
-	cw->pos = (cw->cod.arg.v2 == REG_CODE) ? cw->car[i_car]->reg[IN(cw->arg[1])] :\
+	cw->pos = (cw->cod.arg.v2 == REG_CODE) ?\
+				cw->car[i_car]->reg[IN(cw->arg[1])] :\
 				(int16_t)cw_code_to_byte(cw->map, cw->arg[1], REG_SIZE);
-	cw->pos += (cw->cod.arg.v3 == REG_CODE) ? cw->car[i_car]->reg[IN(cw->arg[2])] :\
+	cw->pos += (cw->cod.arg.v3 == REG_CODE) ?\
+				cw->car[i_car]->reg[IN(cw->arg[2])] :\
 				(int16_t)cw_code_to_byte(cw->map, cw->arg[2], REG_SIZE);
 	cw->pos = PCV(cw->pos % IDX_MOD + cw->car[i_car]->pc);
-	cw_byte_to_code(cw->map, cw->pos, &cw->car[i_car]->reg[IN(cw->arg[0])], REG_SIZE);
+	cw_byte_to_code(cw->map, cw->pos,\
+						&cw->car[i_car]->reg[IN(cw->arg[0])], REG_SIZE);
 	if (cw->f.lg.vs)
 		vs_log(cw, i_car, 0, cw->pos);
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);

@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 15:38:47 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 17:33:06 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,8 @@ int8_t							cw_codage_validator(t_cw *cw, size_t i_car, uint8_t i_op);
 uint8_t							cw_strrstr(const char *haystack, const char *needle);
 void							cw_map_filler(int ac, char **av, t_cw *cw);
 void							cw_flg_analis(int ac, char **av, t_cw *cw, int i);
+void							cw_check_delimetr(t_cw *cw, uint8_t *head, uint8_t i_champ,\
+																				uint8_t mod);
 
 void							cw_init(t_cw *cw);
 void							cw_out(t_cw *cw, int prnt, char *prog_name);

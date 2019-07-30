@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:01:06 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 15:39:18 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 16:00:24 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ int8_t				add_champ(t_cw *cw, uint8_t id_champ)
 			return (-1);
 	if (!(cw->champ = (t_champ **)realloc(cw->champ, sizeof(t_champ *) *\
 													++cw->num_of_champs)))
-		cw_out(cw, ft_printf("%w\033[1;31mChamps malloc error\033[0m\n", STDERR), 0);
+		cw_out(cw, ft_printf("%w\033[1;31mChamps malloc error\033[0m\n",\
+																STDERR), 0);
 	if (!(cw->champ[IN(cw->num_of_champs)] = new_champ(id_champ)))
-		cw_out(cw, ft_printf("%w\033[1;31mNew champ malloc error\033[0m\n", STDERR), 0);
+		cw_out(cw, ft_printf("%w\033[1;31mNew champ malloc error\033[0m\n",\
+																STDERR), 0);
 	return (0);
 }
 

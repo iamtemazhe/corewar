@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/29 21:00:01 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 16:20:56 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void		vs_checker(t_cw *cw, uint8_t mod)
 	if (mod)
 	{
 		raw = cw->num_of_champs * 4 + 16;
-		mvwprintw(cw->vs.header, raw, 16, "%-7u", cw->cycle_to_die);
+		mvwprintw(cw->vs.header, raw, 16, "%-7d", cw->cycle_to_die);
 		return ;
 	}
 	i = 0;

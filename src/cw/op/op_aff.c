@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:05:48 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 15:33:37 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 15:47:41 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void				op_aff(t_cw *cw, size_t i_car)
 		}
 		wnoutrefresh(cw->vs.aff);
 	}
-	else 
+	else
 		ft_printf("Aff: %c\n", letter);
 }

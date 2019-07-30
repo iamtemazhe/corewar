@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cw_codage_validator.c                                 :+:      :+:    :+:   */
+/*   cw_codage_validator.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:03:57 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 15:03:59 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/30 16:18:37 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static void			ind(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 	}
 	cw->pos = cw->car[i_car]->pc + cw->step;
 	cw->arg_code[i_arg] = cw_code_to_byte(cw->map, cw->pos, IND_SIZE);
-	cw->arg[i_arg] = PCV((int16_t)cw->arg_code[i_arg] % IDX_MOD + cw->car[i_car]->pc);
+	cw->arg[i_arg] =\
+			PCV((int16_t)cw->arg_code[i_arg] % IDX_MOD + cw->car[i_car]->pc);
 }
 
 static void			dir(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
@@ -66,27 +67,25 @@ int8_t				cw_codage_validator(t_cw *cw, size_t i_car, uint8_t i_op)
 	uint8_t			code;
 
 	cw->step = OPC_SIZE;
-	ft_bzero(cw->arg, sizeof(*cw->arg) * OP_NUM_ARGS);
-	ft_bzero(cw->arg_code, sizeof(*cw->arg_code) * OP_NUM_ARGS);
 	cw->cod.age = cw->map[PC(cw->car[i_car]->pc + cw->step)].v.code;
 	cw->err = (cw->cod.arg.v4) ? -1 : 0;
 	i_arg = -1;
 	while (++i_arg < cw->op[i_op].num_args)
-		if ((code = (cw->cod.age >> (6 - i_arg * 2)) & 0x3) && code == IND_CODE)
+		if (!(code = (cw->cod.age >> (6 - i_arg * 2)) & 0x3))
+			cw->err = -1;
+		else if (code == IND_CODE)
 			ind(cw, i_arg, i_car, i_op);
 		else if (code == REG_CODE)
 			reg(cw, i_arg, i_car, i_op);
-		else if (code == DIR_CODE)
-			dir(cw, i_arg, i_car, i_op);
 		else
-			cw->err = -1;
-	if (cw->f.lg.dbg || cw->f.lg.vs)
-		(cw->f.lg.dbg) ? dbg_log_cod(cw, i_car) :\
-							vs_backlight_car(cw, i_car, cw->step, 1);
+			dir(cw, i_arg, i_car, i_op);
+	if (cw->f.lg.vs)
+		vs_backlight_car(cw, i_car, cw->step, 1);
+	else if (cw->f.lg.dbg)
+		dbg_log_cod(cw, i_car);
 	if (!cw->err)
 		return (0);
 	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);
-	cw->cod.age = 0;
 	cw->err = 0;
 	return (-1);
 }

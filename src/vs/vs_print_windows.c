@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vs_print_windows.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hgysella <hgysella@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 16:47:11 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/29 18:50:33 by hgysella         ###   ########.fr       */
+/*   Updated: 2019/07/30 16:20:37 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void		print_header_1(t_cw *cw)
 	mvwprintw(cw->vs.header, raw += 3, 1, "%s",\
 			"[--------------------------------------------------]");
 	wattron(cw->vs.header, COLOR_PAIR(COL_TEXT) | A_BOLD);
-	mvwprintw(cw->vs.header, raw += 2, 1, "%s : %-10u", "CYCLE_TO_DIE",\
+	mvwprintw(cw->vs.header, raw += 2, 1, "%s : %-7d", "CYCLE_TO_DIE",\
 														cw->cycle_to_die);
 	mvwprintw(cw->vs.header, raw += 2, 1, "%s : %u", "CYCLE_DELTA",\
 															CYCLE_DELTA);
