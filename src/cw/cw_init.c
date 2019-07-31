@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:01:27 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/31 17:06:04 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 17:46:37 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void				cw_init(t_cw *cw)
 	cw->last_live_champ_i = 1;
 	cw->checks = 0;
 	cw->cycles = 0;
+	cw->end_cycle = 0;
 	cw->start_cycle = 0;
 	cw->cycle_to_die = CYCLE_TO_DIE;
 	cw->cycle_to_check = CYCLE_TO_DIE;

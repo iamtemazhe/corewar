@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:01:06 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 20:47:51 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 17:50:17 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,18 @@ int8_t				add_champ(t_cw *cw, uint8_t id_champ)
 
 static void			del_one_champ(t_cw *cw, size_t i_champ)
 {
-	free(cw->champ[i_champ]->exec);
+	if (cw->champ[i_champ]->exec)
+		free(cw->champ[i_champ]->exec);
 	cw->champ[i_champ]->exec = NULL;
-	free(cw->champ[i_champ]);
+	if (cw->champ[i_champ])
+		free(cw->champ[i_champ]);
 	cw->champ[i_champ] = NULL;
 }
 
 void				del_all_champs(t_cw *cw)
 {
+	if (!cw->champ)
+		return ;
 	while (cw->num_of_champs-- > 0)
 		del_one_champ(cw, cw->num_of_champs);
 	free(cw->champ);

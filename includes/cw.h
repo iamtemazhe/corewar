@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/31 17:08:35 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 18:46:57 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define VS_PAUSE				0x0200 | VISU
 # define VS_AUDIO				0x0400 | VISU
 # define PRG_STRT				0x0800
+# define PRG_END				0x1000
 
 # define CYCLE_TO_SHOW			50
 # define LIVES_TO_SHOW			50
@@ -61,11 +62,11 @@
 # define COL_STEP				COL_BACK - COL_CODE
 # define COL_LIVE_STEP			COL_LIVE_CODE_CH1 - COL_CODE_CH1
 
-# define MAGIC_HEADER_SIZE		4
 # define DELIMETR_SIZE			4
-# define CHAMP_EXEC_SIZE		4
-# define HEADER_SIZE			PROG_NAME_LENGTH + COMMENT_LENGTH + MAGIC_HEADER_SIZE +\
-								(2 * DELIMETR_SIZE) + CHAMP_EXEC_SIZE
+# define MAGIC_HEADER_SIZE		DELIMETR_SIZE
+# define CHAMP_EXEC_SIZE		DELIMETR_SIZE
+# define HEADER_CODE			PROG_NAME_LENGTH + COMMENT_LENGTH
+# define HEADER_SIZE			HEADER_CODE + DELIMETR_SIZE * 4
 
 # define OP_SIZE				1
 # define CODAGE_SIZE		    1
@@ -91,11 +92,11 @@
 # define LFORK					14
 # define AFF					15
 
-# define IN(x)					((x) ? ((x) - 1) : (x))
-# define PCV(x)					((((int32_t)(x) < 0) ? (MEM_SIZE - -(x)) : (x)) % MEM_SIZE)
-# define PC(x)					(PCV(IN(x)))
-# define VPCY(x)				((x) * 3 / MAP_X + 1)
-# define VPCX(x)				((x) * 3 % MAP_X + 1)
+# define IN(x)					(x) ? (x) - 1 : (x)
+# define PCV(x)					((x) < 0 ? MEM_SIZE - -(x) : (x)) % MEM_SIZE
+# define PC(x)					PCV(IN(x))
+# define VPCY(x)				(x) * 3 / MAP_X + 1
+# define VPCX(x)				(x) * 3 % MAP_X + 1
 
 typedef struct					s_vs
 {
@@ -109,7 +110,7 @@ typedef struct					s_vs
 
 typedef struct					s_champ
 {
-	header_t					head;
+	t_header					head;
 	uint8_t						id;
 	uint8_t						*exec;
 	uint8_t						flg_live;
@@ -160,6 +161,7 @@ struct							s_cw
 	uint32_t					arg_code[OP_NUM_ARGS];
 	size_t						lives;
 	size_t						cycles;
+	size_t						end_cycle;
 	size_t						start_cycle;
 	size_t						cycle_to_dump;
 	size_t						cycle_to_check;
@@ -182,6 +184,7 @@ struct							s_cw
 			uint8_t				vs_pause: 1;
 			uint8_t				vs_audio: 1;
 			uint8_t				prg_strt: 1;
+			uint8_t				prg_end	: 1;
 		}						lg;
 	}							f;
 	union
@@ -197,15 +200,15 @@ struct							s_cw
 	}							cod;
 	union						u_map
 	{
-	    uint32_t				val;
-	    struct
-	    {
-	        uint8_t				code	: 8;
-	        uint8_t				col		: 3;
-	        uint8_t				live	: 1;
-	        uint8_t				bold	: 6;
-	        uint16_t			car		: 14;
-	    }						v;
+		uint32_t				val;
+		struct
+		{
+			uint8_t				code	: 8;
+			uint8_t				col		: 3;
+			uint8_t				live	: 1;
+			uint8_t				bold	: 6;
+			uint16_t			car		: 14;
+		}						v;
 	}							map[MEM_SIZE];
 };
 
@@ -227,42 +230,47 @@ void							op_lldi(t_cw *cw, size_t i_car);
 void							op_lfork(t_cw *cw, size_t i_car);
 void							op_aff(t_cw *cw, size_t i_car);
 
-int32_t							cw_code_to_byte(const union u_map *src, int32_t pos, uint8_t n);
-void							cw_byte_to_code(union u_map *dst, int32_t pos, const void *src, uint8_t n);
-int8_t							cw_codage_validator(t_cw *cw, size_t i_car, uint8_t i_op);
-
-
-uint8_t							cw_strrstr(const char *haystack, const char *needle);
-void							cw_map_filler(int ac, char **av, t_cw *cw);
-void							cw_flg_analis(int ac, char **av, t_cw *cw, int i);
-void							cw_check_delimetr(t_cw *cw, uint8_t *head, uint8_t i_champ,\
-																				uint8_t mod);
-
 void							cw_init(t_cw *cw);
-void							cw_out(t_cw *cw, int prnt, char *prog_name);
-void							dbg_log(t_cw *cw, size_t i_car);
-void							dbg_log_cod(t_cw *cw, size_t i_car);
-void							dbg_log_table(uint8_t mode);
 void							cw_dump(t_cw *cw);
 void							cw_present(t_cw *cw);
 void							cw_results(t_cw *cw);
+void							cw_out(t_cw *cw, int prnt, char *prog_name);
+void							cw_map_filler(int ac, char **av, t_cw *cw);
+void							cw_flg_analis(int ac, char **av, t_cw *cw,\
+																	int i);
+void							cw_fill_head(t_cw *cw, uint8_t *head,\
+											uint8_t *exec, uint8_t i_champ);
+void							cw_byte_to_code(union u_map *dst,\
+									int32_t pos, const void *src, uint8_t n);
+int8_t							cw_codage_validator(t_cw *cw, size_t i_car,\
+																uint8_t i_op);
+uint8_t							cw_strrstr(const char *haystack,\
+															const char *needle);
+int32_t							cw_code_to_byte(const union u_map *src,\
+														int32_t pos, uint8_t n);
 
-void							add_car(t_cw *cw, size_t i_car, int32_t pc);
-void							del_cars(t_cw *cw);
-
-int8_t							add_champ(t_cw *cw, uint8_t id_champ);
-void							del_all_champs(t_cw *cw);
+void							dbg_log(t_cw *cw, size_t i_car);
+void							dbg_log_cod(t_cw *cw, size_t i_car);
+void							dbg_log_table(uint8_t mode);
 
 void							vs(t_cw *cw);
 void							vs_out(t_cw *cw);
 void							vs_init(t_cw *cw);
 void							vs_audio(uint8_t mode);
 void							vs_print_windows(t_cw *cw);
-void							vs_log(t_cw *cw, size_t i_car, uint8_t i_champ, int32_t pc);
-void							vs_backlight_on_car(t_cw *cw, uint8_t col, int32_t pc, uint8_t mode);
-void							vs_backlight_car(t_cw *cw, size_t i_car, int32_t step, uint8_t mode);
+void							vs_log(t_cw *cw, size_t i_car, uint8_t i_champ,\
+																	int32_t pc);
+void							vs_backlight_on_car(t_cw *cw, uint8_t col,\
+													int32_t pc, uint8_t mode);
+void							vs_backlight_car(t_cw *cw, size_t i_car,\
+													int32_t step, uint8_t mode);
 void							vs_backlight_del_car(t_cw *cw, int32_t pc);
 void							vs_checker(t_cw *cw, uint8_t mode);
 void							vs_print_lives(t_cw *cw, uint8_t mode);
 
+void							del_all_champs(t_cw *cw);
+int8_t							add_champ(t_cw *cw, uint8_t id_champ);
+
+void							add_car(t_cw *cw, size_t i_car, int32_t pc);
+void							del_cars(t_cw *cw);
 #endif

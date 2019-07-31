@@ -6,47 +6,17 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 16:47:07 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 17:51:42 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 18:44:48 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw.h"
 
-static void		fill_head(t_cw *cw, uint8_t *head, uint8_t *exec,\
-														uint8_t i_champ)
-{
-	int32_t		j;
-	int32_t		k;
-
-	cw->champ[i_champ]->head.magic = (head[3] & 0x000000FF) << 0 |\
-						(head[2] & 0xFF) << 8 | (head[1] & 0xFF) << 16 |\
-						(head[0] & 0xFF) << 24;
-	if (cw->champ[i_champ]->head.magic != COREWAR_EXEC_MAGIC)
-		cw_out(cw, ft_printf("%w\033[1;31mInvali_champ file type\033[0m\n",\
-																STDERR), 0);
-	k = -1;
-	j = MAGIC_HEADER_SIZE - 1;
-	while (++j < MAGIC_HEADER_SIZE + PROG_NAME_LENGTH)
-		cw->champ[i_champ]->head.prog_name[++k] = head[j];
-	k = -1;
-	cw_check_delimetr(cw, head, i_champ, 1);
-	j = MAGIC_HEADER_SIZE + PROG_NAME_LENGTH + DELIMETR_SIZE * 2 - 1;
-	while (++j < HEADER_SIZE - CHAMP_EXEC_SIZE)
-		cw->champ[i_champ]->head.comment[++k] = head[j];
-	cw_check_delimetr(cw, head, i_champ, 0);
-	if (!(cw->champ[i_champ]->exec = (uint8_t*)malloc(sizeof(uint8_t) *\
-									(cw->champ[i_champ]->head.prog_size + 1))))
-		cw_out(cw, ft_printf("%w\033[1;31mError\033[0m\n",\
-												STDERR), 0);
-	ft_memcpy(cw->champ[i_champ]->exec, exec,\
-						cw->champ[i_champ]->head.prog_size);
-}
-
 static void		fill_champ(t_cw *cw, char *file_name, uint8_t id_champ, int arg)
 {
 	int			fd;
 	uint8_t		head[HEADER_SIZE + 1];
-	uint8_t		exec[CHAMP_MAX_SIZE + 1];
+	uint8_t		exec[CHAMP_MAX_SIZE * 2 + 1];
 
 	if (add_champ(cw, id_champ))
 		cw_out(cw, ft_printf("%w\033[1;31mPlayer# %u is already exist ",\
@@ -59,7 +29,7 @@ static void		fill_champ(t_cw *cw, char *file_name, uint8_t id_champ, int arg)
 		cw_out(cw, ft_printf("%w\033[1;31mFile %s read error\033[0m\n",\
 												STDERR, file_name), 0);
 	if ((cw->champ[IN(cw->num_of_champs)]->head.prog_size =\
-							read(fd, exec, CHAMP_MAX_SIZE + 1)) <= 0)
+							read(fd, exec, CHAMP_MAX_SIZE * 2 + 1)) <= 0)
 		cw_out(cw, ft_printf("%w\033[1;31mFile %s read error\033[0m\n",\
 												STDERR, file_name), 0);
 	if (cw->champ[IN(cw->num_of_champs)]->head.prog_size > CHAMP_MAX_SIZE)
@@ -67,7 +37,7 @@ static void		fill_champ(t_cw *cw, char *file_name, uint8_t id_champ, int arg)
 			STDERR, file_name, "has too large executable code:",\
 			cw->champ[IN(cw->num_of_champs)]->head.prog_size,\
 			"CHAMP_MAX_SIZE", CHAMP_MAX_SIZE, "\033[0m\n"), 0);
-	fill_head(cw, head, exec, IN(cw->num_of_champs));
+	cw_fill_head(cw, head, exec, IN(cw->num_of_champs));
 	close(fd);
 }
 
@@ -120,6 +90,32 @@ static void		flg_analis_2(char **av, t_cw *cw, int i, size_t j)
 						STDERR, "do not stack with", &av[i][j], i), av[0]);
 }
 
+static int		flg_analis_1(int ac, char **av, t_cw *cw, int i)
+{
+	size_t		j;
+
+	j = cw->lives;
+	if (av[i][j] == 's' && !av[i][j + 1])
+	{
+		if (++i == ac || ((cw->f.lag |= PRG_STRT) &&\
+			!(cw->start_cycle = ft_atoi(av[i])) && av[i][0] != '0'))
+			cw_out(cw, ft_printf("%w\033[1;31m%s %s [arg#: %d]\n",\
+							STDERR, "Invalid cycle value:",\
+								(i == ac) ? NULL : av[i], i), av[0]);
+	}
+	else if (av[i][j] == 'e' && !av[i][j + 1])
+	{
+		if (++i == ac || ((cw->f.lag |= PRG_END) &&\
+			!(cw->end_cycle = ft_atoi(av[i])) && av[i][0] != '0'))
+			cw_out(cw, ft_printf("%w\033[1;31m%s %s [arg#: %d]\n",\
+							STDERR, "Invalid cycle value:",\
+								(i == ac) ? NULL : av[i], i), av[0]);
+	}
+	else
+		flg_analis_2(av, cw, i, j);
+	return (i);
+}
+
 void			cw_flg_analis(int ac, char **av, t_cw *cw, int i)
 {
 	size_t		j;
@@ -136,15 +132,11 @@ void			cw_flg_analis(int ac, char **av, t_cw *cw, int i)
 		else if ((!ft_strcmp(&av[i][j], "dump") ||\
 		!ft_strcmp(&av[i][j], "dump64")) && !cw->f.lg.dump && (cw->err = DUMP))
 			i = args_analis(&av[i][j], ((i + 1 < ac) ? av : NULL), cw, i + 1);
-		else if (av[i][j] == 's' && !av[i][j + 1])
-		{
-			if (++i == ac || ((cw->f.lag |= PRG_STRT) &&\
-				!(cw->start_cycle = ft_atoi(av[i])) && av[i][0] != '0'))
-				cw_out(cw, ft_printf("%w\033[1;31m%s %s [arg#: %d]\n",\
-								STDERR, "Invalid cycle value:",\
-									(i == ac) ? NULL : av[i], i), av[0]);
-		}
 		else
-			flg_analis_2(av, cw, i, j);
+		{
+			cw->lives = j;
+			i = flg_analis_1(ac, av, cw, i);
+		}
 	}
+	cw->lives = 0;
 }

@@ -6,15 +6,15 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/30 17:33:04 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 18:44:21 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw.h"
 #include "libft.h"
 
-void				cw_check_delimetr(t_cw *cw, uint8_t *head, uint8_t i_champ,\
-																	uint8_t mod)
+static void				cw_check_delimetr(t_cw *cw, uint8_t *head,\
+													uint8_t i_champ, uint8_t mod)
 {
 	int32_t			j;
 	unsigned int	size;
@@ -36,6 +36,35 @@ void				cw_check_delimetr(t_cw *cw, uint8_t *head, uint8_t i_champ,\
 		cw_out(cw, ft_printf("%w\033[1;31mChampion %s %s\033[0m\n",\
 			STDERR, "has a code size that differ from what it's header says",\
 							cw->champ[i_champ]->head.prog_name), 0);
+}
+
+void			cw_fill_head(t_cw *cw, uint8_t *head, uint8_t *exec, uint8_t i_champ)
+{
+	int32_t		j;
+	int32_t		k;
+
+	cw->champ[i_champ]->head.magic = (head[3] & 0x000000FF) << 0 |\
+						(head[2] & 0xFF) << 8 | (head[1] & 0xFF) << 16 |\
+						(head[0] & 0xFF) << 24;
+	if (cw->champ[i_champ]->head.magic != COREWAR_EXEC_MAGIC)
+		cw_out(cw, ft_printf("%w\033[1;31mInvali_champ file type\033[0m\n",\
+																STDERR), 0);
+	k = -1;
+	j = MAGIC_HEADER_SIZE - 1;
+	while (++j < MAGIC_HEADER_SIZE + PROG_NAME_LENGTH)
+		cw->champ[i_champ]->head.prog_name[++k] = head[j];
+	k = -1;
+	cw_check_delimetr(cw, head, i_champ, 1);
+	j = MAGIC_HEADER_SIZE + PROG_NAME_LENGTH + DELIMETR_SIZE * 2 - 1;
+	while (++j < HEADER_SIZE - CHAMP_EXEC_SIZE)
+		cw->champ[i_champ]->head.comment[++k] = head[j];
+	cw_check_delimetr(cw, head, i_champ, 0);
+	if (!(cw->champ[i_champ]->exec = (uint8_t*)malloc(sizeof(uint8_t) *\
+									(cw->champ[i_champ]->head.prog_size + 1))))
+		cw_out(cw, ft_printf("%w\033[1;31mError\033[0m\n",\
+												STDERR), 0);
+	ft_memcpy(cw->champ[i_champ]->exec, exec,\
+						cw->champ[i_champ]->head.prog_size);
 }
 
 static void			fill_map(t_cw *cw)
