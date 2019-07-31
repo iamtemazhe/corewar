@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:05:48 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 15:47:41 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 15:39:10 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void				op_aff(t_cw *cw, size_t i_car)
 
 	if (cw_codage_validator(cw, i_car, AFF) || !cw->f.lg.af)
 		return ;
-	letter = (char)cw->car[i_car]->reg[IN(cw->arg[0])];
+	letter = (char)cw->car[i_car]->reg[cw->arg[0]];
 	if (cw->f.lg.vs)
 	{
 		mvwprintw(cw->vs.aff, raw, col += 2, "%c ", letter);
@@ -33,4 +33,5 @@ void				op_aff(t_cw *cw, size_t i_car)
 	}
 	else
 		ft_printf("Aff: %c\n", letter);
+	cw->car[i_car]->pc = PCV(cw->car[i_car]->pc + cw->step);
 }

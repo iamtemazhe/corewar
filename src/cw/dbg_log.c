@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:05:24 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 16:46:28 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 16:14:41 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void				dbg_log_cod(t_cw *cw, size_t i_car)
 				cw->cod.arg.v1, cw->cod.arg.v2, cw->cod.arg.v3, cw->cod.arg.v4,\
 				cw->arg_code[0], cw->arg_code[1], cw->arg_code[2],\
 				(cw->err) ? "\033[1merror\033[22m" : "",\
-				cw->arg[0], cw->arg[1], cw->arg[2]);
+				(int16_t)cw->arg[0], (int16_t)cw->arg[1], cw->arg[2]);
 	ft_bzero(cw->arg, sizeof(*cw->arg) * OP_NUM_ARGS);
 	ft_bzero(cw->arg_code, sizeof(*cw->arg_code) * OP_NUM_ARGS);
 }

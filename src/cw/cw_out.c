@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:05:10 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/31 14:09:38 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 15:55:08 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,11 @@ void					cw_dump(t_cw *cw)
 	{
 		if (!(i % num_of_oct))
 			ft_printf("0x%04zx : ", i);
-		ft_printf("%02x%c", cw->map[i].v.code,\
-				((i % num_of_oct) == num_of_oct - 1) ? '\n' : ' ');
+		// ft_printf("%02x%c", cw->map[i].v.code,
+				// ((i % num_of_oct) == num_of_oct - 1) ? '\n' : ' ');
+		ft_printf("%02x ", cw->map[i].v.code);
+		if ((i % num_of_oct) == num_of_oct - 1)
+			ft_printf("\n");
 		i++;
 	}
 	cw_out(cw, 0, 0);

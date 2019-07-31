@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:06:01 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 15:33:55 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 14:52:17 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void			op_fork(t_cw *cw, size_t i_car)
 {
 	cw->step = OP_SIZE + cw->op[FORK].label_size;
-	cw->arg[0] = (int16_t)cw_code_to_byte(cw->map,\
+	cw->arg[0] = cw_code_to_byte(cw->map,\
 				cw->car[i_car]->pc + cw->step, cw->op[FORK].label_size);
 	add_car(cw, i_car, PCV(cw->arg[0] % IDX_MOD + cw->car[i_car]->pc));
 	if (cw->f.lg.vs)

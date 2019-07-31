@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cw_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jwinthei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:01:27 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 15:01:33 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 16:09:48 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void				cw_init(t_cw *cw)
 	cw->err = 0;
 	cw->lives = 0;
 	cw->vs.champs_lives = 0;
+	cw->last_live_id = 0;
 	cw->checks = 0;
 	cw->cycles = 0;
 	cw->start_cycle = 0;

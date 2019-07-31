@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/31 13:55:21 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 14:21:13 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,13 +153,13 @@ struct							s_cw
 	uint8_t						flg;
 	uint8_t						checks;
 	uint8_t						num_of_champs;
+	uint8_t						last_live_id;
 	int32_t						pos;
 	int32_t						step;
 	int32_t						cycle_to_die;
 	int32_t						arg[OP_NUM_ARGS];
 	uint32_t					arg_code[OP_NUM_ARGS];
 	size_t						lives;
-	size_t						last_live_id;
 	size_t						cycles;
 	size_t						start_cycle;
 	size_t						cycle_to_dump;
@@ -228,8 +228,8 @@ void							op_lldi(t_cw *cw, size_t i_car);
 void							op_lfork(t_cw *cw, size_t i_car);
 void							op_aff(t_cw *cw, size_t i_car);
 
-int32_t							cw_code_to_byte(const union u_map *src, int32_t pos, size_t n);
-void							cw_byte_to_code(union u_map *dst, int32_t pos, const void *src, size_t n);
+int32_t							cw_code_to_byte(const union u_map *src, int32_t pos, uint8_t n);
+void							cw_byte_to_code(union u_map *dst, int32_t pos, const void *src, uint8_t n);
 int8_t							cw_codage_validator(t_cw *cw, size_t i_car, uint8_t i_op);
 
 
