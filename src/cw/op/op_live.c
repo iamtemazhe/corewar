@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:06:29 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/31 14:52:01 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 17:04:32 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void			op_live(t_cw *cw, size_t i_car)
 			{
 				cw->champ[i_champ]->lives++;
 				cw->champ[i_champ]->last_live = cw->cycles + 1;
-				cw->last_live_id = cw->arg_code[0];
+				cw->last_live_champ_i = i_champ;
 				if (cw->f.lg.vs)
 					vs_log(cw, i_car, i_champ, cw->car[i_car]->pc);
 				break ;

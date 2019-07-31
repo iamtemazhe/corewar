@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/31 14:21:13 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 17:08:35 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,8 @@
 # define LFORK					14
 # define AFF					15
 
-# define ABS(x)					(((int8_t)(x)) < 0 ? (-x) : (x))
 # define IN(x)					((x) ? ((x) - 1) : (x))
-# define PCV(x)					((((x) < 0) ? (MEM_SIZE - -(x)) : (x)) % MEM_SIZE)
+# define PCV(x)					((((int32_t)(x) < 0) ? (MEM_SIZE - -(x)) : (x)) % MEM_SIZE)
 # define PC(x)					(PCV(IN(x)))
 # define VPCY(x)				((x) * 3 / MAP_X + 1)
 # define VPCX(x)				((x) * 3 % MAP_X + 1)
@@ -153,7 +152,7 @@ struct							s_cw
 	uint8_t						flg;
 	uint8_t						checks;
 	uint8_t						num_of_champs;
-	uint8_t						last_live_id;
+	uint8_t						last_live_champ_i;
 	int32_t						pos;
 	int32_t						step;
 	int32_t						cycle_to_die;

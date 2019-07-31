@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:00:28 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/30 17:45:45 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 17:07:10 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,10 @@ void			vs_out(t_cw *cw)
 		"[--------------------------------------------------]");
 	mvwprintw(cw->vs.header, raw + 3, 1, "%s",\
 		"[--------------------------------------------------]");
-	wattron(cw->vs.header, COLOR_PAIR(cw->last_live_id) | A_BOLD);
+	wattron(cw->vs.header,\
+				COLOR_PAIR(cw->champ[cw->last_live_champ_i]->id) | A_BOLD);
 	mvwprintw(cw->vs.header, raw + 14, 17, "%s",\
-				cw->champ[cw->last_live_id - 1]->head.prog_name);
+				cw->champ[cw->last_live_champ_i]->head.prog_name);
 	wnoutrefresh(cw->vs.header);
 	doupdate();
 	if (cw->f.lg.vs_audio)

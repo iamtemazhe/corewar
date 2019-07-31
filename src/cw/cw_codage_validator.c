@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:03:57 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/31 15:29:05 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 17:12:37 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static void			ind(t_cw *cw, uint8_t i_arg, size_t i_car, uint8_t i_op)
 	cw->arg[i_arg] = cw_code_to_byte(cw->map, cw->pos, IND_SIZE);
 	cw->arg_code[i_arg] = cw->arg[i_arg];
 	if (i_op == LLD)
-		cw->arg[i_arg] = cw->arg[i_arg] + cw->car[i_car]->pc;
+		cw->arg[i_arg] = PCV(cw->arg[i_arg] + cw->car[i_car]->pc);
 	else
-		cw->arg[i_arg] = cw->arg[i_arg] % IDX_MOD + cw->car[i_car]->pc;
+		cw->arg[i_arg] = PCV(cw->arg[i_arg] % IDX_MOD + cw->car[i_car]->pc);
 	if (i_op == ST)
 		return ;
 	cw->arg[i_arg] = cw_code_to_byte(cw->map, PCV(cw->arg[i_arg]), REG_SIZE);

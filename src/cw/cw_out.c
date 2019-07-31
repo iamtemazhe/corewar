@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:05:10 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/31 15:55:08 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 17:05:36 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void					cw_results(t_cw *cw)
 		dbg_log_table(1);
 	else
 		ft_printf("Contestant %u, \"%s\", has won !\n",\
-			cw->last_live_id, cw->champ[IN(cw->last_live_id)]->head.prog_name);
+				cw->champ[cw->last_live_champ_i],\
+				cw->champ[cw->last_live_champ_i]->head.prog_name);
 }
 
 void					cw_dump(t_cw *cw)
