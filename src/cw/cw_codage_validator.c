@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:03:57 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/31 17:12:37 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 18:58:22 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int8_t				cw_codage_validator(t_cw *cw, size_t i_car, uint8_t i_op)
 	int8_t			i_arg;
 	uint8_t			code;
 
-	cw->err = 0;
 	cw->step = OPC_SIZE;
 	cw->cod.age = cw->map[PC(cw->car[i_car]->pc + cw->step)].v.code;
 	cw->err = (cw->cod.arg.v4) ? -1 : 0;

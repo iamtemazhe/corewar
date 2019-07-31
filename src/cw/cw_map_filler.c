@@ -6,15 +6,15 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 17:59:21 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/31 18:44:21 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 19:03:01 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw.h"
 #include "libft.h"
 
-static void				cw_check_delimetr(t_cw *cw, uint8_t *head,\
-													uint8_t i_champ, uint8_t mod)
+static void			cw_check_delimetr(t_cw *cw, uint8_t *head,\
+									uint8_t i_champ, uint8_t mod)
 {
 	int32_t			j;
 	unsigned int	size;
@@ -38,10 +38,11 @@ static void				cw_check_delimetr(t_cw *cw, uint8_t *head,\
 							cw->champ[i_champ]->head.prog_name), 0);
 }
 
-void			cw_fill_head(t_cw *cw, uint8_t *head, uint8_t *exec, uint8_t i_champ)
+void				cw_fill_head(t_cw *cw, uint8_t *head, uint8_t *exec,\
+															uint8_t i_champ)
 {
-	int32_t		j;
-	int32_t		k;
+	int32_t			j;
+	int32_t			k;
 
 	cw->champ[i_champ]->head.magic = (head[3] & 0x000000FF) << 0 |\
 						(head[2] & 0xFF) << 8 | (head[1] & 0xFF) << 16 |\

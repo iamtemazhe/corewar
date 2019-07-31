@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 15:45:08 by hgysella          #+#    #+#             */
-/*   Updated: 2019/07/30 22:03:46 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 19:05:29 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,23 +83,21 @@ void		vs_checker(t_cw *cw, uint8_t mode)
 {
 	uint8_t	i_champ;
 
-	i_champ = 0;
+	i_champ = cw->num_of_champs;
 	if (mode)
 	{
 		if (!cw->checks)
 			mvwprintw(cw->vs.header, 16 + cw->num_of_champs * 4, 16, "%-7d",\
 															cw->cycle_to_die);
-		while (i_champ < cw->num_of_champs)
+		while (i_champ-- > 0)
 		{
 			cw->champ[i_champ]->lives = 0;
 			mvwprintw(cw->vs.header, 12 + i_champ * 4, 31, "%7u",\
 										cw->champ[i_champ]->lives);
-			i_champ++;
 		}
 		return ;
 	}
-	while (i_champ < cw->num_of_champs)
-	{
+	while (i_champ-- > 0)
 		if (cw->champ[i_champ]->flg_live)
 		{
 			mvwprintw(cw->vs.header, 11 + i_champ * 4, 31, "%7u",\
@@ -108,8 +106,6 @@ void		vs_checker(t_cw *cw, uint8_t mode)
 										cw->champ[i_champ]->lives);
 			cw->champ[i_champ]->flg_live = 0;
 		}
-		i_champ++;
-	}
 }
 
 void		vs_print_lives(t_cw *cw, uint8_t mode)

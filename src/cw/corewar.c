@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 15:01:44 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/31 18:15:11 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 18:57:37 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static void		fight(t_cw *cw)
 		if (cw->f.lg.vs)
 			vs(cw);
 		else if (cw->f.lg.dbg &&\
-				((cw->f.lg.prg_strt && !cw->f.lg.prg_end && cw->start_cycle < cw->cycles) ||\
+				((cw->f.lg.prg_strt && !cw->f.lg.prg_end &&\
+				cw->start_cycle < cw->cycles) ||\
 				(cw->f.lg.prg_end && cw->end_cycle < cw->cycles)))
 			break ;
 		if (cw->f.lg.dump && cw->cycles == cw->cycle_to_dump)
