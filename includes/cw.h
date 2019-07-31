@@ -6,7 +6,7 @@
 /*   By: jwinthei <jwinthei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/14 14:24:32 by jwinthei          #+#    #+#             */
-/*   Updated: 2019/07/30 20:47:24 by jwinthei         ###   ########.fr       */
+/*   Updated: 2019/07/31 13:55:21 by jwinthei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,7 @@ void							op_lldi(t_cw *cw, size_t i_car);
 void							op_lfork(t_cw *cw, size_t i_car);
 void							op_aff(t_cw *cw, size_t i_car);
 
-size_t							cw_code_to_byte(const union u_map *src, int32_t pos, size_t n);
+int32_t							cw_code_to_byte(const union u_map *src, int32_t pos, size_t n);
 void							cw_byte_to_code(union u_map *dst, int32_t pos, const void *src, size_t n);
 int8_t							cw_codage_validator(t_cw *cw, size_t i_car, uint8_t i_op);
 
